@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Encuesta Silao · La Voz Ciudadana</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+<style>
+/* ══ SUPABASE CONFIG ══
+   Edita estas dos líneas con tus datos de Supabase:
+   SUPABASE_URL  → Ajustes > API > Project URL
+   SUPABASE_KEY  → Ajustes > API > anon/public key
+*/
+:root{
+  --rojo:#cc0a0a;--azul:#1a3a8f;--oro:#d97706;--verde:#15803d;--morado:#7c3aed;--rosa:#db2777;
+  --fondo:#f7f4ef;--fondo2:#ffffff;--fondo3:#f0f3fb;--texto:#0f172a;--muted:#334155;
+  --borde:#c8d0dc;--card:#ffffff;
+  --shadow:0 2px 12px rgba(0,0,0,0.07);--shadow-hover:0 6px 28px rgba(0,0,0,0.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--fondo);color:var(--texto);font-family:'Barlow',sans-serif;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0 16px;height:62px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 20px rgba(0,0,0,0.7);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.nav-logo-box{height:44px;width:44px;border-radius:10px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.13);display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0}
+.nav-logo-box img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+.nav-brand{line-height:1.05}
+.nav-brand-enc{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:4px;color:rgba(255,255,255,0.45);display:block}
+.nav-brand-sil{font-family:'Dancing Script',cursive;font-size:22px;color:#fff;display:block;line-height:1.1}
+.nav-cta{background:var(--rojo);color:#fff;text-decoration:none;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:9px 16px;border-radius:9px;box-shadow:0 3px 12px rgba(204,10,10,0.4);transition:all .2s;white-space:nowrap;border:none;cursor:pointer}
+.nav-cta:hover{background:#a80808;transform:translateY(-1px)}
+
+/* HERO */
+.hero{padding-top:62px;background:linear-gradient(170deg,#0f172a 0%,#1a0a2e 55%,#0a1628 100%);position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:100vh}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 120% 50% at 50% 0%,rgba(204,10,10,0.2),transparent 65%);pointer-events:none}
+
+/* BRAND */
+.brand-block{text-align:center;padding:24px 20px 10px;position:relative;z-index:2}
+.live-pill{display:inline-flex;align-items:center;gap:7px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:5px;color:#fff;background:rgba(204,10,10,0.3);border:1.5px solid rgba(204,10,10,0.5);border-radius:20px;padding:5px 14px;margin-bottom:12px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#ff4444;animation:blk 1.5s infinite;box-shadow:0 0 8px rgba(255,68,68,0.8)}
+@keyframes blk{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+.brand-enc-label{font-family:'Barlow Condensed',sans-serif;font-size:clamp(11px,2.5vw,14px);font-weight:800;letter-spacing:8px;color:rgba(255,255,255,0.4);display:block;margin-bottom:2px}
+.brand-main{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,17vw,115px);line-height:.87;letter-spacing:6px;color:#fff;display:block;text-shadow:0 4px 40px rgba(204,10,10,0.55)}
+.brand-script{font-family:'Dancing Script',cursive;font-size:clamp(36px,9vw,68px);color:#cc0a0a;display:block;line-height:1;margin-top:-2px;text-shadow:0 0 40px rgba(204,10,10,0.8),0 0 80px rgba(204,10,10,0.35)}
+
+/* RELOJ */
+.clock-block{text-align:center;padding:10px 20px 6px;position:relative;z-index:2}
+.clock-time{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,11vw,74px);color:#fff;letter-spacing:6px;line-height:1;text-shadow:0 0 30px rgba(255,255,255,0.12)}
+.clock-date{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.38);margin-top:3px;text-transform:uppercase}
+
+/* STATS */
+.stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
+.sb{flex:1;padding:11px 6px;text-align:center;border-right:1px solid rgba(255,255,255,0.07)}
+.sb:last-child{border-right:none}
+.sb-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(17px,4vw,24px);color:#fff;line-height:1;margin-bottom:2px}
+.sb-l{font-size:8px;color:rgba(255,255,255,0.35);letter-spacing:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+
+/* CARRUSEL */
+.carrusel-wrap{margin:14px 0 0;overflow:hidden;position:relative;z-index:2}
+.carrusel-inner{display:flex;width:max-content;will-change:transform}
+.banner-slide{width:270px;height:164px;flex-shrink:0;margin-right:10px;border-radius:14px;overflow:hidden;position:relative;display:flex;flex-direction:column;justify-content:flex-end;border:1.5px solid rgba(255,255,255,0.1)}
+.banner-logo-wrap{position:absolute;top:10px;left:10px;width:44px;height:44px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:18px}
+.banner-logo-wrap img{width:100%;height:100%;object-fit:contain;padding:3px}
+.banner-tag-badge{position:absolute;top:10px;right:10px;font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:2px;background:rgba(0,0,0,0.5);color:#fff;border-radius:5px;padding:3px 8px;backdrop-filter:blur(4px)}
+.banner-content{padding:11px;background:linear-gradient(transparent,rgba(0,0,0,0.78))}
+.banner-cand-name{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:1px}
+.banner-main-txt{font-family:'Bebas Neue',sans-serif;font-size:19px;color:#fff;letter-spacing:2px;line-height:1.1}
+.banner-sub-txt{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.45);margin-top:2px}
+
+/* BOTONES HERO */
+.btns-hero{padding:14px 14px 8px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:2}
+.btn-enc{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:16px;border:2px solid rgba(255,255,255,0.2);transition:all .22s;overflow:hidden;box-shadow:0 8px 32px rgba(204,10,10,0.6);background:linear-gradient(135deg,#cc0a0a,#ff3333)}
+.btn-enc:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(204,10,10,0.75)}
+.btn-enc-fallback{width:100%;padding:22px 18px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,32px);letter-spacing:4px;color:#fff}
+.btn-enc img{width:100%;display:block;border-radius:14px}
+.btns-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-trivia{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:14px;border:2px solid rgba(255,255,255,0.15);transition:all .22s;overflow:hidden;box-shadow:0 4px 20px rgba(109,40,217,0.5);background:linear-gradient(135deg,#4c1d95,#7c3aed)}
+.btn-trivia:hover{transform:translateY(-2px)}
+.btn-trivia-fallback{width:100%;padding:17px 10px;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:#fff}
+.btn-trivia img{width:100%;display:block;border-radius:12px}
+.btn-peso{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:14px;border:2px solid rgba(255,255,255,0.15);transition:all .22s;overflow:hidden;box-shadow:0 4px 20px rgba(219,39,119,0.5);background:linear-gradient(135deg,#831843,#db2777)}
+.btn-peso:hover{transform:translateY(-2px)}
+.btn-peso-fallback{width:100%;padding:17px 10px;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:#fff}
+.btn-peso img{width:100%;display:block;border-radius:12px}
+
+/* COUNTDOWN */
+.cd-wrap{text-align:center;padding:14px 16px 22px;position:relative;z-index:2}
+.cd-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:5px;color:rgba(255,255,255,0.3);margin-bottom:10px}
+.cd-boxes{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.cd-box{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;min-width:60px;text-align:center}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;line-height:1}
+.cd-unit{font-size:8px;color:rgba(255,255,255,0.3);letter-spacing:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+
+/* SEP */
+.sep{height:1px;background:linear-gradient(90deg,transparent,var(--borde),transparent)}
+
+/* SEC */
+.sec{padding:60px 20px;max-width:760px;margin:0 auto}
+.sec-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:4px;color:var(--rojo);margin-bottom:10px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,7vw,58px);line-height:.95;margin-bottom:10px;color:var(--texto);letter-spacing:2px}
+.sec-sub{font-size:15px;color:var(--muted);line-height:1.8;margin-bottom:26px;max-width:520px}
+
+/* ══ ENCUESTA — TARJETAS VERTICALES ══ */
+#encuesta{background:#fff}
+.poll-wrap{display:flex;flex-direction:column;gap:10px}
+
+/* Tarjeta principal */
+.party-btn{display:flex;flex-direction:column;background:#fff;border:2px solid var(--borde);border-radius:16px;padding:0;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.party-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,rgba(204,10,10,0.06),transparent);transition:width .8s ease}
+.party-btn.voted::before{width:var(--pct)}
+.party-btn:hover:not(.voted){border-color:rgba(204,10,10,0.3);box-shadow:var(--shadow-hover);transform:translateY(-1px)}
+.party-btn.voted{cursor:default}
+.party-btn.selected{border-color:var(--rojo)!important;background:#fff8f8!important;box-shadow:0 4px 20px rgba(204,10,10,0.14)!important}
+
+/* Fila superior: logo centrado + info centrada + % grande */
+.p-top{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 14px 10px}
+.p-logo{width:150px;height:150px;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f8fafc;border:1px solid var(--borde)}
+.p-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
+.p-logo-fb{width:150px;height:150px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:30px;color:#fff;flex-shrink:0;letter-spacing:1px}
+.p-info{text-align:center;width:100%}
+.p-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:var(--texto);letter-spacing:.5px}
+.p-ideo{font-size:15px;color:var(--muted);letter-spacing:1.5px;font-family:'Barlow Condensed',sans-serif;margin-top:2px}
+.p-pct-big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--borde);transition:color .4s;text-align:center;line-height:1;width:100%}
+.party-btn.voted .p-pct-big{color:var(--muted)}
+.party-btn.selected .p-pct-big{color:var(--rojo)!important}
+
+/* Barra de progreso visible */
+.p-bar-wrap{height:4px;background:#f1f5f9;margin:0 14px}
+.p-bar-fill{height:100%;background:linear-gradient(90deg,var(--rojo),#ff6b6b);border-radius:2px;transition:width .8s ease;width:0%}
+.party-btn.selected .p-bar-fill{background:linear-gradient(90deg,var(--rojo),#ff4444)}
+
+/* ══ BLOQUE ESTADÍSTICAS — se muestra al votar ══ */
+.p-stats{border-top:1px solid #f1f5f9;padding:10px 14px 12px;display:none;flex-direction:column;gap:8px}
+.party-btn.voted .p-stats{display:flex}
+
+/* Grid 3 cols */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.stat-card{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:8px 6px;text-align:center;cursor:pointer;transition:all .18s;-webkit-tap-highlight-color:transparent}
+.stat-card:hover,.stat-card:active{background:#fff0f0;border-color:var(--rojo);transform:translateY(-1px)}
+.stat-sym{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--rojo);line-height:1;display:block}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:21px;color:#0f172a;line-height:1.1;display:block;margin-top:2px}
+.stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;color:#64748b;display:block;margin-top:2px;text-transform:uppercase}
+.stat-trend-up{color:#16a34a!important}
+.stat-trend-dn{color:#dc2626!important}
+
+/* Barra progreso dentro de stats */
+.stat-progress-bar{height:5px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin-top:4px}
+.stat-progress-fill{height:100%;background:linear-gradient(90deg,var(--rojo),#ff6b6b);border-radius:4px;transition:width .8s ease}
+
+/* ══ MODAL ESTADÍSTICA — clic en cada botón ══ */
+#modalStatInfo{display:none;position:fixed;inset:0;z-index:9800;background:rgba(0,0,0,0.72);align-items:center;justify-content:center;padding:20px}
+#modalStatInfo.open{display:flex}
+.statinfo-box{background:#1e293b;border:1px solid rgba(255,255,255,0.12);border-radius:20px;width:100%;max-width:320px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:popIn .18s ease}
+@keyframes popIn{from{transform:scale(.88);opacity:0}to{transform:scale(1);opacity:1}}
+.statinfo-head{padding:16px 18px 10px;display:flex;align-items:center;gap:10px}
+.statinfo-sym{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,#7c0a0a,var(--rojo));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;flex-shrink:0}
+.statinfo-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:#fff}
+.statinfo-body{padding:0 18px 18px}
+.statinfo-text{font-family:'Barlow',sans-serif;font-size:14px;color:rgba(255,255,255,0.8);line-height:1.65}
+.statinfo-val{font-family:'Bebas Neue',sans-serif;font-size:30px;color:#ff6b6b;display:block;margin:8px 0 4px;letter-spacing:2px}
+.statinfo-close{display:block;margin:14px 18px 0;width:calc(100% - 36px);background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.statinfo-close:hover{background:rgba(255,255,255,0.12);color:#fff}
+
+/* nota poll */
+.poll-note{font-size:11px;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:2px;font-family:'Barlow Condensed',sans-serif}
+.vote-total{text-align:center;margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:3px}
+
+/* SUPABASE STATUS BADGE */
+.sb-status{position:absolute;top:7px;right:9px;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:800;letter-spacing:2px;padding:3px 8px;border-radius:10px;z-index:10}
+.sb-status.ok{background:rgba(21,128,61,0.25);color:#4ade80;border:1px solid rgba(74,222,128,0.3)}
+.sb-status.local{background:rgba(217,119,6,0.25);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)}
+.sb-status.loading{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.35);border:1px solid rgba(255,255,255,0.12)}
+
+/* CANDIDATOS */
+#candidatos{background:var(--fondo3)}
+.cand-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand-card{background:#fff;border:1.5px solid var(--borde);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);transition:all .2s}
+.cand-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.c-foto{background:linear-gradient(135deg,#e2e8f0,#f8fafc);height:136px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.c-foto img{width:100%;height:100%;object-fit:cover}
+.c-foto-inner{text-align:center}
+.c-foto-ico{font-size:34px;margin-bottom:3px}
+.c-foto-tag{font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:800;letter-spacing:3px;color:#94a3b8}
+.c-info{padding:10px 10px 6px}
+.c-badge{display:inline-block;border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:8px;font-weight:800;letter-spacing:2px;padding:3px 8px}
+.c-nombre{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:var(--texto);line-height:1.2;margin-top:4px}
+.c-cargo{font-size:10px;color:var(--muted);letter-spacing:1px;font-family:'Barlow Condensed',sans-serif;margin-top:1px}
+.c-bio{padding:0 10px 6px;font-size:11px;color:var(--muted);line-height:1.6}
+.c-redes{display:flex;gap:5px;padding:4px 10px 2px;flex-wrap:wrap}
+.c-red{font-size:13px;background:var(--fondo);border:1px solid var(--borde);border-radius:6px;padding:4px 8px;text-decoration:none;cursor:pointer;transition:all .2s}
+.c-red:hover{background:var(--borde)}
+.c-tel{padding:4px 10px 6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px}
+.c-estado{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:3px;color:var(--muted);text-align:center;padding:6px 0;border-top:1px solid var(--borde)}
+.c-add{background:var(--fondo);border:1.5px dashed var(--borde);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;color:var(--borde);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;text-align:center;gap:4px}
+
+/* ══ 4 BOTONES CUADRADOS IGUALES ══ */
+.hero-4grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;padding:14px 14px 8px}
+/* cada botón: cuadrado perfecto 1:1 */
+.hbtn4{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:14px;border:1.5px solid rgba(255,255,255,0.12);transition:all .22s;overflow:hidden;position:relative;aspect-ratio:1/1;width:100%}
+.hbtn4:hover,.hbtn4:active{transform:scale(.95);filter:brightness(1.1)}
+/* imagen que cubre si se sube */
+.hbtn4 img.btn-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:13px;z-index:0}
+/* texto fallback */
+.hfb4{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;letter-spacing:1.5px;color:#fff;text-align:center;line-height:1.1;font-size:clamp(10px,2.8vw,15px)}
+.hico4{font-size:clamp(20px,5.5vw,32px);display:block;margin-bottom:2px;line-height:1}
+
+/* MODAL INSTALAR */
+#modalInstalar{display:none;position:fixed;inset:0;z-index:9860;background:rgba(0,0,0,0.88);align-items:flex-end;justify-content:center;padding:0}
+#modalInstalar.open{display:flex}
+.inst-box{background:#111;border-top:1px solid rgba(255,255,255,0.1);border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:20px 18px 32px;animation:slideUp .25s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.inst-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;margin-bottom:4px;text-align:center}
+.inst-sub{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.32);text-align:center;margin-bottom:18px}
+.inst-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.inst-step{display:flex;align-items:flex-start;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px}
+.inst-step-ico{font-size:26px;flex-shrink:0;line-height:1;margin-top:2px}
+.inst-step-body{}
+.inst-step-title{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:#fff;line-height:1;margin-bottom:4px}
+.inst-step-txt{font-family:'Barlow',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.6}
+.inst-step-txt strong{color:rgba(255,255,255,0.85)}
+.inst-tabs{display:flex;gap:8px;margin-bottom:14px}
+.inst-tab{flex:1;padding:9px 6px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.5px;color:rgba(255,255,255,0.4);cursor:pointer;transition:all .2s;text-align:center}
+.inst-tab.active{background:rgba(22,163,74,0.15);border-color:rgba(22,163,74,0.4);color:#4ade80}
+.inst-close{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.4);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.inst-close:hover{background:rgba(255,255,255,0.11);color:#fff}
+
+/* NOTICIAS */
+#noticias{background:#fff}
+.noticias-wrap{display:flex;flex-direction:column;gap:14px}
+.n-featured{border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);border:1.5px solid var(--borde)}
+.n-feat-img{height:230px;background-size:cover;background-position:center;background-color:var(--fondo)}
+.n-feat-body{padding:18px}
+.n-tag{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:4px;color:var(--rojo);margin-bottom:7px}
+.n-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5.5vw,34px);line-height:1;color:var(--texto);margin-bottom:8px;letter-spacing:1px}
+.n-text{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:9px}
+.n-fuente{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--rojo);margin-bottom:9px}
+.n-link-btn{display:inline-flex;align-items:center;gap:6px;background:var(--rojo);color:#fff;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:2px;padding:8px 16px;border-radius:8px;transition:all .2s}
+.n-link-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(204,10,10,0.4)}
+.n-mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.n-mini{border-radius:12px;overflow:hidden;border:1.5px solid var(--borde);box-shadow:var(--shadow);display:flex;flex-direction:column}
+.n-mini-img{height:114px;background-size:cover;background-position:center;background-color:var(--fondo)}
+.n-mini-body{padding:11px;flex:1;display:flex;flex-direction:column}
+.n-mini-tag{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:3px;color:var(--rojo);margin-bottom:4px}
+.n-mini-title{font-family:'Bebas Neue',sans-serif;font-size:17px;line-height:1.1;color:var(--texto);margin-bottom:4px}
+.n-mini-text{font-size:11px;color:var(--muted);line-height:1.65;flex:1}
+.n-mini-fuente{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--rojo);margin-top:5px;letter-spacing:1px}
+.n-mini-link{display:inline-flex;align-items:center;gap:4px;background:var(--rojo);color:#fff;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:10px;letter-spacing:2px;padding:6px 11px;border-radius:6px;margin-top:8px;align-self:flex-start;transition:all .2s}
+.n-mini-link:hover{box-shadow:0 3px 10px rgba(204,10,10,0.4)}
+
+/* CTA */
+.cta-sec{background:var(--rojo);padding:70px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 130%,rgba(0,0,0,0.25),transparent);pointer-events:none}
+.cta-in{max-width:460px;margin:0 auto;position:relative;z-index:1}
+.cta-in h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,8vw,68px);line-height:.95;color:#fff;margin-bottom:12px;letter-spacing:2px}
+.cta-in p{font-size:14px;color:rgba(255,255,255,0.8);max-width:360px;margin:0 auto 30px;line-height:1.75}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--rojo);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;letter-spacing:2px;padding:16px 38px;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,0.2);transition:all .2s}
+.cta-btn:hover{transform:translateY(-2px) scale(1.02)}
+
+/* FOOTER */
+footer{background:#0f172a;padding:32px 24px 24px;text-align:center}
+footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-family:'Barlow Condensed',sans-serif;line-height:2.4}
+
+/* EXTRA */
+.extra-sec{background:#0a0a0a;padding:28px 18px 38px}
+.extra-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+
+/* ══ DOBLE CONTADOR GRANDE (encima de estadísticas) ══ */
+.dual-cd{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 28px}
+.dcd-card{border-radius:18px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;overflow:hidden}
+.dcd-card.elec{background:linear-gradient(135deg,#0f172a,#1e293b);border:1.5px solid rgba(204,10,10,0.3)}
+.dcd-card.enc{background:linear-gradient(135deg,#0a1628,#102040);border:1.5px solid rgba(56,189,248,0.22)}
+.dcd-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(204,10,10,0.1),transparent 70%);pointer-events:none}
+.dcd-card.enc::before{background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(56,189,248,0.1),transparent 70%)}
+.dcd-ico{font-size:clamp(22px,6vw,30px);line-height:1;position:relative;z-index:1}
+.dcd-lbl{font-family:'Barlow Condensed',sans-serif;font-size:clamp(8px,2vw,9px);font-weight:800;letter-spacing:2.5px;color:rgba(255,255,255,0.38);text-transform:uppercase;line-height:1.3;position:relative;z-index:1}
+.dcd-boxes{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.dcd-box{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:5px 8px;min-width:40px;text-align:center}
+.dcd-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(20px,5.5vw,30px);color:#fff;line-height:1;display:block}
+.dcd-unit{font-size:7px;color:rgba(255,255,255,0.28);letter-spacing:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700}
+.dcd-done{font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,4vw,17px);color:#fff;letter-spacing:2px;padding:8px 0;position:relative;z-index:1}
+
+/* Botones nav */
+.nav-right{display:flex;align-items:center;gap:8px}
+.nav-share-btn{width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.13);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s;color:#fff;text-decoration:none;flex-shrink:0}
+.nav-share-btn:hover{background:rgba(255,255,255,0.15);transform:translateY(-1px)}
+.nav-fb-btn{width:38px;height:38px;border-radius:9px;background:#1877f2;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;text-decoration:none;transition:all .2s;flex-shrink:0}
+.nav-fb-btn:hover{background:#0d5fc4;transform:translateY(-1px)}
+
+/* MODAL COMPARTIR */
+#modalShare{display:none;position:fixed;inset:0;z-index:9850;background:rgba(0,0,0,0.82);align-items:center;justify-content:center;padding:20px}
+#modalShare.open{display:flex}
+.share-box{background:#141414;border:1px solid rgba(255,255,255,0.09);border-radius:20px;width:100%;max-width:340px;padding:24px;animation:popIn .18s ease}
+.share-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;margin-bottom:4px}
+.share-sub{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.32);margin-bottom:18px}
+.share-btn-row{display:flex;flex-direction:column;gap:10px}
+.share-btn{display:flex;align-items:center;gap:13px;border-radius:12px;padding:13px 16px;cursor:pointer;width:100%;transition:all .2s;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:2px;color:#fff;text-align:left;border:none}
+.share-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.share-ico{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.sbtn-fb{background:rgba(24,119,242,0.14);border:1.5px solid rgba(24,119,242,0.3)}
+.sbtn-fb .share-ico{background:#1877f2;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff}
+.sbtn-wa{background:rgba(37,211,102,0.1);border:1.5px solid rgba(37,211,102,0.28)}
+.sbtn-wa .share-ico{background:#25D366}
+.sbtn-cp{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1)}
+.sbtn-cp .share-ico{background:rgba(255,255,255,0.1)}
+.share-cancel{margin-top:12px;width:100%;background:transparent;border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:11px;color:rgba(255,255,255,0.3);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;transition:all .2s}
+.share-cancel:hover{border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.55)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ADMIN */
+.adm-tab{padding:11px 4px;background:transparent;border:none;border-bottom:2px solid transparent;color:rgba(255,255,255,0.35);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1.5px;cursor:pointer;transition:all .2s;flex:1}
+.adm-tab.active{color:#fff;border-bottom-color:#cc0a0a}
+.adm-input{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:7px;padding:8px 11px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;outline:none;box-sizing:border-box}
+.adm-input::placeholder{color:rgba(255,255,255,0.3)}
+.adm-textarea{width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:7px;padding:8px 11px;color:#fff;font-family:'Barlow',sans-serif;font-size:12px;outline:none;resize:vertical;box-sizing:border-box}
+.adm-textarea::placeholder{color:rgba(255,255,255,0.3)}
+.adm-select{width:100%;background:#1e293b;border:1px solid rgba(255,255,255,0.12);border-radius:7px;padding:8px 10px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:12px;outline:none;box-sizing:border-box}
+.adm-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:7px}
+.adm-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.35)}
+.adm-save-btn{width:100%;border:none;border-radius:10px;padding:13px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;margin-top:4px;transition:all .2s}
+
+/* Supabase config en admin */
+.sb-config-box{background:rgba(21,128,61,0.08);border:1.5px solid rgba(74,222,128,0.2);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:9px}
+.sb-config-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#4ade80}
+.sb-connected{display:none;text-align:center;padding:8px;background:rgba(74,222,128,0.1);border-radius:8px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" id="navLogoBtn">
+    <div class="nav-logo-box" id="navLogoBox">🏙️</div>
+    <div class="nav-brand">
+      <span class="nav-brand-enc">ENCUESTA</span>
+      <span class="nav-brand-sil">Silao</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="nav-share-btn" onclick="abrirShare()" title="Compartir">🔗</button>
+    <a class="nav-fb-btn" href="https://www.facebook.com/Encuestasilao?mibextid=wwXIfr&rdid=BasEyKwIVwlI834Y" target="_blank" title="Facebook">f</a>
+    <a href="#encuesta" class="nav-cta" onclick="playClick('vote')">VER RESULTADOS</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="brand-block">
+    <div class="live-pill"><span class="live-dot"></span>EN VIVO · TIEMPO REAL</div>
+    <span class="brand-enc-label">ENCUESTA</span>
+    <span class="brand-main">SILAO</span>
+    <span class="brand-script">La Voz Ciudadana</span>
+  </div>
+
+  <div class="clock-block">
+    <div class="clock-time" id="heroClock">00:00:00 AM</div>
+    <div class="clock-date" id="heroDate">—</div>
+  </div>
+
+  <div class="stats-bar" style="position:relative">
+    <div class="sb"><div class="sb-n" id="statVisitas">—</div><div class="sb-l">VISITAS</div></div>
+    <div class="sb"><div class="sb-n" id="statVotos">—</div><div class="sb-l">VOTOS TOTALES</div></div>
+    <div class="sb"><div class="sb-n" id="statFuente">📡</div><div class="sb-l" id="statFuenteLbl">FUENTE</div></div>
+    <div id="sbStatusBadge" class="sb-status loading">CONECTANDO...</div>
+  </div>
+
+  <div class="carrusel-wrap">
+    <div id="heroBanner" class="carrusel-inner"></div>
+  </div>
+
+  <div class="btns-hero">
+    <!-- 4 botones cuadrados iguales — tipo carrusel -->
+    <div class="hero-4grid">
+      <a href="https://silao360.com.mx" target="_blank" onclick="snd('vote')" class="hbtn4" id="btnEnc" style="background:linear-gradient(135deg,#7c0a0a,#cc0a0a);box-shadow:0 6px 24px rgba(204,10,10,0.5)">
+        <div class="hfb4" id="btnEncFb"><span class="hico4">🗳️</span>PARTICIPA</div>
+      </a>
+      <a href="https://trivia.silao360.com.mx" target="_blank" onclick="snd('fun')" class="hbtn4" id="btnTrivia" style="background:linear-gradient(135deg,#3b0764,#7c3aed);box-shadow:0 6px 24px rgba(109,40,217,0.45)">
+        <div class="hfb4" id="btnTriviaFb"><span class="hico4">🧠</span>TRIVIA</div>
+      </a>
+      <a href="https://pesoapeso.silao360.com.mx" target="_blank" onclick="snd('fun')" class="hbtn4" id="btnPeso" style="background:linear-gradient(135deg,#831843,#db2777);box-shadow:0 6px 24px rgba(219,39,119,0.45)">
+        <div class="hfb4" id="btnPesoFb"><span class="hico4">⚖️</span>PESO A PESO</div>
+      </a>
+      <button onclick="snd('install');abrirInstalar()" class="hbtn4" id="btnInstalar" style="background:linear-gradient(135deg,#0f4c2a,#16a34a);box-shadow:0 6px 24px rgba(22,163,74,0.45);border:none;cursor:pointer">
+        <div class="hfb4"><span class="hico4">📲</span>INSTALAR</div>
+      </button>
+    </div>
+  </div>
+
+  <div class="cd-wrap">
+    <div class="cd-lbl">⏳ PRÓXIMAS ELECCIONES MUNICIPALES</div>
+    <div class="cd-boxes" id="heroCD"></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══ DOS CONTADORES GRANDES ══ -->
+<section style="background:#0a0a0a;padding:32px 16px 28px">
+  <div style="max-width:760px;margin:0 auto">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:5px;color:rgba(255,255,255,0.25);text-align:center;margin-bottom:16px">⏱ CONTADORES EN TIEMPO REAL</div>
+    <div class="dual-cd">
+      <!-- Contador 1: Elecciones -->
+      <div class="dcd-card elec">
+        <div class="dcd-ico">🗳️</div>
+        <div class="dcd-lbl" id="cdElecLbl">PRÓXIMAS ELECCIONES<br>MUNICIPALES</div>
+        <div class="dcd-boxes" id="cdElec"><div class="dcd-done">—</div></div>
+      </div>
+      <!-- Contador 2: Cierre encuesta -->
+      <div class="dcd-card enc">
+        <div class="dcd-ico">📋</div>
+        <div class="dcd-lbl" id="cdEncLbl">CIERRE DE LA<br>ENCUESTA SIN ROSTRO</div>
+        <div class="dcd-boxes" id="cdEnc"><div class="dcd-done">—</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══ AVISO CIERRE ENCUESTA LED ══ -->
+<div style="background:#0a0a1a;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)">
+  <div id="avisoCierre" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,3.5vw,18px);letter-spacing:3px;color:#fff;text-align:center;min-height:1.4em;word-break:break-word"></div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ══ ENCUESTA ══ -->
+<section id="encuesta">
+  <div class="sec reveal">
+
+    <!-- LED PREGUNTA BOX -->
+    <div id="ledPreguntaWrap" style="position:relative;margin-bottom:22px">
+      <canvas id="ledDotsCanvas" style="position:absolute;inset:0;width:100%;height:100%;border-radius:14px;pointer-events:none;z-index:0"></canvas>
+      <div id="ledPreguntaBox" style="position:relative;z-index:1;background:#0a0a1a;border-radius:12px;padding:22px 20px;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+        <div id="ledPreguntaText" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,5vw,28px);letter-spacing:3px;color:#fff;line-height:1.2;min-height:1.4em;word-break:break-word"></div>
+      </div>
+      <div style="margin-top:8px;position:relative;z-index:2;display:flex;align-items:center;gap:6px">
+        <input id="ledPreguntaInput" maxlength="80" class="adm-input" placeholder="Escribe aquí la pregunta (máx 80 caracteres)" style="background:#0a0a1a;border:1px solid rgba(255,255,255,0.18);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:9px 12px;border-radius:8px;flex:1" oninput="actualizarContadorLed(this)">
+        <span id="ledContador" style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,0.35);white-space:nowrap;background:#0a0a1a;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 9px">0/80</span>
+      </div>
+    </div>
+
+    <div class="sec-label">📊 RESULTADOS EN TIEMPO REAL</div>
+    <h2 class="sec-title">¿Por quién<br>votarías hoy?</h2>
+    <p style="font-size:17px;color:#111;font-weight:600;margin-bottom:7px;line-height:1.6">Resultados actualizados en tiempo real · Estadísticas detalladas.</p>
+    <p style="font-size:19px;color:#000;font-weight:700;margin-bottom:22px;letter-spacing:1px">Encuesta independiente · Sin registro · <span id="fechaEnc"></span></p>
+    <div class="poll-wrap" id="pollWrap"></div>
+    <div class="vote-total" id="voteTotal" style="display:none"></div>
+    <p class="poll-note">ENCUESTA CIUDADANA INDEPENDIENTE · NO OFICIAL · ENCUESTA SILAO</p>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══ CANDIDATOS ══ -->
+<section id="candidatos">
+  <div class="sec reveal">
+    <div class="sec-label">👤 CANDIDATOS 2025</div>
+    <h2 class="sec-title">Conoce a los<br>candidatos.</h2>
+    <p class="sec-sub">Perfiles editables desde administración: foto, bio, redes, teléfono y más.</p>
+    <div class="cand-grid" id="candGrid"></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══ NOTICIAS ══ -->
+<section id="noticias">
+  <div class="sec reveal">
+    <div class="sec-label">📰 NOTICIAS LOCALES</div>
+    <h2 class="sec-title">Lo que pasa<br>en Silao.</h2>
+    <p class="sec-sub">Publicadas desde administración. Hasta 6 noticias con foto, fuente y enlace.</p>
+    <div id="noticiasGrid" class="noticias-wrap"></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ══ CTA ══ -->
+<section class="cta-sec">
+  <div class="cta-in reveal">
+    <h2>¿Listo para<br>participar?</h2>
+    <p>Encuesta Silao es de los ciudadanos, para los ciudadanos. Anónimo, gratuito y en tiempo real.</p>
+    <a href="https://silao360.com.mx" target="_blank" class="cta-btn" onclick="playClick('vote')"><span style="font-size:18px">🗳️</span> PARTICIPAR AHORA</a>
+  </div>
+</section>
+
+<!-- ══ EXTRA (admin oculto — 5 toques al logo) ══ -->
+<section class="extra-sec">
+  <div class="extra-inner" style="text-align:center">
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.07)">ENCUESTA SILAO · V21</p>
+  </div>
+</section>
+
+<footer>
+  <p>ENCUESTA SILAO · LA VOZ CIUDADANA<br>ENCUESTA INDEPENDIENTE · SIN FINES ELECTORALES · NO OFICIAL<br><span id="ftYear"></span></p>
+</footer>
+
+<!-- ══ MODAL ESTADÍSTICA ══ -->
+<div id="modalStatInfo" onclick="if(event.target===this)cerrarStatInfo()">
+  <div class="statinfo-box">
+    <div class="statinfo-head">
+      <div class="statinfo-sym" id="siSym">%</div>
+      <div class="statinfo-name" id="siName">PORCENTAJE</div>
+    </div>
+    <div class="statinfo-body">
+      <span class="statinfo-val" id="siVal">—</span>
+      <div class="statinfo-text" id="siText">Explicación de esta estadística.</div>
+    </div>
+    <button class="statinfo-close" onclick="cerrarStatInfo()">CERRAR ✕</button>
+  </div>
+</div>
+
+<!-- ══ MODAL INSTALAR ══ -->
+<div id="modalInstalar" onclick="if(event.target===this)cerrarInstalar()">
+  <div class="inst-box">
+    <div class="inst-title">📲 INSTALAR APP</div>
+    <div class="inst-sub">ENCUESTA SILAO · ACCESO RÁPIDO EN TU PANTALLA</div>
+    <div class="inst-tabs">
+      <button class="inst-tab active" onclick="instTab('ios')">🍎 iPhone / iPad</button>
+      <button class="inst-tab" onclick="instTab('android')">🤖 Android</button>
+      <button class="inst-tab" onclick="instTab('pc')">💻 Computadora</button>
+    </div>
+    <!-- iOS -->
+    <div id="instIos" class="inst-steps">
+      <div class="inst-step">
+        <div class="inst-step-ico">🧭</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 1 · ABRE EN SAFARI</div>
+          <div class="inst-step-txt">Debe ser el navegador <strong>Safari</strong> (el de la brújula). No funciona desde Chrome ni Firefox en iPhone.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">⬆️</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 2 · BOTÓN COMPARTIR</div>
+          <div class="inst-step-txt">Toca el botón de <strong>cuadrito con flecha hacia arriba</strong> que está abajo en el centro de Safari.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">➕</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 3 · "AÑADIR A PANTALLA DE INICIO"</div>
+          <div class="inst-step-txt">Desliza hacia abajo en el menú y toca <strong>"Añadir a pantalla de inicio"</strong>. Ponle el nombre que quieras y toca <strong>Añadir</strong>.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">🏠</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">¡LISTO!</div>
+          <div class="inst-step-txt">Aparecerá un ícono de Encuesta Silao en tu pantalla de inicio. Ábrelo como si fuera una app normal.</div>
+        </div>
+      </div>
+    </div>
+    <!-- Android -->
+    <div id="instAndroid" class="inst-steps" style="display:none">
+      <div class="inst-step">
+        <div class="inst-step-ico">🌐</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 1 · ABRE EN CHROME</div>
+          <div class="inst-step-txt">Abre esta página desde <strong>Google Chrome</strong> en tu celular Android.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">⋮</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 2 · MENÚ DE 3 PUNTOS</div>
+          <div class="inst-step-txt">Toca los <strong>tres puntos</strong> (⋮) en la esquina superior derecha de Chrome.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">➕</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 3 · "AÑADIR A PANTALLA DE INICIO"</div>
+          <div class="inst-step-txt">Toca <strong>"Añadir a pantalla de inicio"</strong> o <strong>"Instalar aplicación"</strong> si aparece el banner automático.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">🏠</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">¡LISTO!</div>
+          <div class="inst-step-txt">Tendrás el ícono de Encuesta Silao directo en tu pantalla. Sin descargar nada de la tienda.</div>
+        </div>
+      </div>
+    </div>
+    <!-- PC -->
+    <div id="instPc" class="inst-steps" style="display:none">
+      <div class="inst-step">
+        <div class="inst-step-ico">🌐</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 1 · ABRE EN CHROME O EDGE</div>
+          <div class="inst-step-txt">Abre esta página desde <strong>Google Chrome</strong> o <strong>Microsoft Edge</strong> en tu computadora.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">💻</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 2 · ÍCONO EN LA BARRA</div>
+          <div class="inst-step-txt">Busca el ícono de <strong>instalar</strong> (pantalla con flecha ↓) en la barra de dirección, a la derecha. Haz clic en él.</div>
+        </div>
+      </div>
+      <div class="inst-step">
+        <div class="inst-step-ico">✅</div>
+        <div class="inst-step-body">
+          <div class="inst-step-title">PASO 3 · CONFIRMAR</div>
+          <div class="inst-step-txt">Haz clic en <strong>"Instalar"</strong>. Aparecerá como una app de escritorio separada, sin barras del navegador.</div>
+        </div>
+      </div>
+    </div>
+    <button class="inst-close" onclick="cerrarInstalar()">ENTENDIDO · CERRAR</button>
+  </div>
+</div>
+
+<!-- ══ MODAL COMPARTIR ══ -->
+<div id="modalShare" onclick="if(event.target===this)cerrarShare()">
+  <div class="share-box">
+    <div class="share-title">COMPARTIR</div>
+    <div class="share-sub">ENCUESTA SILAO · LA VOZ CIUDADANA</div>
+    <div class="share-btn-row">
+      <button class="share-btn sbtn-fb" onclick="shareToFacebook()">
+        <div class="share-ico">f</div><span>COMPARTIR EN FACEBOOK</span>
+      </button>
+      <button class="share-btn sbtn-wa" onclick="shareToWhatsapp()">
+        <div class="share-ico">📱</div><span>ENVIAR POR WHATSAPP</span>
+      </button>
+      <button class="share-btn sbtn-cp" onclick="copiarEnlace()">
+        <div class="share-ico">🔗</div><span id="sbCopiarTxt">COPIAR ENLACE</span>
+      </button>
+    </div>
+    <button class="share-cancel" onclick="cerrarShare()">CANCELAR</button>
+  </div>
+</div>
+
+<!-- ══ MODAL ADMIN ══ -->
+<div id="adminModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:flex-start;justify-content:center;padding:12px;overflow-y:auto">
+  <div style="background:#0f172a;border:1px solid rgba(255,255,255,0.09);border-radius:20px;width:100%;max-width:470px;overflow:hidden;margin:auto">
+
+    <!-- LOGIN -->
+    <div id="adminLogin" style="padding:32px 24px">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:36px;margin-bottom:8px">🔐</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:#fff">PANEL 101</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.28);margin-top:4px">ENCUESTA SILAO · ADMINISTRACIÓN</div>
+      </div>
+      <input id="adminPass" type="password" placeholder="Contraseña" class="adm-input" style="margin-bottom:10px;font-size:16px;letter-spacing:3px;padding:14px 16px" onkeydown="if(event.key==='Enter')verificarAdmin()">
+      <div id="adminErr" style="display:none;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-align:center;margin-bottom:10px;padding:8px;background:rgba(248,113,113,0.1);border-radius:8px">⚠️ CONTRASEÑA INCORRECTA</div>
+      <button onclick="verificarAdmin()" style="width:100%;background:linear-gradient(135deg,#cc0a0a,#ff3333);border:none;border-radius:12px;padding:15px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;cursor:pointer">ENTRAR AL PANEL</button>
+      <button onclick="cerrarAdmin()" style="width:100%;background:transparent;border:none;color:rgba(255,255,255,0.18);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:10px;padding:7px">CANCELAR</button>
+    </div>
+
+    <!-- PANEL -->
+    <div id="adminPanel" style="display:none">
+      <div style="background:linear-gradient(135deg,#cc0a0a,#7c0a0a);padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:3px;color:#fff">PANEL 101</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5)">ENCUESTA SILAO</div>
+        </div>
+        <button onclick="cerrarAdmin()" style="background:rgba(255,255,255,0.15);border:none;border-radius:8px;padding:7px 13px;color:#fff;cursor:pointer;font-size:16px">✕</button>
+      </div>
+
+      <!-- TABS -->
+      <div style="display:flex;background:#1e293b;border-bottom:1px solid rgba(255,255,255,0.07);overflow-x:auto">
+        <button onclick="adminTab('supabase')" id="tab-supabase" class="adm-tab active">📡 SUPABASE</button>
+        <button onclick="adminTab('fechas')" id="tab-fechas" class="adm-tab">📅 FECHAS</button>
+        <button onclick="adminTab('cands')" id="tab-cands" class="adm-tab">👤 CANDS</button>
+        <button onclick="adminTab('votos')" id="tab-votos" class="adm-tab">📊 VOTOS</button>
+        <button onclick="adminTab('banner')" id="tab-banner" class="adm-tab">🎠 BANNER</button>
+        <button onclick="adminTab('noticias')" id="tab-noticias" class="adm-tab">📰 NOTICIAS</button>
+        <button onclick="adminTab('ajustes')" id="tab-ajustes" class="adm-tab">⚙️ AJUSTES</button>
+      </div>
+
+      <!-- TAB SUPABASE -->
+      <div id="panel-supabase" style="padding:16px;display:flex;flex-direction:column;gap:11px;max-height:60vh;overflow-y:auto">
+        <div class="sb-config-box">
+          <div class="sb-config-title">🟢 CONEXIÓN SUPABASE</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:1px;line-height:1.6">
+            Pega aquí tu URL y tu KEY de Supabase.<br>
+            Las encuentras en: <strong style="color:rgba(255,255,255,0.7)">Supabase → Settings → API</strong><br>
+            Los datos se guardan en tu dispositivo (localStorage).
+          </div>
+          <div class="adm-label">PROJECT URL</div>
+          <input id="sbUrl" class="adm-input" placeholder="https://xxxxxxxxxxxx.supabase.co" style="font-size:11px">
+          <div class="adm-label">ANON / PUBLIC KEY</div>
+          <input id="sbKey" class="adm-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="font-size:10px">
+          <div class="adm-label">NOMBRE DE TU TABLA</div>
+          <input id="sbTable" class="adm-input" placeholder="votos" value="votos" style="font-size:12px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);line-height:1.7">
+            Tu tabla necesita estas columnas:<br>
+            <strong style="color:rgba(255,255,255,0.55)">partido</strong> (text) · <strong style="color:rgba(255,255,255,0.55)">votos</strong> (integer)
+          </div>
+          <button onclick="guardarYConectarSupabase()" class="adm-save-btn" style="background:linear-gradient(135deg,#065f46,#059669)">🔌 CONECTAR Y GUARDAR</button>
+          <div id="sbTestResult" style="display:none;text-align:center;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px"></div>
+        </div>
+
+        <div class="adm-row">
+          <div class="adm-label">📋 INSTRUCCIONES — CREAR TABLA EN SUPABASE</div>
+          <div style="font-family:'Barlow',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.75">
+            1. Ve a <strong style="color:#fff">supabase.com</strong> → tu proyecto<br>
+            2. Clic en <strong style="color:#fff">Table Editor → New Table</strong><br>
+            3. Nombre: <strong style="color:#4ade80">votos</strong><br>
+            4. Agrega columna: <strong style="color:#4ade80">partido</strong> (type: text)<br>
+            5. Agrega columna: <strong style="color:#4ade80">votos</strong> (type: int4, default: 0)<br>
+            6. Guarda y ve a <strong style="color:#fff">Settings → API</strong> para copiar URL y Key<br>
+            7. Regresa aquí y pégalos arriba ☝️<br><br>
+            <strong style="color:#fbbf24">Importante:</strong> En Authentication → Policies, habilita lectura anónima (anon SELECT) para la tabla.
+          </div>
+        </div>
+
+        <div class="adm-row">
+          <div class="adm-label">🔄 MODO ACTUAL</div>
+          <div id="modoActualTxt" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.6)">Cargando...</div>
+        </div>
+      </div>
+
+      <!-- TAB FECHAS -->
+      <div id="panel-fechas" style="padding:16px;display:none;flex-direction:column;gap:12px;max-height:60vh;overflow-y:auto">
+
+        <div class="adm-row">
+          <div class="adm-label" style="font-size:12px;letter-spacing:2px;color:#fff;margin-bottom:4px">🗳️ FECHA — PRÓXIMAS ELECCIONES</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:6px">
+            Esta fecha aparece en el contador grande de la izquierda.<br>Formato: YYYY-MM-DD (ej. 2025-06-01)
+          </div>
+          <div class="adm-label">FECHA DE ELECCIONES</div>
+          <input id="fechaElec" class="adm-input" type="date" value="2025-06-01" style="font-size:14px;padding:10px 12px">
+          <div class="adm-label">ETIQUETA (texto que aparece en el contador)</div>
+          <input id="labelElec" class="adm-input" value="PRÓXIMAS ELECCIONES MUNICIPALES" placeholder="PRÓXIMAS ELECCIONES MUNICIPALES">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.28)">Cuando llegue la fecha aparece: 🗳️ DÍA DE ELECCIONES</div>
+        </div>
+
+        <div class="adm-row">
+          <div class="adm-label" style="font-size:12px;letter-spacing:2px;color:#fff;margin-bottom:4px">📋 FECHA — CIERRE ENCUESTA SIN ROSTRO</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:6px">
+            Esta fecha aparece en el contador de la derecha.<br>Marca cuándo termina la primera etapa de la encuesta.
+          </div>
+          <div class="adm-label">FECHA DE CIERRE</div>
+          <input id="fechaEncierre" class="adm-input" type="date" style="font-size:14px;padding:10px 12px">
+          <div class="adm-label">ETIQUETA (texto que aparece)</div>
+          <input id="labelEnc" class="adm-input" value="CIERRE DE LA ENCUESTA SIN ROSTRO" placeholder="CIERRE DE LA ENCUESTA SIN ROSTRO">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.28)">Cuando llegue la fecha aparece: ✅ ENCUESTA CERRADA</div>
+        </div>
+
+        <button onclick="guardarFechas()" class="adm-save-btn" style="background:linear-gradient(135deg,#1a3a8f,#2563eb)">💾 GUARDAR FECHAS Y ETIQUETAS</button>
+        <div id="fechasMsg" style="display:none;text-align:center;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ GUARDADO</div>
+      </div>
+
+      <!-- TAB CANDS -->
+      <div id="panel-cands" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="adm-label">CANDIDATOS</div>
+          <button onclick="agregarCandidato()" style="background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.28);border-radius:8px;padding:7px 13px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">➕ AGREGAR</button>
+        </div>
+        <div id="candEditorWrap" style="display:flex;flex-direction:column;gap:9px"></div>
+        <button onclick="adminGuardarCands()" class="adm-save-btn" style="background:linear-gradient(135deg,#15803d,#22c55e)">💾 GUARDAR CANDIDATOS</button>
+      </div>
+
+      <!-- TAB VOTOS -->
+      <div id="panel-votos" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
+        <div class="adm-label">RESULTADOS DESDE SUPABASE</div>
+        <div id="votosTable" style="display:flex;flex-direction:column;gap:6px"></div>
+        <button onclick="adminRefreshVotos()" style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);border-radius:9px;padding:11px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;margin-top:6px">🔄 ACTUALIZAR DESDE SUPABASE</button>
+        <div id="votosMsg" style="display:none;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;padding:10px;background:rgba(74,222,128,0.1);border-radius:8px"></div>
+      </div>
+
+      <!-- TAB BANNER -->
+      <div id="panel-banner" style="padding:16px;display:none;flex-direction:column;gap:9px">
+        <div class="adm-label">🎴 10 BANNERS · LOGO · CANDIDATO · TEXTO</div>
+        <div id="bannerEditorWrap" style="display:flex;flex-direction:column;gap:8px;max-height:50vh;overflow-y:auto"></div>
+        <input type="file" id="bannerLogoInput" accept="image/*" style="display:none" onchange="procesarBannerLogo(event)">
+        <button onclick="adminGuardarBanner()" class="adm-save-btn" style="background:linear-gradient(135deg,#cc0a0a,#ff3333)">💾 GUARDAR BANNERS</button>
+      </div>
+
+      <!-- TAB NOTICIAS -->
+      <div id="panel-noticias" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
+        <div class="adm-label">📰 NOTICIAS · MÁX. 6</div>
+        <div id="noticiasEditor" style="display:flex;flex-direction:column;gap:9px"></div>
+      </div>
+
+      <!-- TAB AJUSTES -->
+      <div id="panel-ajustes" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:58vh;overflow-y:auto">
+        <div class="adm-label">⚙️ IMÁGENES Y LOGO</div>
+        <div class="adm-row">
+          <div class="adm-label">🖼️ LOGO NAV</div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <div id="navLogoPrev" style="width:44px;height:44px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🏙️</div>
+            <button onclick="document.getElementById('navLogoFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR LOGO</button>
+          </div>
+          <input type="file" id="navLogoFile" accept="image/*" style="display:none" onchange="procesarNavLogo(event)">
+        </div>
+        <div class="adm-row">
+          <div class="adm-label">🗳️ IMAGEN BOTÓN ENCUESTA</div>
+          <button onclick="document.getElementById('encImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+          <input type="file" id="encImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEnc','btnEncFb')">
+        </div>
+        <div class="adm-row">
+          <div class="adm-label">🧠 IMAGEN TRIVIA</div>
+          <button onclick="document.getElementById('triviaImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN TRIVIA</button>
+          <input type="file" id="triviaImgFile" accept="image/*" style="display:none" onchange="procesarTriviaImg(event)">
+        </div>
+        <div class="adm-row">
+          <div class="adm-label">⚖️ IMAGEN PESO A PESO</div>
+          <button onclick="document.getElementById('pesoImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN PESO A PESO</button>
+          <input type="file" id="pesoImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnPeso','btnPesoFb')">
+        </div>
+        <button onclick="adminGuardarAjustes()" class="adm-save-btn" style="background:linear-gradient(135deg,#1a3a8f,#2563eb)">💾 GUARDAR AJUSTES</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   CONFIGURACIÓN SUPABASE
+   Puedes editar aquí directamente o desde
+   el Panel Admin → pestaña SUPABASE
+══════════════════════════════════════════ */
+var SB = {
+  url:   localStorage.getItem('sb_url')   || '',
+  key:   localStorage.getItem('sb_key')   || '',
+  table: localStorage.getItem('sb_table') || 'votos',
+  get activo(){ return !!(this.url && this.key); }
+};
+
+/* ── SONIDOS ── */
+function snd(t){
+  try{
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    var o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    if(t==='vote'){o.type='sine';o.frequency.value=880;g.gain.setValueAtTime(.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.18);}
+    else if(t==='fun'){
+      /* acorde divertido */
+      [523,659,784].forEach(function(f,i){
+        var o2=ctx.createOscillator(),g2=ctx.createGain();
+        o2.connect(g2);g2.connect(ctx.destination);
+        o2.type='triangle';o2.frequency.value=f;
+        g2.gain.setValueAtTime(.08,ctx.currentTime+i*.06);
+        g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.06+.15);
+        o2.start(ctx.currentTime+i*.06);o2.stop(ctx.currentTime+i*.06+.15);
+      });return;
+    }else if(t==='install'){
+      /* subida positiva */
+      [440,554,659,880].forEach(function(f,i){
+        var o2=ctx.createOscillator(),g2=ctx.createGain();
+        o2.connect(g2);g2.connect(ctx.destination);
+        o2.frequency.value=f;g2.gain.setValueAtTime(.1,ctx.currentTime+i*.07);
+        g2.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+i*.07+.12);
+        o2.start(ctx.currentTime+i*.07);o2.stop(ctx.currentTime+i*.07+.12);
+      });return;
+    }else{o.frequency.value=440;g.gain.setValueAtTime(.1,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.1);}
+    o.start();o.stop(ctx.currentTime+.18);
+  }catch(e){}
+}
+function playClick(t){snd(t==='vote'?'vote':'fun');}
+
+/* ── DATOS BASE ── */
+var PARTIDOS=[
+  {id:'PAN',    color:'#003f8a',nombre:'CANDIDATO / A',partido:'PAN',    ideologia:'ACCIÓN NACIONAL'},
+  {id:'MORENA', color:'#8B1A1A',nombre:'CANDIDATO / A',partido:'MORENA', ideologia:'MORENA'},
+  {id:'MC',     color:'#F47920',nombre:'CANDIDATO / A',partido:'MC',     ideologia:'MOVIMIENTO CIUDADANO'},
+  {id:'PRI',    color:'#006847',nombre:'CANDIDATO / A',partido:'PRI',    ideologia:'REVOLUCIONARIO INSTITUCIONAL'},
+  {id:'SOMOSMX',color:'#1a237e',nombre:'CANDIDATO / A',partido:'SOMOS MX',ideologia:'SOMOS MÉXICO'},
+  {id:'SOMBRERO',color:'#C2185B',nombre:'CANDIDATO / A',partido:'SOMBRERO',ideologia:'SOMBRERO POPULAR'},
+  {id:'PVEM',   color:'#16a34a',nombre:'CANDIDATO / A',partido:'PVEM',   ideologia:'PARTIDO VERDE'},
+  {id:'PT',     color:'#dc2626',nombre:'CANDIDATO / A',partido:'PT',     ideologia:'PARTIDO DEL TRABAJO'},
+  {id:'INDEPENDIENTE',color:'#7c3aed',nombre:'CANDIDATO / A',partido:'INDEPENDIENTE',ideologia:'CANDIDATURA INDEPENDIENTE'},
+  {id:'NODECIDO',color:'#0891b2',nombre:'ESCUCHO PROPUESTAS',partido:'NO DECIDIDO',ideologia:'CIUDADANO INFORMADO'},
+];
+
+var SLIDES_DEF=[
+  {bg:'linear-gradient(135deg,#003f8a,#1a5fd4)',tag:'🔵 PAN',txt:'ESPACIO CANDIDATO 1',candidato:'',sub:'Partido Acción Nacional',logo:''},
+  {bg:'linear-gradient(135deg,#8B1A1A,#cc2222)',tag:'🟤 MORENA',txt:'ESPACIO CANDIDATO 2',candidato:'',sub:'Morena',logo:''},
+  {bg:'linear-gradient(135deg,#F47920,#ffad3a)',tag:'🟠 MC',txt:'ESPACIO CANDIDATO 3',candidato:'',sub:'Movimiento Ciudadano',logo:''},
+  {bg:'linear-gradient(135deg,#006847,#22a66e)',tag:'🟢 PRI',txt:'ESPACIO CANDIDATO 4',candidato:'',sub:'PRI',logo:''},
+  {bg:'linear-gradient(135deg,#1a237e,#2563eb)',tag:'🔵 SOMOS MX',txt:'ESPACIO CANDIDATO 5',candidato:'',sub:'Somos México',logo:''},
+  {bg:'linear-gradient(135deg,#C2185B,#f06292)',tag:'🩷 SOMBRERO',txt:'ESPACIO CANDIDATO 6',candidato:'',sub:'Sombrero Popular',logo:''},
+  {bg:'linear-gradient(135deg,#16a34a,#4ade80)',tag:'🌿 PVEM',txt:'ESPACIO CANDIDATO 7',candidato:'',sub:'Partido Verde',logo:''},
+  {bg:'linear-gradient(135deg,#dc2626,#f87171)',tag:'🔴 PT',txt:'ESPACIO CANDIDATO 8',candidato:'',sub:'Partido del Trabajo',logo:''},
+  {bg:'linear-gradient(135deg,#7c3aed,#a78bfa)',tag:'🟣 INDEPENDIENTE',txt:'ESPACIO CANDIDATO 9',candidato:'',sub:'Candidatura Independiente',logo:''},
+  {bg:'linear-gradient(135deg,#0f172a,#334155)',tag:'⚫ GENERAL',txt:'ESPACIO BANNER 10',candidato:'',sub:'Información general',logo:''},
+];
+
+var DEFAULT_NEWS=[
+  {id:1,titulo:'Socavón genera caos vial en carretera federal',texto:'Continúan trabajos de reparación mientras ciudadanos reportan tráfico intenso y demoras en accesos al municipio.',img:'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800',tag:'LOCAL · INFRAESTRUCTURA',fuente:'El Correo Guanajuato',link:''},
+  {id:2,titulo:'Participación ciudadana en Encuesta Silao supera expectativas',texto:'Miles de silaoenses han participado en la plataforma digital, expresando su preferencia electoral de forma anónima.',img:'https://images.unsplash.com/photo-1508615070457-7baeba4003ab?q=80&w=800',tag:'POLÍTICA · ENCUESTA',fuente:'Encuesta Silao',link:''},
+];
+
+/* ── ESTADÍSTICAS — textos explicativos ── */
+var STAT_INFO={
+  '%':{name:'PORCENTAJE',     text:'De cada 100 votos registrados, este candidato recibió este número. Por ejemplo: 35% = 35 de cada 100 personas lo eligieron. Es el indicador más directo de preferencia.'},
+  'μ':{name:'PROMEDIO',       text:'Si los votos se repartieran de forma perfectamente igual entre todos los candidatos, cada uno tendría este número. Sirve para comparar si alguien está arriba o abajo de lo esperado.'},
+  'σ':{name:'DISPERSIÓN',     text:'Qué tan concentrado está el voto. Número alto significa que un candidato domina y los demás tienen pocos votos. Número bajo significa que los votos están muy repartidos.'},
+  '±':{name:'MARGEN DE ERROR',text:'El resultado real podría variar este porcentaje hacia arriba o abajo. Con más participantes, el margen de error baja y el resultado es más preciso y confiable.'},
+  'n':{name:'TOTAL DE VOTOS', text:'Cuántas personas han participado en la encuesta. Entre más votos haya, los porcentajes son más representativos y confiables de la opinión ciudadana.'},
+  '▲':{name:'TENDENCIA: SUBE',text:'Este candidato está recibiendo más preferencia que antes. Su porcentaje está creciendo.'},
+  '▼':{name:'TENDENCIA: BAJA',text:'Este candidato está perdiendo preferencia. Su porcentaje está bajando con el tiempo.'},
+  '—':{name:'TENDENCIA: ESTABLE',text:'El resultado se mantiene sin cambios significativos. La preferencia es consistente.'}
+};
+
+function abrirStatInfo(sym,val,e){
+  if(e)e.stopPropagation();
+  var info=STAT_INFO[sym]||{name:sym,text:'Estadística de la encuesta.'};
+  document.getElementById('siSym').textContent=sym;
+  document.getElementById('siName').textContent=info.name;
+  document.getElementById('siVal').textContent=val;
+  document.getElementById('siText').textContent=info.text;
+  document.getElementById('modalStatInfo').classList.add('open');
+}
+function cerrarStatInfo(){document.getElementById('modalStatInfo').classList.remove('open');}
+
+/* ── RELOJ 12H ── */
+(function(){
+  var D=['DOMINGO','LUNES','MARTES','MIÉRCOLES','JUEVES','VIERNES','SÁBADO'];
+  var M=['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+  function tick(){
+    var n=new Date();
+    var raw=n.getHours(),ampm=raw>=12?'PM':'AM',h=raw%12||12;
+    var t=pad(h)+':'+pad(n.getMinutes())+':'+pad(n.getSeconds())+' '+ampm;
+    var cl=document.getElementById('heroClock');
+    var dt=document.getElementById('heroDate');
+    if(cl)cl.textContent=t;
+    if(dt)dt.textContent=D[n.getDay()]+' '+n.getDate()+' DE '+M[n.getMonth()]+' DE '+n.getFullYear();
+  }
+  function pad(v){return String(v).padStart(2,'0');}
+  tick();setInterval(tick,1000);
+})();
+
+/* ── FOOTER AÑO ── */
+var ftEl=document.getElementById('ftYear');
+if(ftEl)ftEl.textContent='© '+new Date().getFullYear()+' ENCUESTA SILAO';
+
+/* ── FECHA ENCUESTA ── */
+(function(){
+  var M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var n=new Date();
+  var el=document.getElementById('fechaEnc');
+  if(el)el.textContent=n.getDate()+' de '+M[n.getMonth()]+' de '+n.getFullYear();
+})();
+
+/* ── COUNTDOWN DUAL ── */
+function pad2(v){return String(v).padStart(2,'0');}
+
+function dcdBox(n,l){
+  return '<div class="dcd-box"><span class="dcd-num">'+pad2(n)+'</span><div class="dcd-unit">'+l+'</div></div>';
+}
+
+function tickDualCD(){
+  var now=new Date();
+
+  /* --- Elecciones --- */
+  var elecStr=localStorage.getItem('es_fecha_elec')||'2025-06-01';
+  var elecLbl=localStorage.getItem('es_label_elec')||'PRÓXIMAS ELECCIONES MUNICIPALES';
+  var targetElec=new Date(elecStr+'T08:00:00');
+  var diffElec=targetElec-now;
+  var cE=document.getElementById('cdElec');
+  var lE=document.getElementById('cdElecLbl');
+  if(lE)lE.textContent=elecLbl;
+  if(cE){
+    if(diffElec<=0){
+      cE.innerHTML='<div class="dcd-done">🗳️ DÍA DE ELECCIONES</div>';
+    }else{
+      var d=Math.floor(diffElec/864e5),h=Math.floor((diffElec%864e5)/36e5),m=Math.floor((diffElec%36e5)/6e4),s=Math.floor((diffElec%6e4)/1e3);
+      cE.innerHTML=dcdBox(d,'DÍAS')+dcdBox(h,'HRS')+dcdBox(m,'MIN')+dcdBox(s,'SEG');
+    }
+  }
+
+  /* --- Cierre encuesta --- */
+  var encStr=localStorage.getItem('es_fecha_enc')||'';
+  var encLbl=localStorage.getItem('es_label_enc')||'CIERRE DE LA ENCUESTA SIN ROSTRO';
+  var cN=document.getElementById('cdEnc');
+  var lN=document.getElementById('cdEncLbl');
+  if(lN)lN.textContent=encLbl;
+  if(cN){
+    if(!encStr){
+      cN.innerHTML='<div class="dcd-done" style="font-size:12px;opacity:.5">SIN FECHA<br>DEFINIDA</div>';
+    }else{
+      var targetEnc=new Date(encStr+'T23:59:59');
+      var diffEnc=targetEnc-now;
+      if(diffEnc<=0){
+        cN.innerHTML='<div class="dcd-done">✅ ENCUESTA CERRADA</div>';
+      }else{
+        var d2=Math.floor(diffEnc/864e5),h2=Math.floor((diffEnc%864e5)/36e5),m2=Math.floor((diffEnc%36e5)/6e4),s2=Math.floor((diffEnc%6e4)/1e3);
+        cN.innerHTML=dcdBox(d2,'DÍAS')+dcdBox(h2,'HRS')+dcdBox(m2,'MIN')+dcdBox(s2,'SEG');
+      }
+    }
+  }
+}
+tickDualCD();
+setInterval(tickDualCD,1000);
+
+/* Mantener countdown original en hero (si existe) */
+(function(){
+  var target=new Date((localStorage.getItem('es_fecha_elec')||'2025-06-01')+'T08:00:00');
+  function tick(){
+    var now=new Date(),diff=target-now;
+    if(diff<=0){var c=document.getElementById('heroCD');if(c)c.innerHTML='<div style="font-family:\'Bebas Neue\',sans-serif;font-size:17px;letter-spacing:3px;color:#fff">🗳️ DÍA DE ELECCIONES</div>';return;}
+    var d=Math.floor(diff/864e5),h=Math.floor((diff%864e5)/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3);
+    var c=document.getElementById('heroCD');
+    if(c)c.innerHTML=box(d,'DÍAS')+box(h,'HRS')+box(m,'MIN')+box(s,'SEG');
+  }
+  function box(n,l){return '<div class="cd-box"><div class="cd-num">'+String(n).padStart(2,'0')+'</div><div class="cd-unit">'+l+'</div></div>';}
+  tick();setInterval(tick,1000);
+})();
+
+/* ── 5 TOQUES AL LOGO = ADMIN ── */
+var _lc=0,_lt=null;
+document.getElementById('navLogoBtn').addEventListener('click',function(){
+  _lc++;
+  if(_lt)clearTimeout(_lt);
+  _lt=setTimeout(function(){_lc=0;},1800);
+  if(_lc>=5){_lc=0;abrirAdmin();}
+});
+
+/* ── MODAL INSTALAR ── */
+function abrirInstalar(){document.getElementById('modalInstalar').classList.add('open');}
+function cerrarInstalar(){document.getElementById('modalInstalar').classList.remove('open');}
+function instTab(t){
+  ['ios','android','pc'].forEach(function(id){
+    var el=document.getElementById('inst'+id.charAt(0).toUpperCase()+id.slice(1));
+    if(el)el.style.display=t===id?'flex':'none';
+  });
+  document.querySelectorAll('.inst-tab').forEach(function(b,i){
+    b.classList.toggle('active',['ios','android','pc'][i]===t);
+  });
+}
+
+/* ── CANDIDATOS — AGREGAR / ELIMINAR ── */
+function agregarCandidato(){
+  var cands=getCands();
+  cands.push({
+    id:'CAND_'+Date.now(),color:'#555555',
+    nombre:'NUEVO CANDIDATO',partido:'NUEVO',ideologia:'PARTIDO',
+    foto:'',twitter:'',facebook:'',instagram:'',tel:'',web:'',bio:'',estado:'EN ESPERA'
+  });
+  setCands(cands);cargarEditorCands();
+}
+function eliminarCandidato(idx){
+  if(!confirm('¿Eliminar este candidato? Se borrará de la pantalla.'))return;
+  var cands=getCands();cands.splice(idx,1);setCands(cands);
+  cargarEditorCands();buildCandGrid();buildPoll();
+}
+
+/* ── COMPARTIR ── */
+var SHARE_URL='https://www.facebook.com/share/1CCfvKYYK1/?mibextid=wwXIfr';
+function abrirShare(){document.getElementById('modalShare').classList.add('open');}
+function cerrarShare(){document.getElementById('modalShare').classList.remove('open');}
+function shareToFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL),'_blank');cerrarShare();}
+function shareToWhatsapp(){var t='🗳️ Encuesta Silao · La Voz Ciudadana\n¡Participa y ve los resultados!\n'+SHARE_URL;window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');cerrarShare();}
+function copiarEnlace(){
+  var el=document.getElementById('sbCopiarTxt');
+  try{navigator.clipboard.writeText(SHARE_URL);}catch(e){}
+  el.textContent='✅ ENLACE COPIADO';
+  setTimeout(function(){el.textContent='COPIAR ENLACE';},2200);
+}
+
+/* ══════════════════════════════════════════
+   SUPABASE — VOTOS
+══════════════════════════════════════════ */
+
+/* Actualiza el badge de estado */
+function setStatusBadge(estado){
+  var b=document.getElementById('sbStatusBadge');
+  if(!b)return;
+  b.className='sb-status '+estado;
+  b.textContent=estado==='ok'?'📡 SUPABASE':estado==='local'?'💾 LOCAL':'⏳ CARGANDO';
+}
+
+/* Lee votos de Supabase */
+async function fetchSupabaseVotos(){
+  if(!SB.activo)return null;
+  try{
+    var res=await fetch(SB.url+'/rest/v1/'+SB.table+'?select=partido,votos',{
+      headers:{
+        'apikey':SB.key,
+        'Authorization':'Bearer '+SB.key,
+        'Content-Type':'application/json'
+      }
+    });
+    if(!res.ok)return null;
+    var rows=await res.json();
+    var obj={};
+    rows.forEach(function(r){if(r.partido)obj[r.partido]=Number(r.votos)||0;});
+    return obj;
+  }catch(e){return null;}
+}
+
+/* Escribe/actualiza un voto en Supabase (si lo necesitas luego) */
+async function upsertSupabaseVoto(partido,delta){
+  if(!SB.activo)return false;
+  try{
+    // Primero lee el valor actual
+    var res=await fetch(SB.url+'/rest/v1/'+SB.table+'?partido=eq.'+encodeURIComponent(partido)+'&select=votos',{
+      headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}
+    });
+    var rows=await res.json();
+    var current=(rows&&rows[0])?Number(rows[0].votos)||0:0;
+    var nuevo=current+delta;
+    // Upsert
+    await fetch(SB.url+'/rest/v1/'+SB.table,{
+      method:'POST',
+      headers:{
+        'apikey':SB.key,
+        'Authorization':'Bearer '+SB.key,
+        'Content-Type':'application/json',
+        'Prefer':'resolution=merge-duplicates'
+      },
+      body:JSON.stringify({partido:partido,votos:nuevo})
+    });
+    return true;
+  }catch(e){return false;}
+}
+
+/* ── VOTOS (local + remoto) ── */
+function setVotosLocal(v){localStorage.setItem('es_votos',JSON.stringify(v));refreshStatVotos(v);}
+
+var _votosCache={};          // últimos votos mostrados
+var _votosSource='local';    // 'supabase' | 'local'
+
+function refreshStatVotos(votos){
+  var t=Object.values(votos||{}).reduce(function(a,b){return a+b;},0);
+  var el=document.getElementById('statVotos');
+  if(el)el.textContent=t.toLocaleString();
+  var fl=document.getElementById('statFuenteLbl');
+  var fn=document.getElementById('statFuente');
+  if(_votosSource==='supabase'){
+    if(fl)fl.textContent='SUPABASE';
+    if(fn)fn.textContent='📡';
+  }else{
+    if(fl)fl.textContent='LOCAL';
+    if(fn)fn.textContent='💾';
+  }
+}
+
+/* Carga votos (Supabase si está, local si no) */
+async function cargarVotos(){
+  setStatusBadge('loading');
+  if(SB.activo){
+    var remoto=await fetchSupabaseVotos();
+    if(remoto){
+      _votosCache=remoto;
+      _votosSource='supabase';
+      setStatusBadge('ok');
+      refreshStatVotos(remoto);
+      buildPoll(remoto);
+      return;
+    }
+  }
+  /* Sin Supabase configurado — pantalla en espera */
+  _votosCache={};
+  _votosSource='local';
+  setStatusBadge('local');
+  refreshStatVotos({});
+  buildPoll({});
+}
+
+/* Stats globales */
+function updateStats(){
+  var v=parseInt(localStorage.getItem('es_visits')||'0')+1;
+  localStorage.setItem('es_visits',v);
+  var el=document.getElementById('statVisitas');
+  if(el)el.textContent=v.toLocaleString();
+}
+updateStats();
+
+/* ── CARRUSEL ── */
+function getSlides(){var s=localStorage.getItem('es_slides');return s?JSON.parse(s):SLIDES_DEF;}
+var _carTimer=null;
+function buildCarrusel(){
+  var slides=getSlides().filter(function(s){return s.visible!==false;});
+  var wrap=document.getElementById('heroBanner');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  if(_carTimer)clearInterval(_carTimer);
+  slides.forEach(function(s){
+    var el=document.createElement('div');
+    el.className='banner-slide';
+    el.style.background=s.bg;
+    el.innerHTML=(s.logo?'<div class="banner-logo-wrap"><img src="'+s.logo+'" alt="logo"></div>':'<div class="banner-logo-wrap">🏙️</div>')
+      +'<div class="banner-tag-badge">'+s.tag+'</div>'
+      +'<div class="banner-content">'
+      +(s.candidato?'<div class="banner-cand-name">'+s.candidato+'</div>':'')
+      +'<div class="banner-main-txt">'+s.txt+'</div>'
+      +(s.sub?'<div class="banner-sub-txt">'+s.sub+'</div>':'')
+      +'</div>';
+    wrap.appendChild(el);
+  });
+  if(!wrap.children.length)return;
+  Array.from(wrap.children).forEach(function(c){wrap.appendChild(c.cloneNode(true));});
+  var x=0;
+  _carTimer=setInterval(function(){
+    x+=0.13;
+    var half=wrap.scrollWidth/2;
+    if(x>=half)x=0;
+    wrap.style.transform='translateX(-'+x+'px)';
+  },16);
+}
+buildCarrusel();
+
+/* ── CANDIDATOS ── */
+function getCands(){
+  var s=localStorage.getItem('es_cands');
+  if(s)return JSON.parse(s);
+  return PARTIDOS.map(function(p){return Object.assign({},p,{foto:'',twitter:'',facebook:'',instagram:'',tel:'',web:'',bio:'',estado:'EN ESPERA'});});
+}
+function setCands(c){localStorage.setItem('es_cands',JSON.stringify(c));}
+function buildCandGrid(){
+  var cands=getCands();
+  var grid=document.getElementById('candGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  cands.forEach(function(c){
+    var card=document.createElement('div');
+    card.className='cand-card';
+    var fotoHTML=c.foto
+      ?'<img src="'+c.foto+'" alt="'+c.nombre+'" style="width:100%;height:100%;object-fit:cover">'
+      :'<div class="c-foto-inner"><div class="c-foto-ico">👤</div><div class="c-foto-tag">FOTO · PRÓXIMAMENTE</div></div>';
+    var redes='';
+    if(c.twitter)redes+='<a class="c-red" href="'+c.twitter+'" target="_blank">𝕏</a>';
+    if(c.facebook)redes+='<a class="c-red" href="'+c.facebook+'" target="_blank">f</a>';
+    if(c.instagram)redes+='<a class="c-red" href="'+c.instagram+'" target="_blank">📷</a>';
+    if(c.web)redes+='<a class="c-red" href="'+c.web+'" target="_blank">🌐</a>';
+    card.innerHTML='<div class="c-info">'
+      +'<div class="c-badge" style="background:'+c.color+';color:#fff">'+c.partido+'</div>'
+      +'<div class="c-nombre">'+c.nombre+'</div>'
+      +'<div class="c-cargo">Presidente/a Municipal</div>'
+      +'</div>'
+      +'<div class="c-foto">'+fotoHTML+'</div>'
+      +(redes?'<div class="c-redes">'+redes+'</div>':'')
+      +(c.tel?'<div class="c-tel">📞 '+c.tel+'</div>':'')
+      +(c.bio?'<div class="c-bio">'+c.bio+'</div>':'')
+      +'<div class="c-estado">'+c.estado+'</div>';
+    grid.appendChild(card);
+  });
+  var add=document.createElement('div');
+  add.className='c-add';
+  add.innerHTML='<div style="font-size:22px">➕</div>MÁS CANDIDATOS<br>PRÓXIMAMENTE';
+  grid.appendChild(add);
+}
+buildCandGrid();
+
+/* ── ENCUESTA — POLL ── */
+function calcStats(vals){
+  var n=vals.length;if(!n)return{mu:0,sigma:0};
+  var sum=vals.reduce(function(a,b){return a+b;},0);
+  var mu=sum/n;
+  var sigma=Math.sqrt(vals.reduce(function(a,b){return a+Math.pow(b-mu,2);},0)/n);
+  return{mu:mu,sigma:sigma,n:sum};
+}
+
+function buildPoll(votosObj){
+  var cands=getCands();
+  var votos=votosObj||_votosCache||{};
+  var allVals=cands.map(function(c){return votos[c.id]||0;});
+  var totalVotos=allVals.reduce(function(a,b){return a+b;},0)||1;
+  var st=calcStats(allVals);
+  var prevSnap=JSON.parse(localStorage.getItem('es_votos_prev')||'{}');
+  var wrap=document.getElementById('pollWrap');
+  if(!wrap)return;
+  wrap.innerHTML='';
+
+  // Siempre mostramos resultados (modo solo lectura / pantalla)
+  // No hay voto aquí — los votos vienen de la app externa
+  var mostrarStats=true;
+
+  cands.forEach(function(c){
+    var v=votos[c.id]||0;
+    var pct=Math.round(v/totalVotos*100);
+    var prevV=prevSnap[c.id]||0;
+    var trendSym=v>prevV?'▲':v<prevV?'▼':'—';
+    var trendLabel=v>prevV?'SUBE':v<prevV?'BAJA':'ESTABLE';
+    var trendColor=v>prevV?'#16a34a':v<prevV?'#dc2626':'#94a3b8';
+    var p=v/totalVotos;
+    var me=totalVotos>1?(1.96*Math.sqrt(p*(1-p)/totalVotos)*100).toFixed(1)+'%':'—';
+
+    var btn=document.createElement('div');
+    btn.className='party-btn voted'; // siempre "voted" para mostrar stats
+    btn.style.setProperty('--pct',pct+'%');
+
+    var logoH=c.foto
+      ?'<div class="p-logo"><img src="'+c.foto+'" alt="'+c.nombre+'"></div>'
+      :'<div class="p-logo-fb" style="background:'+c.color+'">'+c.partido.substring(0,3)+'</div>';
+
+    // Bloque stats con botones explicativos
+    var statsHTML='<div class="p-stats">'
+      +'<div class="stats-grid">'
+      +'<div class="stat-card" onclick="abrirStatInfo(\'%\',\''+pct+'%\',event)">'
+        +'<span class="stat-sym">%</span>'
+        +'<span class="stat-val">'+pct+'</span>'
+        +'<span class="stat-lbl">Porcentaje</span>'
+      +'</div>'
+      +'<div class="stat-card" onclick="abrirStatInfo(\'μ\',\''+Math.round(st.mu)+'\',event)">'
+        +'<span class="stat-sym">μ</span>'
+        +'<span class="stat-val">'+Math.round(st.mu)+'</span>'
+        +'<span class="stat-lbl">Promedio</span>'
+      +'</div>'
+      +'<div class="stat-card" onclick="abrirStatInfo(\'σ\',\''+Math.round(st.sigma)+'\',event)">'
+        +'<span class="stat-sym">σ</span>'
+        +'<span class="stat-val">'+Math.round(st.sigma)+'</span>'
+        +'<span class="stat-lbl">Dispersión</span>'
+      +'</div>'
+      +'<div class="stat-card" onclick="abrirStatInfo(\'±\',\''+me+'\',event)">'
+        +'<span class="stat-sym">±</span>'
+        +'<span class="stat-val" style="font-size:15px">'+me+'</span>'
+        +'<span class="stat-lbl">Margen Error</span>'
+      +'</div>'
+      +'<div class="stat-card" onclick="abrirStatInfo(\'n\',\''+totalVotos+'\',event)">'
+        +'<span class="stat-sym">n</span>'
+        +'<span class="stat-val">'+totalVotos+'</span>'
+        +'<span class="stat-lbl">Total Votos</span>'
+      +'</div>'
+      +'<div class="stat-card" onclick="abrirStatInfo(\''+trendSym+'\',\''+trendLabel+'\',event)">'
+        +'<span class="stat-sym" style="font-size:14px;color:'+trendColor+'">'+trendSym+'</span>'
+        +'<span class="stat-val" style="font-size:13px;color:'+trendColor+'">'+trendLabel+'</span>'
+        +'<span class="stat-lbl">Tendencia</span>'
+      +'</div>'
+      +'</div>'
+      +'<div class="stat-progress-bar"><div class="stat-progress-fill" style="width:'+pct+'%"></div></div>'
+      +'</div>';
+
+    btn.innerHTML='<div class="p-top">'+logoH
+      +'<div class="p-info">'
+        +'<div class="p-name">'+c.nombre+'</div>'
+        +'<div class="p-ideo">'+c.partido+' · '+c.ideologia+'</div>'
+      +'</div>'
+      +'<div class="p-pct-big" style="color:var(--muted)">'+pct+'%</div>'
+      +'</div>'
+
+      +'<div class="p-bar-wrap"><div class="p-bar-fill" style="width:'+pct+'%"></div></div>'
+      +statsHTML;
+
+    wrap.appendChild(btn);
+  });
+
+  // Total
+  var vt=document.getElementById('voteTotal');
+  if(vt){
+    vt.style.display='block';
+    var t2=Object.values(votos).reduce(function(a,b){return a+b;},0);
+    vt.textContent='📊 TOTAL DE VOTOS: '+t2.toLocaleString()+(_votosSource==='supabase'?' · SUPABASE':' · LOCAL');
+  }
+}
+
+/* ── NOTICIAS ── */
+function getNoticias(){try{var d=localStorage.getItem('es_noticias');return d?JSON.parse(d):DEFAULT_NEWS;}catch(e){return DEFAULT_NEWS;}}
+function setNoticias(n){try{localStorage.setItem('es_noticias',JSON.stringify(n));}catch(e){}}
+function renderNoticias(){
+  var news=getNoticias();
+  var grid=document.getElementById('noticiasGrid');
+  if(!grid)return;
+  if(!news.length){grid.innerHTML='<div style="color:var(--muted);font-family:\'Barlow Condensed\',sans-serif;letter-spacing:2px;font-size:13px;padding:20px 0">Sin noticias publicadas.</div>';return;}
+  var f=news[0],rest=news.slice(1,6);
+  var featH=f.orientacion==='vertical'?'360px':'230px';
+  var featPos=f.orientacion==='vertical'?'top':'center';
+  var lBtn=f.link?'<a href="'+f.link+'" target="_blank" class="n-link-btn">VER NOTA COMPLETA →</a>':'';
+  var html='<div class="n-featured">'
+    +(f.img?'<div class="n-feat-img" style="height:'+featH+';background-image:url('+JSON.stringify(f.img)+');background-size:cover;background-position:'+featPos+'"></div>':'')
+    +'<div class="n-feat-body">'
+    +'<div class="n-tag">'+f.tag+'</div>'
+    +'<div class="n-title">'+f.titulo+'</div>'
+    +'<div class="n-text">'+f.texto+'</div>'
+    +(f.fuente?'<div class="n-fuente">📰 FUENTE: '+f.fuente+'</div>':'')
+    +lBtn+'</div></div>';
+  if(rest.length){
+    html+='<div class="n-mini-grid">'+rest.map(function(n){
+      var miniH=n.orientacion==='vertical'?'170px':'114px';
+      var miniPos=n.orientacion==='vertical'?'top':'center';
+      return '<div class="n-mini">'
+        +(n.img?'<div class="n-mini-img" style="height:'+miniH+';background-image:url('+JSON.stringify(n.img)+');background-size:cover;background-position:'+miniPos+'"></div>':'')
+        +'<div class="n-mini-body">'
+        +'<div class="n-mini-tag">'+n.tag+'</div>'
+        +'<div class="n-mini-title">'+n.titulo+'</div>'
+        +'<div class="n-mini-text">'+n.texto+'</div>'
+        +(n.fuente?'<div class="n-mini-fuente">📰 '+n.fuente+'</div>':'')
+        +(n.link?'<a href="'+n.link+'" target="_blank" class="n-mini-link">VER NOTA →</a>':'')
+        +'</div></div>';
+    }).join('')+'</div>';
+  }
+  grid.innerHTML=html;
+}
+renderNoticias();
+
+/* ── REVEAL ── */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(function(r){io.observe(r);});
+
+/* ── ADMIN ── */
+function abrirAdmin(){
+  var m=document.getElementById('adminModal');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+  setTimeout(function(){var p=document.getElementById('adminPass');if(p)p.focus();},100);
+}
+function cerrarAdmin(){document.getElementById('adminModal').style.display='none';document.body.style.overflow='';}
+document.getElementById('adminModal').addEventListener('click',function(e){if(e.target===this)cerrarAdmin();});
+function verificarAdmin(){
+  var pass=document.getElementById('adminPass').value;
+  var ok=localStorage.getItem('es_admin_pass')||'Silao360#';
+  if(pass===ok){
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminPanel').style.display='block';
+    adminTab('supabase');
+    actualizarModoActual();
+  }else{
+    var err=document.getElementById('adminErr');err.style.display='block';
+    setTimeout(function(){err.style.display='none';},2500);
+  }
+}
+function adminTab(tab){
+  ['supabase','fechas','cands','votos','banner','noticias','ajustes'].forEach(function(t){
+    var p=document.getElementById('panel-'+t);
+    var b=document.getElementById('tab-'+t);
+    if(p)p.style.display=t===tab?'flex':'none';
+    if(b)b.classList.toggle('active',t===tab);
+  });
+  if(tab==='cands')cargarEditorCands();
+  if(tab==='votos')adminRefreshVotos();
+  if(tab==='banner')cargarEditorBanner();
+  if(tab==='noticias')cargarEditorNoticias();
+  if(tab==='fechas')cargarFechasAdmin();
+  if(tab==='supabase'){
+    var urlEl=document.getElementById('sbUrl');
+    var keyEl=document.getElementById('sbKey');
+    var tableEl=document.getElementById('sbTable');
+    if(urlEl)urlEl.value=SB.url||'';
+    if(keyEl)keyEl.value=SB.key||'';
+    if(tableEl)tableEl.value=SB.table||'votos';
+    actualizarModoActual();
+  }
+}
+
+function cargarFechasAdmin(){
+  var fe=document.getElementById('fechaElec');
+  var le=document.getElementById('labelElec');
+  var fn=document.getElementById('fechaEncierre');
+  var ln=document.getElementById('labelEnc');
+  if(fe)fe.value=localStorage.getItem('es_fecha_elec')||'2025-06-01';
+  if(le)le.value=localStorage.getItem('es_label_elec')||'PRÓXIMAS ELECCIONES MUNICIPALES';
+  if(fn)fn.value=localStorage.getItem('es_fecha_enc')||'';
+  if(ln)ln.value=localStorage.getItem('es_label_enc')||'CIERRE DE LA ENCUESTA SIN ROSTRO';
+}
+
+function guardarFechas(){
+  var fe=document.getElementById('fechaElec');
+  var le=document.getElementById('labelElec');
+  var fn=document.getElementById('fechaEncierre');
+  var ln=document.getElementById('labelEnc');
+  if(fe&&fe.value)localStorage.setItem('es_fecha_elec',fe.value);
+  if(le&&le.value)localStorage.setItem('es_label_elec',le.value);
+  if(fn)localStorage.setItem('es_fecha_enc',fn.value);
+  if(ln&&ln.value)localStorage.setItem('es_label_enc',ln.value);
+  tickDualCD(); // actualizar contadores de inmediato
+  var msg=document.getElementById('fechasMsg');
+  if(msg){msg.style.display='block';setTimeout(function(){msg.style.display='none';},2500);}
+  playClick('vote');
+}
+function actualizarModoActual(){
+  var el=document.getElementById('modoActualTxt');
+  if(!el)return;
+  if(SB.activo&&_votosSource==='supabase'){
+    el.textContent='✅ CONECTADO A SUPABASE · Los votos vienen de tu base de datos.';
+    el.style.color='#4ade80';
+  }else if(SB.activo){
+    el.textContent='⚠️ Supabase configurado pero sin conexión. Usando datos locales.';
+    el.style.color='#fbbf24';
+  }else{
+    el.textContent='💾 Sin Supabase. Usando localStorage (solo este dispositivo).';
+    el.style.color='rgba(255,255,255,0.45)';
+  }
+}
+
+/* Guardar y conectar Supabase */
+async function guardarYConectarSupabase(){
+  var url=(document.getElementById('sbUrl').value||'').trim();
+  var key=(document.getElementById('sbKey').value||'').trim();
+  var table=(document.getElementById('sbTable').value||'votos').trim();
+  var res=document.getElementById('sbTestResult');
+
+  if(!url||!key){
+    res.style.display='block';
+    res.style.background='rgba(248,113,113,0.1)';
+    res.style.color='#f87171';
+    res.textContent='⚠️ Falta URL o KEY';
+    return;
+  }
+
+  res.style.display='block';
+  res.style.background='rgba(255,255,255,0.04)';
+  res.style.color='rgba(255,255,255,0.4)';
+  res.textContent='⏳ Probando conexión...';
+
+  // Guardar en localStorage
+  localStorage.setItem('sb_url',url);
+  localStorage.setItem('sb_key',key);
+  localStorage.setItem('sb_table',table);
+  SB.url=url; SB.key=key; SB.table=table;
+
+  // Probar
+  var data=await fetchSupabaseVotos();
+  if(data){
+    _votosCache=data;
+    _votosSource='supabase';
+    setStatusBadge('ok');
+    res.style.background='rgba(74,222,128,0.1)';
+    res.style.color='#4ade80';
+    res.textContent='✅ CONECTADO · '+Object.keys(data).length+' partidos encontrados.';
+    buildPoll(data);
+    refreshStatVotos(data);
+    actualizarModoActual();
+  }else{
+    res.style.background='rgba(248,113,113,0.1)';
+    res.style.color='#f87171';
+    res.textContent='❌ No se pudo conectar. Revisa URL, KEY y que la tabla exista con política anon SELECT.';
+  }
+}
+
+/* ── EDITOR CANDS ── */
+function cargarEditorCands(){
+  var cands=getCands();
+  var wrap=document.getElementById('candEditorWrap');
+  if(!wrap)return;
+  wrap.innerHTML='';
+  cands.forEach(function(c,i){
+    var row=document.createElement('div');
+    row.className='adm-row';
+    row.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:7px">'
+      +'<div style="display:flex;align-items:center;gap:7px">'
+      +'<div style="width:11px;height:11px;border-radius:3px;background:'+c.color+';flex-shrink:0"></div>'
+      +'<div class="adm-label">'+c.partido+'</div></div>'
+      +'<button onclick="eliminarCandidato('+i+')" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.28);border-radius:7px;padding:5px 11px;color:#f87171;font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ ELIMINAR</button>'
+      +'</div>'
+      +'<div style="display:flex;gap:8px;align-items:center">'
+      +'<div id="cfp-'+i+'" style="width:46px;height:46px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+      +(c.foto?'<img src="'+c.foto+'" style="width:100%;height:100%;object-fit:cover">':'<span style="font-size:20px">👤</span>')
+      +'</div>'
+      +'<button onclick="abrirFotoCand('+i+')" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:8px;color:rgba(255,255,255,0.55);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 FOTO / LOGO</button></div>'
+      +'<input id="cn-'+i+'" class="adm-input" value="'+c.nombre+'" placeholder="Nombre del candidato">'
+      +'<textarea id="cb-'+i+'" class="adm-textarea" rows="2" placeholder="Bio / propuestas">'+c.bio+'</textarea>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
+      +'<input id="ctw-'+i+'" class="adm-input" value="'+(c.twitter||'')+'" placeholder="Twitter/X URL" style="font-size:11px;padding:7px 10px">'
+      +'<input id="cfb-'+i+'" class="adm-input" value="'+(c.facebook||'')+'" placeholder="Facebook URL" style="font-size:11px;padding:7px 10px">'
+      +'<input id="cig-'+i+'" class="adm-input" value="'+(c.instagram||'')+'" placeholder="Instagram URL" style="font-size:11px;padding:7px 10px">'
+      +'<input id="cwb-'+i+'" class="adm-input" value="'+(c.web||'')+'" placeholder="Sitio web URL" style="font-size:11px;padding:7px 10px">'
+      +'</div>'
+      +'<input id="ct-'+i+'" class="adm-input" value="'+(c.tel||'')+'" placeholder="Teléfono" style="font-size:12px">'
+      +'<select id="ce-'+i+'" class="adm-select">'
+      +'<option '+(c.estado==='EN ESPERA'?'selected':'')+'>EN ESPERA</option>'
+      +'<option '+(c.estado==='CONFIRMADO'?'selected':'')+'>CONFIRMADO</option>'
+      +'<option '+(c.estado==='CANDIDATO OFICIAL'?'selected':'')+'>CANDIDATO OFICIAL</option>'
+      +'<option '+(c.estado==='DECLINÓ'?'selected':'')+'>DECLINÓ</option>'
+      +'</select>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
+      +'<input id="ccolor-'+i+'" class="adm-input" value="'+(c.color||'#555')+'" placeholder="#color" style="font-size:12px">'
+      +'<input id="cpartido-'+i+'" class="adm-input" value="'+(c.partido||'')+'" placeholder="Siglas partido" style="font-size:12px">'
+      +'</div>'
+      +'<input id="cid-'+i+'" class="adm-input" value="'+(c.id||'')+'" placeholder="ID único (sin espacios)" style="font-size:11px">'
+      +'<input type="hidden" id="cfd-'+i+'" value="'+(c.foto||'')+'">';
+    wrap.appendChild(row);
+  });
+}
+var _fotoCandIdx=null;
+function abrirFotoCand(i){
+  _fotoCandIdx=i;
+  var inp=document.getElementById('fotoCandFile');
+  if(!inp){
+    inp=document.createElement('input');inp.type='file';inp.id='fotoCandFile';inp.accept='image/*';inp.style.display='none';
+    inp.onchange=function(e){
+      var f=e.target.files[0];if(!f||_fotoCandIdx===null)return;
+      var r=new FileReader();r.onload=function(ev){
+        var b=ev.target.result;
+        var prev=document.getElementById('cfp-'+_fotoCandIdx);
+        if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:cover">';
+        var h=document.getElementById('cfd-'+_fotoCandIdx);if(h)h.value=b;
+        _fotoCandIdx=null;
+      };r.readAsDataURL(f);
+    };
+    document.body.appendChild(inp);
+  }
+  inp.value='';inp.click();
+}
+function adminGuardarCands(){
+  var cands=getCands();
+  cands.forEach(function(c,i){
+    c.nombre=document.getElementById('cn-'+i).value;
+    c.bio=document.getElementById('cb-'+i).value;
+    c.twitter=document.getElementById('ctw-'+i).value;
+    c.facebook=document.getElementById('cfb-'+i).value;
+    c.instagram=document.getElementById('cig-'+i).value;
+    c.web=document.getElementById('cwb-'+i).value;
+    c.tel=document.getElementById('ct-'+i).value;
+    c.estado=document.getElementById('ce-'+i).value;
+    var fd=document.getElementById('cfd-'+i);if(fd&&fd.value)c.foto=fd.value;
+    var col=document.getElementById('ccolor-'+i);if(col&&col.value)c.color=col.value;
+    var part=document.getElementById('cpartido-'+i);if(part&&part.value)c.partido=part.value;
+    var cid=document.getElementById('cid-'+i);if(cid&&cid.value)c.id=cid.value;
+  });
+  setCands(cands);buildCandGrid();buildPoll();snd('vote');
+  var btn=document.querySelector('[onclick="adminGuardarCands()"]');
+  if(btn){btn.textContent='✅ GUARDADO';setTimeout(function(){btn.textContent='💾 GUARDAR CANDIDATOS';},2000);}
+}
+
+/* ── VOTOS ADMIN ── */
+function adminRefreshVotos(){
+  var votos=_votosCache||{};
+  var cands=getCands();
+  var total=Object.values(votos).reduce(function(a,b){return a+b;},0)||1;
+  var t=document.getElementById('votosTable');if(!t)return;t.innerHTML='';
+  cands.forEach(function(c){
+    var v=votos[c.id]||0,pct=Math.round(v/total*100);
+    var row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.04);border-radius:8px;padding:9px 11px;position:relative;overflow:hidden';
+    row.innerHTML='<div style="position:absolute;left:0;top:0;bottom:0;width:'+pct+'%;background:rgba(204,10,10,0.12)"></div>'
+      +'<div style="width:9px;height:9px;border-radius:2px;background:'+c.color+';flex-shrink:0;position:relative"></div>'
+      +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-weight:800;font-size:12px;color:#fff;flex:1;position:relative">'+c.partido+'</div>'
+      +'<div style="font-family:\'Bebas Neue\',sans-serif;font-size:17px;color:#fff;position:relative">'+v+'</div>'
+      +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.35);position:relative;min-width:30px;text-align:right">'+pct+'%</div>';
+    t.appendChild(row);
+  });
+  // Recargar desde Supabase si está activo
+  if(SB.activo){
+    fetchSupabaseVotos().then(function(data){
+      if(data){_votosCache=data;adminRefreshVotos();buildPoll(data);}
+    });
+  }
+}
+
+/* ── EDITOR BANNER ── */
+function cargarEditorBanner(){
+  var slides=getSlides();
+  var wrap=document.getElementById('bannerEditorWrap');
+  if(!wrap)return;wrap.innerHTML='';
+  slides.forEach(function(s,i){
+    var isVisible=s.visible!==false;
+    var row=document.createElement('div');
+    row.className='adm-row';
+    row.innerHTML='<div style="height:28px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-family:\'Bebas Neue\',sans-serif;font-size:11px;color:#fff;letter-spacing:2px;background:'+s.bg+'">'
+      +'<span>BANNER '+(i+1)+'</span>'
+      +'<button id="bvis-'+i+'" onclick="toggleBannerVisible('+i+')" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.3);border-radius:5px;padding:3px 8px;cursor:pointer;font-size:13px;color:#fff;line-height:1">'+(isVisible?'👁️':'🙈')+'</button>'
+      +'</div>'
+      +'<div style="display:flex;gap:7px;align-items:center">'
+      +'<div id="blp-'+i+'" style="width:40px;height:40px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+      +(s.logo?'<img src="'+s.logo+'" style="width:100%;height:100%;object-fit:contain;padding:2px">':'<span style="font-size:16px">🖼️</span>')
+      +'</div>'
+      +'<button onclick="abrirBannerLogo('+i+')" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:7px;color:rgba(255,255,255,0.55);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 LOGO</button>'
+      +(s.logo?'<button onclick="borrarBannerLogo('+i+')" style="background:rgba(204,10,10,0.2);border:1px solid rgba(204,10,10,0.3);border-radius:6px;padding:7px 10px;color:#f87171;font-size:11px;cursor:pointer">🗑️</button>':'')
+      +'</div>'
+      +'<input id="btag-'+i+'" class="adm-input" value="'+(s.tag||'')+'" placeholder="Etiqueta: 🔵 PAN">'
+      +'<input id="btxt-'+i+'" class="adm-input" value="'+(s.txt||'')+'" placeholder="Nombre candidato o titular" style="font-size:12px">'
+      +'<input id="bcand-'+i+'" class="adm-input" value="'+(s.candidato||'')+'" placeholder="Candidato/a" style="font-size:12px">'
+      +'<input id="bsub-'+i+'" class="adm-input" value="'+(s.sub||'')+'" placeholder="Subtítulo o partido" style="font-size:11px">'
+      +'<input type="hidden" id="bld-'+i+'" value="'+(s.logo||'')+'">'
+      +'<input type="hidden" id="bvis-inp-'+i+'" value="'+(isVisible?'1':'0')+'">';
+    wrap.appendChild(row);
+  });
+}
+function toggleBannerVisible(i){
+  var slides=getSlides();
+  if(!slides[i])return;
+  var cur=slides[i].visible!==false;
+  slides[i].visible=!cur;
+  localStorage.setItem('es_slides',JSON.stringify(slides));
+  cargarEditorBanner();buildCarrusel();
+}
+var _bannerLogoIdx=null;
+function abrirBannerLogo(i){_bannerLogoIdx=i;var inp=document.getElementById('bannerLogoInput');if(inp){inp.value='';inp.click();}}
+function procesarBannerLogo(e){
+  var f=e.target.files[0];if(!f||_bannerLogoIdx===null)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;
+    var prev=document.getElementById('blp-'+_bannerLogoIdx);
+    if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:2px">';
+    var h=document.getElementById('bld-'+_bannerLogoIdx);if(h)h.value=b;
+    _bannerLogoIdx=null;
+  };r.readAsDataURL(f);
+}
+function borrarBannerLogo(i){
+  var slides=getSlides();if(slides[i])slides[i].logo='';
+  localStorage.setItem('es_slides',JSON.stringify(slides));
+  cargarEditorBanner();buildCarrusel();
+}
+function adminGuardarBanner(){
+  var slides=getSlides();
+  for(var i=0;i<slides.length;i++){
+    var t=document.getElementById('btag-'+i),x=document.getElementById('btxt-'+i);
+    var c=document.getElementById('bcand-'+i),s=document.getElementById('bsub-'+i);
+    var ld=document.getElementById('bld-'+i);
+    var vi=document.getElementById('bvis-inp-'+i);
+    if(t)slides[i].tag=t.value;if(x)slides[i].txt=x.value;
+    if(c)slides[i].candidato=c.value;if(s)slides[i].sub=s.value;
+    if(ld&&ld.value)slides[i].logo=ld.value;
+    // visible se guarda en tiempo real via toggleBannerVisible, no se sobreescribe aquí
+  }
+  localStorage.setItem('es_slides',JSON.stringify(slides));
+  buildCarrusel();playClick('vote');
+  var btn=document.querySelector('[onclick="adminGuardarBanner()"]');
+  if(btn){btn.textContent='✅ GUARDADO';setTimeout(function(){btn.textContent='💾 GUARDAR BANNERS';},2500);}
+}
+
+/* ── EDITOR NOTICIAS ── */
+function setOrientNoticia(v){
+  var h=document.getElementById('nn-ori-h');
+  var vb=document.getElementById('nn-ori-v');
+  var inp=document.getElementById('nn-orientacion');
+  if(inp)inp.value=v;
+  var activeStyle='background:rgba(204,10,10,0.25);border:1.5px solid rgba(204,10,10,0.5);color:#fff';
+  var inactiveStyle='background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45)';
+  if(h)h.style.cssText=h.style.cssText.replace(/background[^;]+;border:[^;]+;color:[^;]+/,'')+(v==='horizontal'?activeStyle:inactiveStyle);
+  if(vb)vb.style.cssText=vb.style.cssText.replace(/background[^;]+;border:[^;]+;color:[^;]+/,'')+(v==='vertical'?activeStyle:inactiveStyle);
+}
+function cargarEditorNoticias(){
+  var news=getNoticias();
+  var wrap=document.getElementById('noticiasEditor');
+  if(!wrap)return;wrap.innerHTML='';
+
+  /* Formulario nueva noticia */
+  var form=document.createElement('div');
+  form.className='adm-row';
+  form.innerHTML=
+    '<div class="adm-label" style="font-size:11px;color:#fff;letter-spacing:2px">➕ NUEVA NOTICIA</div>'
+
+    /* Preview foto */
+   +'<div id="nn-foto-preview" style="width:100%;height:110px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.04);border:1.5px dashed rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer" onclick="document.getElementById(\'nn-img-file\').click()">'
+   +'<div id="nn-foto-placeholder" style="text-align:center;pointer-events:none">'
+   +'<div style="font-size:28px;margin-bottom:5px">📸</div>'
+   +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.35)">TOCA PARA SUBIR FOTO</div>'
+   +'</div>'
+   +'</div>'
+
+    /* Botones foto: subir + url + limpiar */
+   +'<div style="display:flex;gap:6px">'
+   +'<button onclick="document.getElementById(\'nn-img-file\').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.13);border-radius:8px;padding:9px;color:rgba(255,255,255,0.55);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">📷 SUBIR FOTO</button>'
+   +'<button onclick="limpiarFotoNoticia()" style="background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:9px 12px;color:#f87171;font-size:13px;cursor:pointer" title="Quitar foto">🗑️</button>'
+   +'</div>'
+   +'<input type="file" id="nn-img-file" accept="image/*" style="display:none" onchange="procesarFotoNoticia(event)">'
+   +'<div class="adm-label" style="margin-top:2px">O pega URL de imagen</div>'
+   +'<input id="nn-img" class="adm-input" placeholder="https://... (URL de imagen externa)" oninput="previewUrlNoticia(this.value)">'
+
+    /* Campos de texto */
+   +'<input id="nn-titulo" class="adm-input" placeholder="Título de la noticia">'
+   +'<textarea id="nn-texto" class="adm-textarea" rows="3" placeholder="Texto de la noticia..."></textarea>'
+   +'<div class="adm-label" style="margin-top:2px">ORIENTACIÓN DE LA FOTO</div>'
+   +'<div style="display:flex;gap:7px;margin-bottom:2px">'
+   +'<button id="nn-ori-h" onclick="setOrientNoticia(\'horizontal\')" style="flex:1;padding:9px 7px;border-radius:8px;background:rgba(204,10,10,0.25);border:1.5px solid rgba(204,10,10,0.5);color:#fff;font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">🖼️ HORIZONTAL (ACOSTADA)</button>'
+   +'<button id="nn-ori-v" onclick="setOrientNoticia(\'vertical\')" style="flex:1;padding:9px 7px;border-radius:8px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">📱 VERTICAL (PARADA)</button>'
+   +'</div>'
+   +'<input type="hidden" id="nn-orientacion" value="horizontal">'
+   +'<input id="nn-tag" class="adm-input" placeholder="Etiqueta: LOCAL · POLÍTICA · ECONOMÍA">'
+   +'<input id="nn-fuente" class="adm-input" placeholder="Fuente: El Correo, Milenio, etc.">'
+   +'<input id="nn-link" class="adm-input" placeholder="Enlace de la nota (URL completa)">'
+   +'<button onclick="publicarNoticia()" class="adm-save-btn" style="background:linear-gradient(135deg,#cc0a0a,#ff3333)">📰 PUBLICAR NOTICIA</button>';
+  wrap.appendChild(form);
+
+  /* Lista de noticias existentes */
+  news.forEach(function(n,i){
+    var item=document.createElement('div');
+    item.className='adm-row';
+    item.style.cssText='flex-direction:row;align-items:center;gap:9px';
+    /* miniatura si tiene foto */
+    var thumb=n.img
+      ?'<div style="width:46px;height:46px;border-radius:7px;overflow:hidden;flex-shrink:0;background:#222"><img src="'+n.img+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'📰\'"></div>'
+      :'<div style="width:46px;height:46px;border-radius:7px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📰</div>';
+    item.innerHTML=thumb
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+n.titulo+'</div>'
+      +'<div style="font-size:9px;color:rgba(255,255,255,0.3);letter-spacing:1.5px;margin-top:2px">'+n.tag+(n.fuente?' · '+n.fuente:'')+'</div>'
+      +'</div>'
+      +'<button onclick="borrarNoticia('+i+')" style="background:rgba(204,10,10,0.18);border:1px solid rgba(204,10,10,0.3);border-radius:7px;padding:8px 11px;color:#f87171;font-size:12px;cursor:pointer;flex-shrink:0">🗑️</button>';
+    wrap.appendChild(item);
+  });
+}
+
+/* Preview inmediato al subir archivo */
+function procesarFotoNoticia(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    var b=ev.target.result;
+    /* Poner en el campo URL */
+    var inp=document.getElementById('nn-img');if(inp)inp.value=b;
+    /* Mostrar preview */
+    _mostrarPreviewNoticia(b);
+  };
+  r.readAsDataURL(f);
+}
+
+/* Preview al escribir URL */
+function previewUrlNoticia(url){
+  if(url&&url.length>10)_mostrarPreviewNoticia(url);
+  else _limpiarPreviewNoticia();
+}
+
+function _mostrarPreviewNoticia(src){
+  var box=document.getElementById('nn-foto-preview');
+  if(!box)return;
+  box.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:cover" onerror="_limpiarPreviewNoticia()">'
+    +'<div style="position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,0.6);border-radius:6px;padding:3px 8px;font-family:\'Barlow Condensed\',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;color:#4ade80">✓ FOTO CARGADA</div>';
+}
+function _limpiarPreviewNoticia(){
+  var box=document.getElementById('nn-foto-preview');
+  if(!box)return;
+  box.innerHTML='<div id="nn-foto-placeholder" style="text-align:center;pointer-events:none">'
+    +'<div style="font-size:28px;margin-bottom:5px">📸</div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.35)">TOCA PARA SUBIR FOTO</div>'
+    +'</div>';
+}
+function limpiarFotoNoticia(){
+  var inp=document.getElementById('nn-img');if(inp)inp.value='';
+  _limpiarPreviewNoticia();
+}
+
+function publicarNoticia(){
+  var titulo=document.getElementById('nn-titulo').value.trim();
+  var texto=document.getElementById('nn-texto').value.trim();
+  var img=document.getElementById('nn-img').value.trim();
+  var tag=document.getElementById('nn-tag').value.trim()||'LOCAL';
+  var fuente=document.getElementById('nn-fuente').value.trim();
+  var link=document.getElementById('nn-link').value.trim();
+  var orientacion=document.getElementById('nn-orientacion')?document.getElementById('nn-orientacion').value:'horizontal';
+  if(!titulo||!texto){alert('Falta título o texto');return;}
+  var news=getNoticias();
+  news.unshift({id:Date.now(),titulo:titulo,texto:texto,img:img,tag:tag,fuente:fuente,link:link,orientacion:orientacion});
+  if(news.length>6)news=news.slice(0,6);
+  setNoticias(news);
+  ['nn-titulo','nn-texto','nn-img','nn-tag','nn-fuente','nn-link'].forEach(function(id){
+    var el=document.getElementById(id);if(el)el.value='';
+  });
+  _limpiarPreviewNoticia();
+  var fi=document.getElementById('nn-img-file');if(fi)fi.value='';
+  cargarEditorNoticias();renderNoticias();snd('vote');
+}
+function borrarNoticia(idx){
+  var news=getNoticias();news.splice(idx,1);setNoticias(news);cargarEditorNoticias();renderNoticias();
+}
+
+/* ── AJUSTES: IMÁGENES ── */
+function procesarNavLogo(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;localStorage.setItem('es_nav_logo',b);aplicarNavLogo(b);
+    var prev=document.getElementById('navLogoPrev');
+    if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain">';
+  };r.readAsDataURL(f);
+}
+function aplicarNavLogo(src){
+  var box=document.getElementById('navLogoBox');
+  if(!box)return;
+  box.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:contain;border-radius:8px">';
+  box.style.background='transparent';
+}
+function procesarBtnImg(e,btnId,fbId){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;localStorage.setItem('es_img_'+btnId,b);aplicarBtnImg(btnId,fbId,b);
+  };r.readAsDataURL(f);
+}
+function aplicarBtnImg(btnId,fbId,src){
+  var btn=document.getElementById(btnId);
+  var fb=document.getElementById(fbId);
+  if(!btn)return;if(fb)fb.style.display='none';
+  var old=btn.querySelector('img.btn-img');if(old)old.remove();
+  var img=document.createElement('img');
+  img.className='btn-img';img.src=src;img.style.cssText='width:100%;display:block;border-radius:14px';
+  btn.insertBefore(img,btn.firstChild);
+}
+function procesarTriviaImg(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;localStorage.setItem('es_img_trivia',b);aplicarTriviaImg(b);
+  };r.readAsDataURL(f);
+}
+function aplicarTriviaImg(src){
+  aplicarBtnImg('btnTrivia','btnTriviaFb',src);
+  var g=document.getElementById('btnTriviaGrande'),gf=document.getElementById('btnTriviaGrandeFb');
+  if(g&&gf){
+    gf.style.display='none';
+    var old=g.querySelector('img.btn-img');if(old)old.remove();
+    var img=document.createElement('img');img.className='btn-img';img.src=src;img.style.cssText='width:100%;display:block;border-radius:16px';
+    g.insertBefore(img,g.firstChild);
+  }
+}
+function adminGuardarAjustes(){
+  playClick('vote');
+  var btn=document.querySelector('[onclick="adminGuardarAjustes()"]');
+  if(btn){btn.textContent='✅ GUARDADO';setTimeout(function(){btn.textContent='💾 GUARDAR AJUSTES';},2000);}
+}
+
+/* ── RESTAURAR IMÁGENES AL CARGAR ── */
+(function(){
+  var nl=localStorage.getItem('es_nav_logo');if(nl)aplicarNavLogo(nl);
+  var be=localStorage.getItem('es_img_btnEnc');if(be)aplicarBtnImg('btnEnc','btnEncFb',be);
+  var bp=localStorage.getItem('es_img_btnPeso');if(bp)aplicarBtnImg('btnPeso','btnPesoFb',bp);
+  var bt=localStorage.getItem('es_img_trivia');if(bt)aplicarTriviaImg(bt);
+})();
+
+/* ── LED PREGUNTA BOX ── */
+(function(){
+  var DEFAULT_PREGUNTA='¿POR QUIÉN VOTARÍAS HOY EN SILAO?';
+  var _ledHue=0;
+  var _ledRafId=null;
+
+  function getLedPregunta(){
+    return localStorage.getItem('es_led_pregunta')||DEFAULT_PREGUNTA;
+  }
+
+  // Actualiza glow color del texto ciclando hue
+  function animarGlowLed(){
+    _ledHue=(_ledHue+0.3)%360;
+    var color='hsl('+_ledHue+',100%,65%)';
+    var el=document.getElementById('ledPreguntaText');
+    if(el)el.style.textShadow='0 0 12px '+color+',0 0 28px '+color+',0 0 48px '+color;
+    var box=document.getElementById('ledPreguntaBox');
+    if(box)box.style.boxShadow='inset 0 0 40px rgba(0,0,0,0.6), 0 0 0 2px hsla('+_ledHue+',80%,50%,0.25)';
+    _ledRafId=requestAnimationFrame(animarGlowLed);
+  }
+
+  var _typeTimer=null;
+  var _eraseTimer=null;
+  var _pauseTimer=null;
+
+  function escribirLed(texto){
+    var el=document.getElementById('ledPreguntaText');
+    if(!el)return;
+    var i=0;el.textContent='';
+    if(_typeTimer)clearTimeout(_typeTimer);
+    function step(){
+      if(i<texto.length){
+        el.textContent+=texto[i];i++;
+        _typeTimer=setTimeout(step,45);
+      }else{
+        // pausa 20s
+        _pauseTimer=setTimeout(function(){borrarLed(texto);},20000);
+      }
+    }
+    step();
+  }
+
+  function borrarLed(texto){
+    var el=document.getElementById('ledPreguntaText');
+    if(!el)return;
+    if(_eraseTimer)clearTimeout(_eraseTimer);
+    function step(){
+      var t=el.textContent;
+      if(t.length>0){
+        el.textContent=t.slice(0,-1);
+        _eraseTimer=setTimeout(step,22);
+      }else{
+        setTimeout(function(){escribirLed(texto);},400);
+      }
+    }
+    step();
+  }
+
+  function actualizarContadorLedFn(inp){
+    var v=(inp.value||'').length;
+    var ctr=document.getElementById('ledContador');
+    if(ctr)ctr.textContent=v+'/80';
+    if(v>0){
+      var txt=inp.value.toUpperCase();
+      localStorage.setItem('es_led_pregunta',txt);
+      // reiniciar animación con nuevo texto
+      if(_typeTimer)clearTimeout(_typeTimer);
+      if(_eraseTimer)clearTimeout(_eraseTimer);
+      if(_pauseTimer)clearTimeout(_pauseTimer);
+      var el=document.getElementById('ledPreguntaText');
+      if(el)el.textContent='';
+      setTimeout(function(){escribirLed(txt);},200);
+    }
+  }
+  window.actualizarContadorLed=actualizarContadorLedFn;
+
+  // Canvas dots girando alrededor del cuadro
+  function initLedCanvas(){
+    var wrap=document.getElementById('ledPreguntaWrap');
+    var canvas=document.getElementById('ledDotsCanvas');
+    if(!canvas||!wrap)return;
+    var ctx=canvas.getContext('2d');
+    var angle=0;
+    var dots=24;
+    function resize(){
+      canvas.width=wrap.offsetWidth;
+      canvas.height=wrap.getBoundingClientRect().height||110;
+    }
+    resize();
+    window.addEventListener('resize',resize);
+    function drawDots(){
+      resize();
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      var w=canvas.width,h=canvas.height;
+      var perim=2*(w+h);
+      for(var d=0;d<dots;d++){
+        var prog=((d/dots)+angle)%1;
+        var dist=prog*perim;
+        var px,py;
+        if(dist<w){px=dist;py=0;}
+        else if(dist<w+h){px=w;py=dist-w;}
+        else if(dist<2*w+h){px=w-(dist-w-h);py=h;}
+        else{px=0;py=h-(dist-2*w-h);}
+        var hue2=(_ledHue+d*(360/dots))%360;
+        var alpha=0.5+0.5*Math.sin(prog*Math.PI*2);
+        ctx.beginPath();
+        ctx.arc(px,py,3,0,Math.PI*2);
+        ctx.fillStyle='hsla('+hue2+',100%,65%,'+alpha+')';
+        ctx.fill();
+      }
+      angle=(angle+0.002)%1;
+      requestAnimationFrame(drawDots);
+    }
+    drawDots();
+  }
+
+  // Inicializar al cargar
+  document.addEventListener('DOMContentLoaded',function(){
+    initLedCanvas();
+    animarGlowLed();
+    escribirLed(getLedPregunta());
+    // Prefill input
+    var inp=document.getElementById('ledPreguntaInput');
+    if(inp)inp.value=getLedPregunta();
+    var ctr=document.getElementById('ledContador');
+    if(ctr)ctr.textContent=(getLedPregunta().length)+'/80';
+  });
+  // Por si DOMContentLoaded ya pasó
+  if(document.readyState!=='loading'){
+    setTimeout(function(){
+      initLedCanvas();
+      animarGlowLed();
+      escribirLed(getLedPregunta());
+      var inp=document.getElementById('ledPreguntaInput');
+      if(inp)inp.value=getLedPregunta();
+      var ctr=document.getElementById('ledContador');
+      if(ctr)ctr.textContent=(getLedPregunta().length)+'/80';
+    },100);
+  }
+})();
+
+/* ── AVISO CIERRE ENCUESTA LED ── */
+(function(){
+  var MENSAJES=[
+    '⚠️ ESTA ENCUESTA CIERRA EL 1 DE SEPTIEMBRE 2026',
+    '🗳️ TU VOTO CUENTA · PARTICIPA ANTES DEL 1 SEP 2026',
+    '📅 CIERRE: 1 SEPTIEMBRE 2026 · ¡PARTICIPA AHORA!'
+  ];
+  var _idx=0;
+  var _hue=180;
+  var _raf=null;
+  var _typeT=null;
+  var _eraseT=null;
+  var _pauseT=null;
+
+  function animarGlowAviso(){
+    _hue=(_hue+0.4)%360;
+    var el=document.getElementById('avisoCierre');
+    if(el)el.style.textShadow='0 0 10px hsl('+_hue+',100%,65%),0 0 24px hsl('+_hue+',100%,55%)';
+    _raf=requestAnimationFrame(animarGlowAviso);
+  }
+
+  function escribirAviso(txt){
+    var el=document.getElementById('avisoCierre');
+    if(!el)return;
+    var i=0;el.textContent='';
+    if(_typeT)clearTimeout(_typeT);
+    function step(){
+      if(i<txt.length){el.textContent+=txt[i];i++;_typeT=setTimeout(step,38);}
+      else{_pauseT=setTimeout(function(){borrarAviso(txt);},20000);}
+    }
+    step();
+  }
+
+  function borrarAviso(txt){
+    var el=document.getElementById('avisoCierre');
+    if(!el)return;
+    if(_eraseT)clearTimeout(_eraseT);
+    function step(){
+      var t=el.textContent;
+      if(t.length>0){el.textContent=t.slice(0,-1);_eraseT=setTimeout(step,18);}
+      else{
+        _idx=(_idx+1)%MENSAJES.length;
+        setTimeout(function(){escribirAviso(MENSAJES[_idx]);},400);
+      }
+    }
+    step();
+  }
+
+  setTimeout(function(){
+    animarGlowAviso();
+    escribirAviso(MENSAJES[0]);
+  },500);
+})();
+
+/* ── INIT: cargar votos (Supabase o local) ── */
+cargarVotos();
+
+/* ── AUTO-REFRESH cada 60 seg desde Supabase ── */
+setInterval(function(){
+  if(SB.activo){
+    fetchSupabaseVotos().then(function(data){
+      if(data){
+        _votosCache=data;
+        _votosSource='supabase';
+        setStatusBadge('ok');
+        refreshStatVotos(data);
+        buildPoll(data);
+      }
+    });
+  }
+},60000);
+</script>
+</body>
+</html>
