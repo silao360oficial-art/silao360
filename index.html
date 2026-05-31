@@ -113,15 +113,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .party-btn.voted{cursor:default}
 .party-btn.selected{border-color:var(--rojo)!important;background:#fff8f8!important;box-shadow:0 4px 20px rgba(204,10,10,0.14)!important}
 
-/* Fila superior: logo centrado + info centrada + % grande */
-.p-top{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 14px 10px}
-.p-logo{width:150px;height:150px;border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f8fafc;border:1px solid var(--borde)}
+/* Fila superior: logo + info + % */
+.p-top{display:flex;align-items:center;gap:14px;padding:13px 14px 10px}
+.p-logo{width:100px;height:100px;border-radius:4px;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#f8fafc;border:1px solid var(--borde)}
 .p-logo img{width:100%;height:100%;object-fit:contain;padding:4px}
-.p-logo-fb{width:150px;height:150px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:30px;color:#fff;flex-shrink:0;letter-spacing:1px}
-.p-info{text-align:center;width:100%}
-.p-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:var(--texto);letter-spacing:.5px}
-.p-ideo{font-size:15px;color:var(--muted);letter-spacing:1.5px;font-family:'Barlow Condensed',sans-serif;margin-top:2px}
-.p-pct-big{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--borde);transition:color .4s;text-align:center;line-height:1;width:100%}
+.p-logo-fb{width:100px;height:100px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;flex-shrink:0;letter-spacing:1px}
+.p-info{flex:1;min-width:0}
+.p-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;color:var(--texto);letter-spacing:.5px}
+.p-ideo{font-size:11px;color:var(--muted);letter-spacing:1.5px;font-family:'Barlow Condensed',sans-serif;margin-top:1px}
+.p-pct-big{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--borde);transition:color .4s;min-width:52px;text-align:right;line-height:1}
 .party-btn.voted .p-pct-big{color:var(--muted)}
 .party-btn.selected .p-pct-big{color:var(--rojo)!important}
 
@@ -419,33 +419,13 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 
 <div class="sep"></div>
 
-<!-- ══ AVISO CIERRE ENCUESTA LED ══ -->
-<div style="background:#0a0a1a;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06)">
-  <div id="avisoCierre" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,3.5vw,18px);letter-spacing:3px;color:#fff;text-align:center;min-height:1.4em;word-break:break-word"></div>
-</div>
-
-<div class="sep"></div>
-
 <!-- ══ ENCUESTA ══ -->
 <section id="encuesta">
   <div class="sec reveal">
-
-    <!-- LED PREGUNTA BOX -->
-    <div id="ledPreguntaWrap" style="position:relative;margin-bottom:22px">
-      <canvas id="ledDotsCanvas" style="position:absolute;inset:0;width:100%;height:100%;border-radius:14px;pointer-events:none;z-index:0"></canvas>
-      <div id="ledPreguntaBox" style="position:relative;z-index:1;background:#0a0a1a;border-radius:12px;padding:22px 20px;text-align:center;min-height:80px;display:flex;align-items:center;justify-content:center;overflow:hidden">
-        <div id="ledPreguntaText" style="font-family:'Bebas Neue',sans-serif;font-size:clamp(18px,5vw,28px);letter-spacing:3px;color:#fff;line-height:1.2;min-height:1.4em;word-break:break-word"></div>
-      </div>
-      <div style="margin-top:8px;position:relative;z-index:2;display:flex;align-items:center;gap:6px">
-        <input id="ledPreguntaInput" maxlength="80" class="adm-input" placeholder="Escribe aquí la pregunta (máx 80 caracteres)" style="background:#0a0a1a;border:1px solid rgba(255,255,255,0.18);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:13px;padding:9px 12px;border-radius:8px;flex:1" oninput="actualizarContadorLed(this)">
-        <span id="ledContador" style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,0.35);white-space:nowrap;background:#0a0a1a;border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 9px">0/80</span>
-      </div>
-    </div>
-
     <div class="sec-label">📊 RESULTADOS EN TIEMPO REAL</div>
     <h2 class="sec-title">¿Por quién<br>votarías hoy?</h2>
     <p style="font-size:17px;color:#111;font-weight:600;margin-bottom:7px;line-height:1.6">Resultados actualizados en tiempo real · Estadísticas detalladas.</p>
-    <p style="font-size:19px;color:#000;font-weight:700;margin-bottom:22px;letter-spacing:1px">Encuesta independiente · Sin registro · <span id="fechaEnc"></span></p>
+    <p style="font-size:13px;color:#555;margin-bottom:22px;letter-spacing:1px">Encuesta independiente · Sin registro · <span id="fechaEnc"></span></p>
     <div class="poll-wrap" id="pollWrap"></div>
     <div class="vote-total" id="voteTotal" style="display:none"></div>
     <p class="poll-note">ENCUESTA CIUDADANA INDEPENDIENTE · NO OFICIAL · ENCUESTA SILAO</p>
@@ -490,7 +470,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 <!-- ══ EXTRA (admin oculto — 5 toques al logo) ══ -->
 <section class="extra-sec">
   <div class="extra-inner" style="text-align:center">
-    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.07)">ENCUESTA SILAO · V21</p>
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.07)">ENCUESTA SILAO · V19</p>
   </div>
 </section>
 
@@ -1167,7 +1147,7 @@ updateStats();
 function getSlides(){var s=localStorage.getItem('es_slides');return s?JSON.parse(s):SLIDES_DEF;}
 var _carTimer=null;
 function buildCarrusel(){
-  var slides=getSlides().filter(function(s){return s.visible!==false;});
+  var slides=getSlides();
   var wrap=document.getElementById('heroBanner');
   if(!wrap)return;
   wrap.innerHTML='';
@@ -1185,11 +1165,10 @@ function buildCarrusel(){
       +'</div>';
     wrap.appendChild(el);
   });
-  if(!wrap.children.length)return;
   Array.from(wrap.children).forEach(function(c){wrap.appendChild(c.cloneNode(true));});
   var x=0;
   _carTimer=setInterval(function(){
-    x+=0.13;
+    x+=0.6;
     var half=wrap.scrollWidth/2;
     if(x>=half)x=0;
     wrap.style.transform='translateX(-'+x+'px)';
@@ -1325,7 +1304,6 @@ function buildPoll(votosObj){
       +'</div>'
       +'<div class="p-pct-big" style="color:var(--muted)">'+pct+'%</div>'
       +'</div>'
-
       +'<div class="p-bar-wrap"><div class="p-bar-fill" style="width:'+pct+'%"></div></div>'
       +statsHTML;
 
@@ -1350,11 +1328,9 @@ function renderNoticias(){
   if(!grid)return;
   if(!news.length){grid.innerHTML='<div style="color:var(--muted);font-family:\'Barlow Condensed\',sans-serif;letter-spacing:2px;font-size:13px;padding:20px 0">Sin noticias publicadas.</div>';return;}
   var f=news[0],rest=news.slice(1,6);
-  var featH=f.orientacion==='vertical'?'360px':'230px';
-  var featPos=f.orientacion==='vertical'?'top':'center';
   var lBtn=f.link?'<a href="'+f.link+'" target="_blank" class="n-link-btn">VER NOTA COMPLETA →</a>':'';
   var html='<div class="n-featured">'
-    +(f.img?'<div class="n-feat-img" style="height:'+featH+';background-image:url('+JSON.stringify(f.img)+');background-size:cover;background-position:'+featPos+'"></div>':'')
+    +(f.img?'<div class="n-feat-img" style="background-image:url('+JSON.stringify(f.img)+')"></div>':'')
     +'<div class="n-feat-body">'
     +'<div class="n-tag">'+f.tag+'</div>'
     +'<div class="n-title">'+f.titulo+'</div>'
@@ -1363,10 +1339,8 @@ function renderNoticias(){
     +lBtn+'</div></div>';
   if(rest.length){
     html+='<div class="n-mini-grid">'+rest.map(function(n){
-      var miniH=n.orientacion==='vertical'?'170px':'114px';
-      var miniPos=n.orientacion==='vertical'?'top':'center';
       return '<div class="n-mini">'
-        +(n.img?'<div class="n-mini-img" style="height:'+miniH+';background-image:url('+JSON.stringify(n.img)+');background-size:cover;background-position:'+miniPos+'"></div>':'')
+        +(n.img?'<div class="n-mini-img" style="background-image:url('+JSON.stringify(n.img)+')"></div>':'')
         +'<div class="n-mini-body">'
         +'<div class="n-mini-tag">'+n.tag+'</div>'
         +'<div class="n-mini-title">'+n.titulo+'</div>'
@@ -1630,13 +1604,9 @@ function cargarEditorBanner(){
   var wrap=document.getElementById('bannerEditorWrap');
   if(!wrap)return;wrap.innerHTML='';
   slides.forEach(function(s,i){
-    var isVisible=s.visible!==false;
     var row=document.createElement('div');
     row.className='adm-row';
-    row.innerHTML='<div style="height:28px;border-radius:6px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-family:\'Bebas Neue\',sans-serif;font-size:11px;color:#fff;letter-spacing:2px;background:'+s.bg+'">'
-      +'<span>BANNER '+(i+1)+'</span>'
-      +'<button id="bvis-'+i+'" onclick="toggleBannerVisible('+i+')" style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.3);border-radius:5px;padding:3px 8px;cursor:pointer;font-size:13px;color:#fff;line-height:1">'+(isVisible?'👁️':'🙈')+'</button>'
-      +'</div>'
+    row.innerHTML='<div style="height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:\'Bebas Neue\',sans-serif;font-size:11px;color:#fff;letter-spacing:2px;background:'+s.bg+'">BANNER '+(i+1)+'</div>'
       +'<div style="display:flex;gap:7px;align-items:center">'
       +'<div id="blp-'+i+'" style="width:40px;height:40px;border-radius:7px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
       +(s.logo?'<img src="'+s.logo+'" style="width:100%;height:100%;object-fit:contain;padding:2px">':'<span style="font-size:16px">🖼️</span>')
@@ -1648,18 +1618,9 @@ function cargarEditorBanner(){
       +'<input id="btxt-'+i+'" class="adm-input" value="'+(s.txt||'')+'" placeholder="Nombre candidato o titular" style="font-size:12px">'
       +'<input id="bcand-'+i+'" class="adm-input" value="'+(s.candidato||'')+'" placeholder="Candidato/a" style="font-size:12px">'
       +'<input id="bsub-'+i+'" class="adm-input" value="'+(s.sub||'')+'" placeholder="Subtítulo o partido" style="font-size:11px">'
-      +'<input type="hidden" id="bld-'+i+'" value="'+(s.logo||'')+'">'
-      +'<input type="hidden" id="bvis-inp-'+i+'" value="'+(isVisible?'1':'0')+'">';
+      +'<input type="hidden" id="bld-'+i+'" value="'+(s.logo||'')+'">';
     wrap.appendChild(row);
   });
-}
-function toggleBannerVisible(i){
-  var slides=getSlides();
-  if(!slides[i])return;
-  var cur=slides[i].visible!==false;
-  slides[i].visible=!cur;
-  localStorage.setItem('es_slides',JSON.stringify(slides));
-  cargarEditorBanner();buildCarrusel();
 }
 var _bannerLogoIdx=null;
 function abrirBannerLogo(i){_bannerLogoIdx=i;var inp=document.getElementById('bannerLogoInput');if(inp){inp.value='';inp.click();}}
@@ -1684,11 +1645,9 @@ function adminGuardarBanner(){
     var t=document.getElementById('btag-'+i),x=document.getElementById('btxt-'+i);
     var c=document.getElementById('bcand-'+i),s=document.getElementById('bsub-'+i);
     var ld=document.getElementById('bld-'+i);
-    var vi=document.getElementById('bvis-inp-'+i);
     if(t)slides[i].tag=t.value;if(x)slides[i].txt=x.value;
     if(c)slides[i].candidato=c.value;if(s)slides[i].sub=s.value;
     if(ld&&ld.value)slides[i].logo=ld.value;
-    // visible se guarda en tiempo real via toggleBannerVisible, no se sobreescribe aquí
   }
   localStorage.setItem('es_slides',JSON.stringify(slides));
   buildCarrusel();playClick('vote');
@@ -1697,16 +1656,6 @@ function adminGuardarBanner(){
 }
 
 /* ── EDITOR NOTICIAS ── */
-function setOrientNoticia(v){
-  var h=document.getElementById('nn-ori-h');
-  var vb=document.getElementById('nn-ori-v');
-  var inp=document.getElementById('nn-orientacion');
-  if(inp)inp.value=v;
-  var activeStyle='background:rgba(204,10,10,0.25);border:1.5px solid rgba(204,10,10,0.5);color:#fff';
-  var inactiveStyle='background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45)';
-  if(h)h.style.cssText=h.style.cssText.replace(/background[^;]+;border:[^;]+;color:[^;]+/,'')+(v==='horizontal'?activeStyle:inactiveStyle);
-  if(vb)vb.style.cssText=vb.style.cssText.replace(/background[^;]+;border:[^;]+;color:[^;]+/,'')+(v==='vertical'?activeStyle:inactiveStyle);
-}
 function cargarEditorNoticias(){
   var news=getNoticias();
   var wrap=document.getElementById('noticiasEditor');
@@ -1738,12 +1687,6 @@ function cargarEditorNoticias(){
     /* Campos de texto */
    +'<input id="nn-titulo" class="adm-input" placeholder="Título de la noticia">'
    +'<textarea id="nn-texto" class="adm-textarea" rows="3" placeholder="Texto de la noticia..."></textarea>'
-   +'<div class="adm-label" style="margin-top:2px">ORIENTACIÓN DE LA FOTO</div>'
-   +'<div style="display:flex;gap:7px;margin-bottom:2px">'
-   +'<button id="nn-ori-h" onclick="setOrientNoticia(\'horizontal\')" style="flex:1;padding:9px 7px;border-radius:8px;background:rgba(204,10,10,0.25);border:1.5px solid rgba(204,10,10,0.5);color:#fff;font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">🖼️ HORIZONTAL (ACOSTADA)</button>'
-   +'<button id="nn-ori-v" onclick="setOrientNoticia(\'vertical\')" style="flex:1;padding:9px 7px;border-radius:8px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">📱 VERTICAL (PARADA)</button>'
-   +'</div>'
-   +'<input type="hidden" id="nn-orientacion" value="horizontal">'
    +'<input id="nn-tag" class="adm-input" placeholder="Etiqueta: LOCAL · POLÍTICA · ECONOMÍA">'
    +'<input id="nn-fuente" class="adm-input" placeholder="Fuente: El Correo, Milenio, etc.">'
    +'<input id="nn-link" class="adm-input" placeholder="Enlace de la nota (URL completa)">'
@@ -1815,10 +1758,9 @@ function publicarNoticia(){
   var tag=document.getElementById('nn-tag').value.trim()||'LOCAL';
   var fuente=document.getElementById('nn-fuente').value.trim();
   var link=document.getElementById('nn-link').value.trim();
-  var orientacion=document.getElementById('nn-orientacion')?document.getElementById('nn-orientacion').value:'horizontal';
   if(!titulo||!texto){alert('Falta título o texto');return;}
   var news=getNoticias();
-  news.unshift({id:Date.now(),titulo:titulo,texto:texto,img:img,tag:tag,fuente:fuente,link:link,orientacion:orientacion});
+  news.unshift({id:Date.now(),titulo:titulo,texto:texto,img:img,tag:tag,fuente:fuente,link:link});
   if(news.length>6)news=news.slice(0,6);
   setNoticias(news);
   ['nn-titulo','nn-texto','nn-img','nn-tag','nn-fuente','nn-link'].forEach(function(id){
@@ -1890,201 +1832,6 @@ function adminGuardarAjustes(){
   var be=localStorage.getItem('es_img_btnEnc');if(be)aplicarBtnImg('btnEnc','btnEncFb',be);
   var bp=localStorage.getItem('es_img_btnPeso');if(bp)aplicarBtnImg('btnPeso','btnPesoFb',bp);
   var bt=localStorage.getItem('es_img_trivia');if(bt)aplicarTriviaImg(bt);
-})();
-
-/* ── LED PREGUNTA BOX ── */
-(function(){
-  var DEFAULT_PREGUNTA='¿POR QUIÉN VOTARÍAS HOY EN SILAO?';
-  var _ledHue=0;
-  var _ledRafId=null;
-
-  function getLedPregunta(){
-    return localStorage.getItem('es_led_pregunta')||DEFAULT_PREGUNTA;
-  }
-
-  // Actualiza glow color del texto ciclando hue
-  function animarGlowLed(){
-    _ledHue=(_ledHue+0.3)%360;
-    var color='hsl('+_ledHue+',100%,65%)';
-    var el=document.getElementById('ledPreguntaText');
-    if(el)el.style.textShadow='0 0 12px '+color+',0 0 28px '+color+',0 0 48px '+color;
-    var box=document.getElementById('ledPreguntaBox');
-    if(box)box.style.boxShadow='inset 0 0 40px rgba(0,0,0,0.6), 0 0 0 2px hsla('+_ledHue+',80%,50%,0.25)';
-    _ledRafId=requestAnimationFrame(animarGlowLed);
-  }
-
-  var _typeTimer=null;
-  var _eraseTimer=null;
-  var _pauseTimer=null;
-
-  function escribirLed(texto){
-    var el=document.getElementById('ledPreguntaText');
-    if(!el)return;
-    var i=0;el.textContent='';
-    if(_typeTimer)clearTimeout(_typeTimer);
-    function step(){
-      if(i<texto.length){
-        el.textContent+=texto[i];i++;
-        _typeTimer=setTimeout(step,45);
-      }else{
-        // pausa 20s
-        _pauseTimer=setTimeout(function(){borrarLed(texto);},20000);
-      }
-    }
-    step();
-  }
-
-  function borrarLed(texto){
-    var el=document.getElementById('ledPreguntaText');
-    if(!el)return;
-    if(_eraseTimer)clearTimeout(_eraseTimer);
-    function step(){
-      var t=el.textContent;
-      if(t.length>0){
-        el.textContent=t.slice(0,-1);
-        _eraseTimer=setTimeout(step,22);
-      }else{
-        setTimeout(function(){escribirLed(texto);},400);
-      }
-    }
-    step();
-  }
-
-  function actualizarContadorLedFn(inp){
-    var v=(inp.value||'').length;
-    var ctr=document.getElementById('ledContador');
-    if(ctr)ctr.textContent=v+'/80';
-    if(v>0){
-      var txt=inp.value.toUpperCase();
-      localStorage.setItem('es_led_pregunta',txt);
-      // reiniciar animación con nuevo texto
-      if(_typeTimer)clearTimeout(_typeTimer);
-      if(_eraseTimer)clearTimeout(_eraseTimer);
-      if(_pauseTimer)clearTimeout(_pauseTimer);
-      var el=document.getElementById('ledPreguntaText');
-      if(el)el.textContent='';
-      setTimeout(function(){escribirLed(txt);},200);
-    }
-  }
-  window.actualizarContadorLed=actualizarContadorLedFn;
-
-  // Canvas dots girando alrededor del cuadro
-  function initLedCanvas(){
-    var wrap=document.getElementById('ledPreguntaWrap');
-    var canvas=document.getElementById('ledDotsCanvas');
-    if(!canvas||!wrap)return;
-    var ctx=canvas.getContext('2d');
-    var angle=0;
-    var dots=24;
-    function resize(){
-      canvas.width=wrap.offsetWidth;
-      canvas.height=wrap.getBoundingClientRect().height||110;
-    }
-    resize();
-    window.addEventListener('resize',resize);
-    function drawDots(){
-      resize();
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      var w=canvas.width,h=canvas.height;
-      var perim=2*(w+h);
-      for(var d=0;d<dots;d++){
-        var prog=((d/dots)+angle)%1;
-        var dist=prog*perim;
-        var px,py;
-        if(dist<w){px=dist;py=0;}
-        else if(dist<w+h){px=w;py=dist-w;}
-        else if(dist<2*w+h){px=w-(dist-w-h);py=h;}
-        else{px=0;py=h-(dist-2*w-h);}
-        var hue2=(_ledHue+d*(360/dots))%360;
-        var alpha=0.5+0.5*Math.sin(prog*Math.PI*2);
-        ctx.beginPath();
-        ctx.arc(px,py,3,0,Math.PI*2);
-        ctx.fillStyle='hsla('+hue2+',100%,65%,'+alpha+')';
-        ctx.fill();
-      }
-      angle=(angle+0.002)%1;
-      requestAnimationFrame(drawDots);
-    }
-    drawDots();
-  }
-
-  // Inicializar al cargar
-  document.addEventListener('DOMContentLoaded',function(){
-    initLedCanvas();
-    animarGlowLed();
-    escribirLed(getLedPregunta());
-    // Prefill input
-    var inp=document.getElementById('ledPreguntaInput');
-    if(inp)inp.value=getLedPregunta();
-    var ctr=document.getElementById('ledContador');
-    if(ctr)ctr.textContent=(getLedPregunta().length)+'/80';
-  });
-  // Por si DOMContentLoaded ya pasó
-  if(document.readyState!=='loading'){
-    setTimeout(function(){
-      initLedCanvas();
-      animarGlowLed();
-      escribirLed(getLedPregunta());
-      var inp=document.getElementById('ledPreguntaInput');
-      if(inp)inp.value=getLedPregunta();
-      var ctr=document.getElementById('ledContador');
-      if(ctr)ctr.textContent=(getLedPregunta().length)+'/80';
-    },100);
-  }
-})();
-
-/* ── AVISO CIERRE ENCUESTA LED ── */
-(function(){
-  var MENSAJES=[
-    '⚠️ ESTA ENCUESTA CIERRA EL 1 DE SEPTIEMBRE 2026',
-    '🗳️ TU VOTO CUENTA · PARTICIPA ANTES DEL 1 SEP 2026',
-    '📅 CIERRE: 1 SEPTIEMBRE 2026 · ¡PARTICIPA AHORA!'
-  ];
-  var _idx=0;
-  var _hue=180;
-  var _raf=null;
-  var _typeT=null;
-  var _eraseT=null;
-  var _pauseT=null;
-
-  function animarGlowAviso(){
-    _hue=(_hue+0.4)%360;
-    var el=document.getElementById('avisoCierre');
-    if(el)el.style.textShadow='0 0 10px hsl('+_hue+',100%,65%),0 0 24px hsl('+_hue+',100%,55%)';
-    _raf=requestAnimationFrame(animarGlowAviso);
-  }
-
-  function escribirAviso(txt){
-    var el=document.getElementById('avisoCierre');
-    if(!el)return;
-    var i=0;el.textContent='';
-    if(_typeT)clearTimeout(_typeT);
-    function step(){
-      if(i<txt.length){el.textContent+=txt[i];i++;_typeT=setTimeout(step,38);}
-      else{_pauseT=setTimeout(function(){borrarAviso(txt);},20000);}
-    }
-    step();
-  }
-
-  function borrarAviso(txt){
-    var el=document.getElementById('avisoCierre');
-    if(!el)return;
-    if(_eraseT)clearTimeout(_eraseT);
-    function step(){
-      var t=el.textContent;
-      if(t.length>0){el.textContent=t.slice(0,-1);_eraseT=setTimeout(step,18);}
-      else{
-        _idx=(_idx+1)%MENSAJES.length;
-        setTimeout(function(){escribirAviso(MENSAJES[_idx]);},400);
-      }
-    }
-    step();
-  }
-
-  setTimeout(function(){
-    animarGlowAviso();
-    escribirAviso(MENSAJES[0]);
-  },500);
 })();
 
 /* ── INIT: cargar votos (Supabase o local) ── */
