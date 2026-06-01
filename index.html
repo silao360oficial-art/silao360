@@ -269,7 +269,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .btns-hero{padding:14px 14px 8px;display:flex;flex-direction:column;gap:10px;position:relative;z-index:2}
 .btn-enc{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:16px;border:2px solid rgba(255,255,255,0.2);transition:all .22s;overflow:hidden;box-shadow:0 8px 32px rgba(204,10,10,0.6);background:linear-gradient(135deg,#cc0a0a,#ff3333)}
 .btn-enc:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(204,10,10,0.75)}
-.btn-enc-fallback{width:100%;padding:22px 18px;display:flex;align-items:center;justify-content:center;gap:12px;font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,32px);letter-spacing:4px;color:#fff}
+.btn-enc-fallback{width:100%;padding:22px 18px;display:flex;align-items:center;justify-content:center;gap:14px;font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,8vw,44px);letter-spacing:4px;color:#fff}
 .btn-enc img{width:100%;display:block;border-radius:14px}
 .btns-sub{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn-trivia{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:14px;border:2px solid rgba(255,255,255,0.15);transition:all .22s;overflow:hidden;box-shadow:0 4px 20px rgba(109,40,217,0.5);background:linear-gradient(135deg,#4c1d95,#7c3aed)}
@@ -631,8 +631,8 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 /* HERO 4-GRID BTNS */
 .hero-4grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .hbtn4{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:16px;border:2px solid rgba(255,255,255,0.18);transition:transform .15s,box-shadow .15s;overflow:hidden;position:relative;min-height:74px}
-.hfb4{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:14px 8px;font-family:'Bebas Neue',sans-serif;font-size:clamp(13px,3.5vw,18px);letter-spacing:2px;color:#fff;pointer-events:none;width:100%}
-.hico4{font-size:clamp(22px,6vw,30px);line-height:1;display:block}
+.hfb4{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 8px;font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5.5vw,30px);letter-spacing:2px;color:#fff;pointer-events:none;width:100%}
+.hico4{font-size:clamp(30px,8vw,40px);line-height:1;display:block}
 
 /* CHUSCO effect: bounce + spin + color flash */
 @keyframes chuscoBounce{
@@ -1284,312 +1284,703 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
   </div>
 </div>
 
-<!-- ══ MODAL ADMIN ══ -->
-<div id="adminModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);align-items:flex-start;justify-content:center;padding:12px;overflow-y:auto">
-  <div style="background:#0f172a;border:1px solid rgba(255,255,255,0.09);border-radius:20px;width:100%;max-width:470px;overflow:hidden;margin:auto">
+<!-- ══ MODAL ADMIN v25 ══ -->
+<style>
+/* ══ ADMIN V25 — PANEL VISUAL MEJORADO ══ */
+.adm2-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.95);overflow-y:auto;padding:0}
+.adm2-overlay.open{display:block}
+.adm2-shell{background:#080f1c;width:100%;min-height:100vh;display:flex;flex-direction:column;max-width:560px;margin:0 auto;position:relative}
+.adm2-header{background:linear-gradient(135deg,#cc0a0a,#7c0a0a);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;box-shadow:0 4px 20px rgba(204,10,10,0.5)}
+.adm2-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:#fff}
+.adm2-subtitle{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5);margin-top:1px}
+.adm2-close{background:rgba(255,255,255,0.15);border:none;border-radius:10px;width:44px;height:44px;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent}
+/* NAV SECTIONS */
+.adm2-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 14px 4px;background:#080f1c}
+.adm2-nav-btn{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;min-height:68px;justify-content:center}
+.adm2-nav-btn.active{background:rgba(204,10,10,0.15);border-color:rgba(204,10,10,0.5);box-shadow:0 0 14px rgba(204,10,10,0.2)}
+.adm2-nav-ico{font-size:22px;line-height:1}
+.adm2-nav-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1.5px;color:rgba(255,255,255,0.6);text-align:center;line-height:1.2}
+.adm2-nav-btn.active .adm2-nav-lbl{color:#ff6666}
+/* SECTIONS */
+.adm2-section{display:none;flex-direction:column;gap:0;padding:12px 14px 40px}
+.adm2-section.active{display:flex}
+/* CARDS */
+.adm2-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.09);border-radius:16px;overflow:hidden;margin-bottom:14px}
+.adm2-card-header{padding:14px 16px 10px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07)}
+.adm2-card-ico{font-size:20px;line-height:1;flex-shrink:0}
+.adm2-card-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:2px;color:#fff}
+.adm2-card-desc{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);margin-top:1px;letter-spacing:.5px}
+.adm2-card-body{padding:14px 16px}
+/* INPUTS GRANDES */
+.adm2-input{width:100%;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;outline:none;box-sizing:border-box;margin-bottom:8px;-webkit-appearance:none}
+.adm2-input:focus{border-color:rgba(204,10,10,0.6);background:rgba(255,255,255,0.1)}
+.adm2-input::placeholder{color:rgba(255,255,255,0.3);font-weight:600}
+.adm2-textarea{width:100%;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:15px;outline:none;resize:vertical;box-sizing:border-box;margin-bottom:8px}
+.adm2-select{width:100%;background:#1e293b;border:1.5px solid rgba(255,255,255,0.15);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:15px;outline:none;box-sizing:border-box;margin-bottom:8px}
+.adm2-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.5);margin-bottom:6px;display:block}
+/* BOTONES GRANDES */
+.adm2-btn{width:100%;border:none;border-radius:12px;padding:16px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;margin-top:6px}
+.adm2-btn:active{transform:scale(.97)}
+.adm2-btn-red{background:linear-gradient(135deg,#cc0a0a,#ff3333);box-shadow:0 4px 16px rgba(204,10,10,0.4)}
+.adm2-btn-green{background:linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 4px 16px rgba(34,197,94,0.3)}
+.adm2-btn-blue{background:linear-gradient(135deg,#1a3a8f,#2563eb);box-shadow:0 4px 16px rgba(37,99,235,0.3)}
+.adm2-btn-teal{background:linear-gradient(135deg,#065f46,#059669);box-shadow:0 4px 16px rgba(5,150,105,0.3)}
+.adm2-btn-amber{background:linear-gradient(135deg,#92400e,#f59e0b);color:#000}
+.adm2-btn-ghost{background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);font-size:16px}
+/* FEEDBACK STATES */
+.adm2-feedback{display:none;padding:12px 16px;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;letter-spacing:2px;text-align:center;margin-top:8px}
+.adm2-feedback.ok{background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;display:block}
+.adm2-feedback.err{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#f87171;display:block}
+.adm2-feedback.loading{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);display:block}
+/* IMAGE UPLOADER */
+.adm2-img-zone{border:2px dashed rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;gap:12px;padding:12px;cursor:pointer;transition:all .2s;background:rgba(255,255,255,0.03);margin-bottom:10px;-webkit-tap-highlight-color:transparent}
+.adm2-img-zone:active{border-color:rgba(204,10,10,0.6);background:rgba(204,10,10,0.06)}
+.adm2-img-thumb{width:72px;height:72px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px}
+.adm2-img-thumb img{width:100%;height:100%;object-fit:contain;padding:4px}
+.adm2-img-info{flex:1;min-width:0}
+.adm2-img-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;color:#fff;margin-bottom:3px}
+.adm2-img-hint{font-family:'Barlow Condensed',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);letter-spacing:.5px}
+.adm2-img-status{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;margin-top:3px}
+.adm2-img-status.has-img{color:#4ade80}
+.adm2-img-status.no-img{color:rgba(255,255,255,0.3)}
+/* WHERE USED badge */
+.adm2-where{display:inline-flex;align-items:center;gap:4px;background:rgba(37,99,235,0.15);border:1px solid rgba(37,99,235,0.3);border-radius:20px;padding:3px 10px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:#60a5fa;margin:2px 2px 2px 0}
+/* PARTY GRID */
+.adm2-party-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.adm2-party-card{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.adm2-party-card:active{transform:scale(.96)}
+.adm2-party-thumb{width:64px;height:64px;border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:22px}
+.adm2-party-thumb img{width:100%;height:100%;object-fit:contain;padding:4px}
+.adm2-party-name{font-family:'Bebas Neue',sans-serif;font-size:16px;color:#fff;letter-spacing:2px;text-align:center}
+.adm2-party-st{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-align:center}
+.adm2-party-st.has{color:#4ade80}
+.adm2-party-st.no{color:rgba(255,255,255,0.3)}
+/* MULTIMEDIA GRID */
+.adm2-media-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.adm2-media-tile{border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent;position:relative}
+.adm2-media-tile:active{transform:scale(.94)}
+.adm2-media-tile img{width:100%;height:100%;object-fit:contain;padding:6px}
+.adm2-media-tile-lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;color:#fff;text-align:center;padding:4px 2px}
+.adm2-media-tile-ico{font-size:24px;line-height:1}
+.adm2-media-tile-name{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;color:rgba(255,255,255,0.5);letter-spacing:1px;text-align:center;padding:0 4px}
+/* BANNER PREVIEW */
+.adm2-banner-prev{width:100%;height:130px;border-radius:12px;overflow:hidden;position:relative;margin-bottom:12px;display:flex;flex-direction:column;justify-content:flex-end}
+.adm2-banner-prev-bg{position:absolute;inset:0;background:linear-gradient(135deg,#003f8a,#1a5fd4)}
+.adm2-banner-prev-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.adm2-banner-prev-content{position:relative;z-index:2;padding:10px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.75))}
+/* VOTOS TABLE */
+.adm2-voto-row{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.08);border-radius:12px;padding:13px 14px;position:relative;overflow:hidden;margin-bottom:8px}
+.adm2-voto-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(204,10,10,0.12);transition:width .5s ease}
+.adm2-voto-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;position:relative}
+.adm2-voto-name{font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:#fff;flex:1;position:relative}
+.adm2-voto-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;position:relative}
+.adm2-voto-pct{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,0.5);position:relative;min-width:38px;text-align:right}
+/* STAT INFO */
+.adm2-stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.adm2-stat-card{background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:14px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.adm2-stat-card:active{transform:scale(.96);border-color:rgba(204,10,10,0.5)}
+.adm2-stat-sym{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:2px;display:block}
+.adm2-stat-name{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:rgba(255,255,255,0.8);letter-spacing:1px;display:block;margin-top:2px}
+.adm2-stat-tip{font-family:'Barlow',sans-serif;font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;margin-top:6px;display:none}
+.adm2-stat-card.expanded .adm2-stat-tip{display:block}
+.adm2-stat-card.expanded{border-color:rgba(74,222,128,0.4);background:rgba(74,222,128,0.06)}
+/* SEPARADOR DE SECCIÓN */
+.adm2-section-sep{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;color:rgba(255,255,255,0.3);padding:8px 0 10px;display:flex;align-items:center;gap:10px}
+.adm2-section-sep::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.08)}
+/* LOGIN */
+.adm2-login{padding:40px 24px;display:flex;flex-direction:column;align-items:center;gap:16px;min-height:100vh;justify-content:center}
+/* FOTO CAND MODAL */
+#adm2FotoModal{display:none;position:fixed;inset:0;z-index:10100;background:rgba(0,0,0,0.96);align-items:center;justify-content:center;padding:20px}
+#adm2FotoModal.open{display:flex}
+.adm2-foto-box{background:#0f172a;border:1.5px solid rgba(255,255,255,0.12);border-radius:20px;width:100%;max-width:380px;padding:24px;display:flex;flex-direction:column;gap:14px}
+/* TOGGLE */
+.adm2-toggle{display:flex;align-items:center;gap:12px;padding:10px 0}
+.adm2-toggle input[type=checkbox]{width:46px;height:26px;cursor:pointer;accent-color:#cc0a0a}
+.adm2-toggle-lbl{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#fff;letter-spacing:1px}
+</style>
+
+<div id="adminModal" class="adm2-overlay">
+  <div class="adm2-shell">
 
     <!-- LOGIN -->
-    <div id="adminLogin" style="padding:32px 24px">
-      <div style="text-align:center;margin-bottom:24px">
-        <div style="font-size:36px;margin-bottom:8px">🔐</div>
-        <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:#fff">PANEL 101</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.28);margin-top:4px">ENCUESTA SILAO · ADMINISTRACIÓN</div>
+    <div id="adminLogin" class="adm2-login">
+      <div style="text-align:center">
+        <div style="font-size:52px;margin-bottom:10px">🔐</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:5px;color:#fff">PANEL 101</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.3);margin-top:4px">ENCUESTA SILAO · ADMINISTRACIÓN</div>
       </div>
-      <input id="adminPass" type="password" placeholder="Contraseña" class="adm-input" style="margin-bottom:10px;font-size:16px;letter-spacing:3px;padding:14px 16px" onkeydown="if(event.key==='Enter')verificarAdmin()">
-      <div id="adminErr" style="display:none;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-align:center;margin-bottom:10px;padding:8px;background:rgba(248,113,113,0.1);border-radius:8px">⚠️ CONTRASEÑA INCORRECTA</div>
-      <button onclick="verificarAdmin()" style="width:100%;background:linear-gradient(135deg,#cc0a0a,#ff3333);border:none;border-radius:12px;padding:15px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;cursor:pointer">ENTRAR AL PANEL</button>
-      <button onclick="cerrarAdmin()" style="width:100%;background:transparent;border:none;color:rgba(255,255,255,0.18);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:10px;padding:7px">CANCELAR</button>
+      <input id="adminPass" type="password" placeholder="Contraseña" class="adm2-input" style="text-align:center;font-size:20px;letter-spacing:5px;padding:18px 20px" onkeydown="if(event.key==='Enter')verificarAdmin()">
+      <div id="adminErr" style="display:none;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;text-align:center;padding:12px;background:rgba(248,113,113,0.1);border-radius:10px;width:100%">⚠️ CONTRASEÑA INCORRECTA</div>
+      <button onclick="verificarAdmin()" class="adm2-btn adm2-btn-red" style="font-size:22px;padding:18px">ENTRAR AL PANEL</button>
+      <button onclick="cerrarAdmin()" style="background:transparent;border:none;color:rgba(255,255,255,0.25);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;padding:8px">CANCELAR</button>
     </div>
 
-    <!-- PANEL -->
-    <div id="adminPanel" style="display:none">
-      <div style="background:linear-gradient(135deg,#cc0a0a,#7c0a0a);padding:14px 18px;display:flex;align-items:center;justify-content:space-between">
+    <!-- PANEL PRINCIPAL -->
+    <div id="adminPanel" style="display:none;flex-direction:column;min-height:100vh">
+      <!-- HEADER -->
+      <div class="adm2-header">
         <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:3px;color:#fff">PANEL 101</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.5)">ENCUESTA SILAO</div>
+          <div class="adm2-title">PANEL 101</div>
+          <div class="adm2-subtitle">ENCUESTA SILAO · ADMINISTRACIÓN</div>
         </div>
-        <button onclick="cerrarAdmin()" style="background:rgba(255,255,255,0.15);border:none;border-radius:8px;padding:7px 13px;color:#fff;cursor:pointer;font-size:16px">✕</button>
+        <button onclick="cerrarAdmin()" class="adm2-close">✕</button>
       </div>
 
-      <!-- TABS -->
-      <div style="display:flex;background:#1e293b;border-bottom:1px solid rgba(255,255,255,0.07);overflow-x:auto">
-        <button onclick="adminTab('supabase')" id="tab-supabase" class="adm-tab active">📡 SUPABASE</button>
-        <button onclick="adminTab('fechas')" id="tab-fechas" class="adm-tab">📅 FECHAS</button>
-        <button onclick="adminTab('cands')" id="tab-cands" class="adm-tab">👤 CANDS</button>
-        <button onclick="adminTab('votos')" id="tab-votos" class="adm-tab">📊 VOTOS</button>
-        <button onclick="adminTab('banner')" id="tab-banner" class="adm-tab">🎠 BANNER</button>
-        <button onclick="adminTab('texto')" id="tab-texto" class="adm-tab">✍️ TEXTO</button>
-        <button onclick="adminTab('noticias')" id="tab-noticias" class="adm-tab">📰 NOTICIAS</button>
-        <button onclick="adminTab('ajustes')" id="tab-ajustes" class="adm-tab">⚙️ AJUSTES</button>
-        <button onclick="adminTab('buzon')" id="tab-buzon" class="adm-tab">📬 BUZÓN</button>
-        <button onclick="adminTab('directos')" id="tab-directos" class="adm-tab">💬 DIRECTOS</button>
+      <!-- NAV GRID -->
+      <div class="adm2-nav" id="adm2Nav">
+        <button class="adm2-nav-btn active" onclick="adm2Sec('multimedia')" id="adm2btn-multimedia">
+          <span class="adm2-nav-ico">🖼️</span><span class="adm2-nav-lbl">MULTIMEDIA</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('logos')" id="adm2btn-logos">
+          <span class="adm2-nav-ico">🏅</span><span class="adm2-nav-lbl">LOGOS</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('candidatos')" id="adm2btn-candidatos">
+          <span class="adm2-nav-ico">👤</span><span class="adm2-nav-lbl">CANDIDATOS</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('carrusel')" id="adm2btn-carrusel">
+          <span class="adm2-nav-ico">🎠</span><span class="adm2-nav-lbl">CARRUSEL</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('botones')" id="adm2btn-botones">
+          <span class="adm2-nav-ico">🔳</span><span class="adm2-nav-lbl">BOTONES</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('estadisticas')" id="adm2btn-estadisticas">
+          <span class="adm2-nav-ico">📊</span><span class="adm2-nav-lbl">ESTADÍSTICAS</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('votos')" id="adm2btn-votos">
+          <span class="adm2-nav-ico">🗳️</span><span class="adm2-nav-lbl">VOTOS</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('config')" id="adm2btn-config">
+          <span class="adm2-nav-ico">⚙️</span><span class="adm2-nav-lbl">CONFIG</span>
+        </button>
+        <button class="adm2-nav-btn" onclick="adm2Sec('buzon')" id="adm2btn-buzon">
+          <span class="adm2-nav-ico">📬</span><span class="adm2-nav-lbl">BUZÓN</span>
+        </button>
       </div>
 
-      <!-- TAB SUPABASE -->
-      <div id="panel-supabase" style="padding:16px;display:flex;flex-direction:column;gap:11px;max-height:60vh;overflow-y:auto">
-        <div class="sb-config-box">
-          <div class="sb-config-title">🟢 CONEXIÓN SUPABASE</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:1px;line-height:1.6">
-            Pega aquí tu URL y tu KEY de Supabase.<br>
-            Las encuentras en: <strong style="color:rgba(255,255,255,0.7)">Supabase → Settings → API</strong><br>
-            Los datos se guardan en tu dispositivo (localStorage).
-          </div>
-          <div class="adm-label">PROJECT URL</div>
-          <input id="sbUrl" class="adm-input" placeholder="https://xxxxxxxxxxxx.supabase.co" style="font-size:11px">
-          <div class="adm-label">ANON / PUBLIC KEY</div>
-          <input id="sbKey" class="adm-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." style="font-size:10px">
-          <div class="adm-label">NOMBRE DE TU TABLA</div>
-          <input id="sbTable" class="adm-input" placeholder="votos" value="votos" style="font-size:12px">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);line-height:1.7">
-            Tu tabla necesita estas columnas:<br>
-            <strong style="color:rgba(255,255,255,0.55)">partido</strong> (text) · <strong style="color:rgba(255,255,255,0.55)">votos</strong> (integer)
-          </div>
-          <button onclick="guardarYConectarSupabase()" class="adm-save-btn" style="background:linear-gradient(135deg,#065f46,#059669)">🔌 CONECTAR Y GUARDAR</button>
-          <div id="sbTestResult" style="display:none;text-align:center;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px"></div>
-        </div>
+      <!-- ═══════════ SECCIÓN: MULTIMEDIA ═══════════ -->
+      <div id="adm2sec-multimedia" class="adm2-section active">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.35);padding:12px 0 8px">RESUMEN DE TODOS TUS ARCHIVOS DE IMAGEN · TOCA UNO PARA CAMBIAR</div>
 
-        <div class="adm-row">
-          <div class="adm-label">📋 INSTRUCCIONES — CREAR TABLA EN SUPABASE</div>
-          <div style="font-family:'Barlow',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);line-height:1.75">
-            1. Ve a <strong style="color:#fff">supabase.com</strong> → tu proyecto<br>
-            2. Clic en <strong style="color:#fff">Table Editor → New Table</strong><br>
-            3. Nombre: <strong style="color:#4ade80">votos</strong><br>
-            4. Agrega columna: <strong style="color:#4ade80">partido</strong> (type: text)<br>
-            5. Agrega columna: <strong style="color:#4ade80">votos</strong> (type: int4, default: 0)<br>
-            6. Guarda y ve a <strong style="color:#fff">Settings → API</strong> para copiar URL y Key<br>
-            7. Regresa aquí y pégalos arriba ☝️<br><br>
-            <strong style="color:#fbbf24">Importante:</strong> En Authentication → Policies, habilita lectura anónima (anon SELECT) para la tabla.
-          </div>
-        </div>
+        <div class="adm2-section-sep">LOGOS DE PARTIDOS</div>
+        <div class="adm2-media-grid" id="mm-logos-grid"><!-- se llena por JS --></div>
 
-        <div class="adm-row">
-          <div class="adm-label">🔄 MODO ACTUAL</div>
-          <div id="modoActualTxt" style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.6)">Cargando...</div>
-        </div>
+        <div class="adm2-section-sep">FOTOS DE CANDIDATOS</div>
+        <div class="adm2-media-grid" id="mm-fotos-grid"><!-- se llena por JS --></div>
+
+        <div class="adm2-section-sep">IMÁGENES DE BOTONES</div>
+        <div class="adm2-media-grid" id="mm-btns-grid"><!-- se llena por JS --></div>
+
+        <div class="adm2-section-sep">BANNERS DEL CARRUSEL</div>
+        <div class="adm2-media-grid" id="mm-banners-grid"><!-- se llena por JS --></div>
+
+        <input type="file" id="mm-file-input" accept="image/*" style="display:none" onchange="mmHandleUpload(event)">
       </div>
 
-      <!-- TAB FECHAS -->
-      <div id="panel-fechas" style="padding:16px;display:none;flex-direction:column;gap:12px;max-height:60vh;overflow-y:auto">
-
-        <div class="adm-row">
-          <div class="adm-label" style="font-size:12px;letter-spacing:2px;color:#fff;margin-bottom:4px">🗳️ FECHA — PRÓXIMAS ELECCIONES</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:6px">
-            Esta fecha aparece en el contador grande de la izquierda.<br>Formato: YYYY-MM-DD (ej. 2025-06-01)
-          </div>
-          <div class="adm-label">FECHA DE ELECCIONES</div>
-          <input id="fechaElec" class="adm-input" type="date" value="2025-06-01" style="font-size:14px;padding:10px 12px">
-          <div class="adm-label">ETIQUETA (texto que aparece en el contador)</div>
-          <input id="labelElec" class="adm-input" value="PRÓXIMAS ELECCIONES MUNICIPALES" placeholder="PRÓXIMAS ELECCIONES MUNICIPALES">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.28)">Cuando llegue la fecha aparece: 🗳️ DÍA DE ELECCIONES</div>
-        </div>
-
-        <div class="adm-row">
-          <div class="adm-label" style="font-size:12px;letter-spacing:2px;color:#fff;margin-bottom:4px">📋 FECHA — CIERRE ENCUESTA SIN ROSTRO</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:6px">
-            Esta fecha aparece en el contador de la derecha.<br>Marca cuándo termina la primera etapa de la encuesta.
-          </div>
-          <div class="adm-label">FECHA DE CIERRE</div>
-          <input id="fechaEncierre" class="adm-input" type="date" style="font-size:14px;padding:10px 12px">
-          <div class="adm-label">ETIQUETA (texto que aparece)</div>
-          <input id="labelEnc" class="adm-input" value="CIERRE DE LA ENCUESTA SIN ROSTRO" placeholder="CIERRE DE LA ENCUESTA SIN ROSTRO">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.28)">Cuando llegue la fecha aparece: ✅ ENCUESTA CERRADA</div>
-        </div>
-
-        <button onclick="guardarFechas()" class="adm-save-btn" style="background:linear-gradient(135deg,#1a3a8f,#2563eb)">💾 GUARDAR FECHAS Y ETIQUETAS</button>
-        <div id="fechasMsg" style="display:none;text-align:center;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ GUARDADO</div>
-      </div>
-
-      <!-- TAB CANDS -->
-      <div id="panel-cands" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <div class="adm-label">CANDIDATOS</div>
-          <button onclick="agregarCandidato()" style="background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.28);border-radius:8px;padding:7px 13px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;cursor:pointer">➕ AGREGAR</button>
-        </div>
-        <div id="candEditorWrap" style="display:flex;flex-direction:column;gap:9px"></div>
-        <button onclick="adminGuardarCands()" class="adm-save-btn" style="background:linear-gradient(135deg,#15803d,#22c55e)">💾 GUARDAR CANDIDATOS</button>
-      </div>
-
-      <!-- TAB VOTOS -->
-      <div id="panel-votos" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
-        <div class="adm-label">RESULTADOS DESDE SUPABASE</div>
-        <div id="votosTable" style="display:flex;flex-direction:column;gap:6px"></div>
-        <button onclick="adminRefreshVotos()" style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);border-radius:9px;padding:11px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;margin-top:6px">🔄 ACTUALIZAR DESDE SUPABASE</button>
-        <div id="votosMsg" style="display:none;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;padding:10px;background:rgba(74,222,128,0.1);border-radius:8px"></div>
-      </div>
-
-      <!-- TAB BANNER -->
-      <div id="panel-banner" style="padding:16px;display:none;flex-direction:column;gap:9px">
-        <div class="adm-label">🎴 BANNERS DEL CARRUSEL</div>
-
-        <!-- AGREGAR NUEVO BANNER CANDIDATO -->
-        <div class="adm-row" style="border:1.5px solid rgba(255,200,0,0.3);background:rgba(255,200,0,0.05)">
-          <div class="adm-label" style="color:#fbbf24;font-size:11px">➕ AGREGAR BANNER CANDIDATO</div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <div id="nb-logo-prev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.25);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;cursor:pointer" onclick="document.getElementById('nb-logo-file').click()">🖼️</div>
-            <div style="flex:1;display:flex;flex-direction:column;gap:6px">
-              <input id="nb-cand" class="adm-input" placeholder="Nombre candidato/a" style="font-size:13px">
-              <input id="nb-partido" class="adm-input" placeholder="Partido (PAN, MORENA...)" style="font-size:13px">
+      <!-- ═══════════ SECCIÓN: LOGOS ═══════════ -->
+      <div id="adm2sec-logos" class="adm2-section">
+        <div class="adm2-card" style="border-color:rgba(255,200,50,0.25);background:rgba(255,200,50,0.04)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">⚠️</span>
+            <div>
+              <div class="adm2-card-title">IMPORTANTE</div>
+              <div class="adm2-card-desc">LOGOS Y FOTOS SON COMPLETAMENTE INDEPENDIENTES</div>
             </div>
           </div>
-          <input id="nb-sub" class="adm-input" placeholder="Subtítulo o slogan" style="font-size:12px">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-            <input id="nb-tag" class="adm-input" placeholder="🔵 PAN" style="font-size:12px">
-            <input id="nb-color1" type="color" value="#003f8a" style="width:100%;height:38px;border-radius:7px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);cursor:pointer;padding:2px" title="Color fondo 1">
+          <div class="adm2-card-body" style="padding-top:10px">
+            <div style="font-family:'Barlow',sans-serif;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.65">
+              🏅 <strong style="color:#fbbf24">LOGO DEL PARTIDO</strong> = emblema oficial del partido. Aparece en encuesta, carrusel y estadísticas.<br><br>
+              📸 <strong style="color:#60a5fa">FOTO DEL CANDIDATO</strong> = foto de la persona. Se gestiona en la sección CANDIDATOS.<br><br>
+              Subir un logo <strong style="color:#fff">NUNCA</strong> reemplaza la foto del candidato.
+            </div>
           </div>
-          <input type="file" id="nb-logo-file" accept="image/*" style="display:none" onchange="nbPreviewLogo(event)">
-          <input type="hidden" id="nb-logo-data" value="">
-          <button onclick="agregarNuevoBanner()" class="adm-save-btn" style="background:linear-gradient(135deg,#92400e,#f59e0b);color:#000">➕ AGREGAR AL CARRUSEL</button>
-          <div id="nb-fb" style="display:none;text-align:center;padding:7px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ BANNER AGREGADO</div>
         </div>
 
-        <!-- Velocidad carrusel -->
-        <div class="adm-row">
-          <div class="adm-label">⚡ VELOCIDAD DEL CARRUSEL</div>
-          <div style="display:flex;align-items:center;gap:10px">
-            <input id="carVelocidad" type="range" min="1" max="120" value="40" step="1" style="flex:1;height:8px;accent-color:#cc0a0a;cursor:pointer" oninput="document.getElementById('carVelVal').textContent=this.value+' seg'">
-            <span id="carVelVal" style="font-family:'Bebas Neue',sans-serif;font-size:18px;color:#fff;min-width:54px">40 seg</span>
+        <div class="adm2-section-sep">LOGOS DE PARTIDOS</div>
+        <div class="adm2-party-grid" id="logos-party-grid"><!-- se llena por JS --></div>
+
+        <!-- Detalle logo seleccionado -->
+        <div id="logo-detail" style="display:none">
+          <div class="adm2-card" id="logo-detail-card">
+            <div class="adm2-card-header">
+              <div id="logo-detail-prev" class="adm2-img-thumb" style="width:54px;height:54px"><span style="font-size:22px">🏅</span></div>
+              <div>
+                <div class="adm2-card-title" id="logo-detail-name">PARTIDO</div>
+                <div class="adm2-card-desc" id="logo-detail-color-name">COLOR</div>
+              </div>
+            </div>
+            <div class="adm2-card-body">
+              <div class="adm2-label">DÓNDE SE USA ESTE LOGO</div>
+              <div style="margin-bottom:12px">
+                <span class="adm2-where">📊 Encuesta</span>
+                <span class="adm2-where">🎠 Carrusel</span>
+                <span class="adm2-where">📈 Estadísticas</span>
+              </div>
+              <div class="adm2-label">SUBIR NUEVO LOGO</div>
+              <div class="adm2-img-zone" onclick="document.getElementById('logo-file-input').click()">
+                <div id="logo-upload-thumb" class="adm2-img-thumb"><span style="font-size:26px">🏅</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-name">Toca para seleccionar imagen</div>
+                  <div class="adm2-img-hint">PNG, JPG o SVG · Fondo transparente recomendado</div>
+                  <div class="adm2-img-status no-img" id="logo-upload-status">Sin imagen nueva</div>
+                </div>
+              </div>
+              <input type="file" id="logo-file-input" accept="image/*" style="display:none" onchange="logoHandleFile(event)">
+              <div id="logo-new-preview" style="display:none;width:100%;height:90px;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.06);border:1.5px solid rgba(74,222,128,0.3);margin-bottom:10px;display:flex;align-items:center;justify-content:center">
+                <img id="logo-new-img" src="" style="max-width:100%;max-height:100%;object-fit:contain;padding:8px">
+              </div>
+              <button onclick="logoGuardar()" class="adm2-btn adm2-btn-green">✅ GUARDAR LOGO Y APLICAR</button>
+              <div id="logo-fb" class="adm2-feedback"></div>
+            </div>
           </div>
-          <button onclick="guardarVelocidadCarrusel()" class="adm-save-btn" style="background:linear-gradient(135deg,#cc0a0a,#ff3333);margin-top:4px">⚡ APLICAR VELOCIDAD</button>
+        </div>
+        <input type="hidden" id="logo-current-id" value="">
+        <input type="hidden" id="logo-new-data" value="">
+      </div>
+
+      <!-- ═══════════ SECCIÓN: CANDIDATOS ═══════════ -->
+      <div id="adm2sec-candidatos" class="adm2-section">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0 12px">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.5)">GESTIÓN DE CANDIDATOS</div>
+          <button onclick="agregarCandidato()" style="background:rgba(74,222,128,0.12);border:1.5px solid rgba(74,222,128,0.3);border-radius:10px;padding:10px 16px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;cursor:pointer;-webkit-tap-highlight-color:transparent">➕ AGREGAR</button>
+        </div>
+        <div id="candEditorWrap" style="display:flex;flex-direction:column;gap:12px"></div>
+        <button onclick="adminGuardarCands()" class="adm2-btn adm2-btn-green" style="margin-top:8px">💾 GUARDAR TODOS LOS CANDIDATOS</button>
+        <div id="cands-fb" class="adm2-feedback"></div>
+      </div>
+
+      <!-- ═══════════ SECCIÓN: CARRUSEL ═══════════ -->
+      <div id="adm2sec-carrusel" class="adm2-section">
+        <!-- AGREGAR NUEVO BANNER -->
+        <div class="adm2-card" style="border-color:rgba(255,200,0,0.25);background:rgba(255,200,0,0.04)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">➕</span>
+            <div>
+              <div class="adm2-card-title">NUEVO BANNER</div>
+              <div class="adm2-card-desc">AGREGAR AL CARRUSEL</div>
+            </div>
+          </div>
+          <div class="adm2-card-body">
+            <!-- Preview tiempo real -->
+            <div class="adm2-banner-prev" id="nb-live-prev">
+              <div class="adm2-banner-prev-bg" id="nb-prev-bg"></div>
+              <img class="adm2-banner-prev-img" id="nb-prev-img" src="">
+              <div class="adm2-banner-prev-content">
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:rgba(255,255,255,0.7);letter-spacing:1px" id="nb-prev-cand">CANDIDATO/A</div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:2px;line-height:1.1" id="nb-prev-txt">TEXTO PRINCIPAL</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px" id="nb-prev-sub">Texto secundario</div>
+              </div>
+            </div>
+            <div class="adm2-label">IMAGEN DE FONDO (opcional)</div>
+            <div class="adm2-img-zone" onclick="document.getElementById('nb-logo-file').click()">
+              <div id="nb-logo-prev" class="adm2-img-thumb"><span style="font-size:26px">🖼️</span></div>
+              <div class="adm2-img-info">
+                <div class="adm2-img-name">Imagen del banner</div>
+                <div class="adm2-img-hint">Se muestra como fondo de la tarjeta</div>
+                <div class="adm2-img-status no-img" id="nb-img-st">Sin imagen</div>
+              </div>
+            </div>
+            <input id="nb-logo-file" type="file" accept="image/*" style="display:none" onchange="nbPreviewLogo(event)">
+            <input type="hidden" id="nb-logo-data" value="">
+            <div class="adm2-label">NOMBRE DEL CANDIDATO</div>
+            <input id="nb-cand" class="adm2-input" placeholder="Nombre del candidato/a" oninput="nbUpdatePreview()">
+            <div class="adm2-label">TEXTO PRINCIPAL</div>
+            <input id="nb-txt-main" class="adm2-input" placeholder="Texto grande del banner" oninput="nbUpdatePreview()">
+            <div class="adm2-label">TEXTO SECUNDARIO</div>
+            <input id="nb-partido" class="adm2-input" placeholder="Partido o slogan" oninput="nbUpdatePreview()">
+            <div class="adm2-label">ETIQUETA</div>
+            <input id="nb-tag" class="adm2-input" placeholder="🔵 PAN">
+            <button onclick="agregarNuevoBanner()" class="adm2-btn adm2-btn-amber">➕ AGREGAR AL CARRUSEL</button>
+            <div id="nb-fb" class="adm2-feedback"></div>
+          </div>
         </div>
 
-        <div id="bannerEditorWrap" style="display:flex;flex-direction:column;gap:8px;max-height:48vh;overflow-y:auto"></div>
+        <!-- VELOCIDAD -->
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">⚡</span>
+            <div><div class="adm2-card-title">VELOCIDAD DEL CARRUSEL</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+              <input id="carVelocidad" type="range" min="1" max="120" value="40" step="1" style="flex:1;height:10px;accent-color:#cc0a0a;cursor:pointer" oninput="document.getElementById('carVelVal').textContent=this.value+' seg'">
+              <span id="carVelVal" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;min-width:60px">40 seg</span>
+            </div>
+            <button onclick="guardarVelocidadCarrusel()" class="adm2-btn adm2-btn-red">⚡ APLICAR VELOCIDAD</button>
+          </div>
+        </div>
+
+        <div class="adm2-section-sep">BANNERS ACTUALES</div>
+        <div id="bannerEditorWrap" style="display:flex;flex-direction:column;gap:12px"></div>
         <input type="file" id="bannerLogoInput" accept="image/*" style="display:none" onchange="procesarBannerLogo(event)">
-        <button onclick="adminGuardarBanner()" class="adm-save-btn" style="background:linear-gradient(135deg,#cc0a0a,#ff3333)">💾 GUARDAR BANNERS</button>
+        <button onclick="adminGuardarBanner()" class="adm2-btn adm2-btn-red" style="margin-top:8px">💾 GUARDAR BANNERS</button>
+        <div id="banner-fb" class="adm2-feedback"></div>
       </div>
 
-      <!-- TAB TEXTO ANIMADO -->
-      <div id="panel-texto" style="padding:16px;display:none;flex-direction:column;gap:11px;max-height:60vh;overflow-y:auto">
-        <div class="adm-row">
-          <div class="adm-label" style="font-size:12px;color:#fff">✍️ TEXTO ANIMADO (arriba de la encuesta)</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6">
-            Este texto aparece letra por letra con efecto de luz negro brillante.<br>
-            Se detiene 20 segundos y luego se borra y repite en bucle.
-          </div>
-          <textarea id="loopMsgAdmin" class="adm-textarea" rows="3" placeholder="Escribe el mensaje animado aquí..." style="font-size:14px;letter-spacing:1px"></textarea>
-          <button onclick="guardarLoopMsg()" class="adm-save-btn" style="background:linear-gradient(135deg,#0f172a,#1e3a8a)">✍️ APLICAR TEXTO ANIMADO</button>
-          <div id="loopMsgFb" style="display:none;text-align:center;padding:8px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ TEXTO ACTUALIZADO</div>
+      <!-- ═══════════ SECCIÓN: BOTONES ═══════════ -->
+      <div id="adm2sec-botones" class="adm2-section">
+        <div style="font-family:'Barlow',sans-serif;font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65;padding:4px 0 14px">
+          Sube una imagen para cada botón. Verás la vista previa inmediata y confirmación de guardado.
         </div>
-        <div class="adm-row">
-          <div class="adm-label">✏️ TEXTO DEL BOTÓN GLOW</div>
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.45);line-height:1.6">El botón rojo con efecto de luz pulsante (máx. 80 caracteres).</div>
-          <textarea id="glowTxtAdmin" class="adm-textarea" rows="2" placeholder="¿Por quién votarías hoy?" maxlength="80" style="font-size:15px;letter-spacing:1px"></textarea>
-          <button onclick="guardarGlowTxt()" class="adm-save-btn" style="background:linear-gradient(135deg,#7c0a0a,#cc0a0a)">🔴 APLICAR TEXTO BOTÓN</button>
-        </div>
-      </div>
 
-      <!-- TAB NOTICIAS -->
-      <div id="panel-noticias" style="padding:16px;display:none;flex-direction:column;gap:9px;max-height:58vh;overflow-y:auto">
-        <div class="adm-label">📰 NOTICIAS · MÁX. 6</div>
-        <div id="noticiasEditor" style="display:flex;flex-direction:column;gap:9px"></div>
-      </div>
-
-      <!-- TAB AJUSTES -->
-      <div id="panel-ajustes" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:58vh;overflow-y:auto">
-        <div class="adm-label">⚙️ IMÁGENES Y LOGO</div>
-        <div class="adm-row">
-          <div class="adm-label">🖼️ LOGO NAV</div>
-          <div style="display:flex;align-items:center;gap:9px">
-            <div id="navLogoPrev" style="width:44px;height:44px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🏙️</div>
-            <button onclick="document.getElementById('navLogoFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR LOGO</button>
-          </div>
-          <input type="file" id="navLogoFile" accept="image/*" style="display:none" onchange="procesarNavLogo(event)">
-        </div>
-        <div class="adm-row">
-          <div class="adm-label">🗳️ IMAGEN BOTÓN ENCUESTA</div>
-          <button onclick="document.getElementById('encImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
-          <input type="file" id="encImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEnc','btnEncFb')">
-        </div>
-        <div class="adm-row">
-          <div class="adm-label">🧠 IMAGEN TRIVIA</div>
-          <button onclick="document.getElementById('triviaImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN TRIVIA</button>
-          <input type="file" id="triviaImgFile" accept="image/*" style="display:none" onchange="procesarTriviaImg(event)">
-        </div>
-        <div class="adm-row">
-          <div class="adm-label">⚖️ IMAGEN PESO A PESO</div>
-          <button onclick="document.getElementById('pesoImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN PESO A PESO</button>
-          <input type="file" id="pesoImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnPeso','btnPesoFb')">
-          <!-- INSTALAR -->
-          <div class="adm-row" style="border-left:3px solid #16a34a">
-            <div class="adm-label">📲 INSTALAR · IMAGEN</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <div id="btnInstalarPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('instalarImgFile').click()">📲</div>
-              <button onclick="document.getElementById('instalarImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+        <!-- Logo Nav -->
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">🏙️</span>
+            <div>
+              <div class="adm2-card-title">LOGO PRINCIPAL (NAV)</div>
+              <div class="adm2-card-desc">APARECE EN LA BARRA DE NAVEGACIÓN SUPERIOR</div>
             </div>
-            <input type="file" id="instalarImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnInstalar','btnInstalarFb')">
           </div>
-          <!-- VISITAS -->
-          <div class="adm-row" style="border-left:3px solid #0891b2">
-            <div class="adm-label">👁️ VISITAS · IMAGEN</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <div id="btnVisitasPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('visitasImgFile').click()">👁️</div>
-              <button onclick="document.getElementById('visitasImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+          <div class="adm2-card-body">
+            <div class="adm2-img-zone" onclick="document.getElementById('navLogoFile').click()">
+              <div id="navLogoPrev" class="adm2-img-thumb"><span style="font-size:26px">🏙️</span></div>
+              <div class="adm2-img-info">
+                <div class="adm2-img-name">Logo de navegación</div>
+                <div class="adm2-img-hint">Se muestra en la esquina superior izquierda</div>
+                <div class="adm2-img-status no-img" id="navLogo-st">Sin imagen cargada</div>
+              </div>
             </div>
-            <input type="file" id="visitasImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnVisitas',null)">
-          </div>
-          <!-- ESCRÍBEME -->
-          <div class="adm-row" style="border-left:3px solid #059669">
-            <div class="adm-label">✉️ ESCRÍBEME · IMAGEN</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <div id="btnEscribemePrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('escribemeImgFile').click()">✉️</div>
-              <button onclick="document.getElementById('escribemeImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
-            </div>
-            <input type="file" id="escribemeImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEscribeme','btnEscribemeFb')">
-          </div>
-          <!-- ENCUESTA BUTTON (was old Encuesta/Participa) -->
-          <div class="adm-row" style="border-left:3px solid #cc0a0a">
-            <div class="adm-label">🗳️ ENCUESTA · IMAGEN</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <div id="btnEncuestaPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('encuestaImgFile').click()">🗳️</div>
-              <button onclick="document.getElementById('encuestaImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
-            </div>
-            <input type="file" id="encuestaImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEncuesta','btnEncuestaFb')">
-          </div>
-          <!-- PULSO EN VIVO -->
-          <div class="adm-row" style="border-left:3px solid #4ade80">
-            <div class="adm-label">📊 PULSO EN VIVO · IMAGEN</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <div id="btnPulsoPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('pulsoImgFile').click()">📊</div>
-              <button onclick="document.getElementById('pulsoImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
-            </div>
-            <input type="file" id="pulsoImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEnc','btnEncFb')">
+            <input type="file" id="navLogoFile" accept="image/*" style="display:none" onchange="procesarNavLogo(event)">
+            <div id="navLogo-fb" class="adm2-feedback"></div>
           </div>
         </div>
-        <button onclick="adminGuardarAjustes()" class="adm-save-btn" style="background:linear-gradient(135deg,#1a3a8f,#2563eb)">💾 GUARDAR AJUSTES</button>
 
-        <!-- CANALES CONTACTO -->
-        <div class="adm-row" style="margin-top:4px;border-top:1px solid rgba(255,255,255,0.07);padding-top:14px">
-          <div class="adm-label" style="color:#fff">📩 CANALES DE CONTACTO</div>
-          <div class="adm-label">URL FORMSPREE (correo)</div>
-          <input id="ajFormspree" class="adm-input" placeholder="https://formspree.io/f/..." style="font-size:11px">
-          <div class="adm-label">URL FACEBOOK PAGE</div>
-          <input id="ajFacebook" class="adm-input" placeholder="https://www.facebook.com/Encuestasilao" style="font-size:11px">
-          <div class="adm-label">📱 NÚMERO WHATSAPP (con código país, ej: 5214771234567)</div>
-          <input id="ajWhatsapp" class="adm-input" placeholder="5214771234567" style="font-size:13px">
-          <button onclick="guardarCanalesContacto()" class="adm-save-btn" style="background:linear-gradient(135deg,#065f46,#059669);margin-top:4px">💾 GUARDAR CANALES</button>
-          <div id="canalesFb" style="display:none;text-align:center;padding:7px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ GUARDADO</div>
+        <!-- Botón Encuesta GRANDE -->
+        <div class="adm2-card" style="border-color:rgba(204,10,10,0.3)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">🗳️</span>
+            <div>
+              <div class="adm2-card-title">BOTÓN ENCUESTA (GRANDE)</div>
+              <div class="adm2-card-desc">EL BOTÓN ROJO PRINCIPAL</div>
+            </div>
+          </div>
+          <div class="adm2-card-body">
+            <div class="adm2-img-zone" onclick="document.getElementById('encImgFile').click()">
+              <div id="encBtn-prev" class="adm2-img-thumb"><span style="font-size:26px">🗳️</span></div>
+              <div class="adm2-img-info">
+                <div class="adm2-img-name">Imagen del botón encuesta</div>
+                <div class="adm2-img-hint">Reemplaza el fondo del botón principal</div>
+                <div class="adm2-img-status no-img" id="encBtn-st">Sin imagen cargada</div>
+              </div>
+            </div>
+            <input type="file" id="encImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnEnc','btnEncFb','encBtn-prev','encBtn-st','encBtn-fb')">
+            <div id="encBtn-fb" class="adm2-feedback"></div>
+          </div>
+        </div>
+
+        <!-- 6 BOTONES TEMÁTICOS en grid -->
+        <div class="adm2-section-sep">6 BOTONES TEMÁTICOS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px" id="btns-6grid">
+
+          <!-- Trivia -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">🧠</span>
+              <div><div class="adm2-card-title" style="font-size:13px">TRIVIA</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('triviaImgFile').click()">
+                <div id="triviaBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">🧠</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="triviaBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="triviaImgFile" accept="image/*" style="display:none" onchange="adm2ProcTriviaImg(event,'triviaBtn-prev','triviaBtn-st','triviaBtn-fb')">
+              <div id="triviaBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+          <!-- Peso a Peso -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">⚖️</span>
+              <div><div class="adm2-card-title" style="font-size:13px">PESO A PESO</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('pesoImgFile').click()">
+                <div id="pesoBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">⚖️</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="pesoBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="pesoImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnPeso','btnPesoFb','pesoBtn-prev','pesoBtn-st','pesoBtn-fb')">
+              <div id="pesoBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+          <!-- Instalar -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">📲</span>
+              <div><div class="adm2-card-title" style="font-size:13px">INSTALAR</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('instalarImgFile').click()">
+                <div id="instalarBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">📲</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="instalarBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="instalarImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnInstalar','btnInstalarFb','instalarBtn-prev','instalarBtn-st','instalarBtn-fb')">
+              <div id="instalarBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+          <!-- Visitas -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">👁️</span>
+              <div><div class="adm2-card-title" style="font-size:13px">VISITAS</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('visitasImgFile').click()">
+                <div id="visitasBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">👁️</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="visitasBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="visitasImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnVisitas',null,'visitasBtn-prev','visitasBtn-st','visitasBtn-fb')">
+              <div id="visitasBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+          <!-- Escríbeme -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">✉️</span>
+              <div><div class="adm2-card-title" style="font-size:13px">ESCRÍBEME</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('escribemeImgFile').click()">
+                <div id="escribemeBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">✉️</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="escribemeBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="escribemeImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnEscribeme','btnEscribemeFb','escribemeBtn-prev','escribemeBtn-st','escribemeBtn-fb')">
+              <div id="escribemeBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+          <!-- Encuesta (4-grid) -->
+          <div class="adm2-card">
+            <div class="adm2-card-header" style="padding:12px 12px 8px">
+              <span class="adm2-card-ico" style="font-size:16px">🗳️</span>
+              <div><div class="adm2-card-title" style="font-size:13px">ENCUESTA GRID</div></div>
+            </div>
+            <div class="adm2-card-body" style="padding:10px 12px">
+              <div class="adm2-img-zone" style="padding:8px;margin-bottom:6px" onclick="document.getElementById('encuestaImgFile').click()">
+                <div id="encuestaBtn-prev" class="adm2-img-thumb" style="width:56px;height:56px"><span style="font-size:20px">🗳️</span></div>
+                <div class="adm2-img-info">
+                  <div class="adm2-img-status no-img" id="encuestaBtn-st" style="font-size:11px">Sin imagen</div>
+                </div>
+              </div>
+              <input type="file" id="encuestaImgFile" accept="image/*" style="display:none" onchange="adm2ProcBtnImg(event,'btnEncuesta','btnEncuestaFb','encuestaBtn-prev','encuestaBtn-st','encuestaBtn-fb')">
+              <div id="encuestaBtn-fb" class="adm2-feedback" style="font-size:12px;padding:8px"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- TEXTO DE BOTONES -->
+        <div class="adm2-section-sep">TEXTO DEL BOTÓN PRINCIPAL</div>
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">✍️</span>
+            <div><div class="adm2-card-title">TEXTO ANIMADO</div><div class="adm2-card-desc">TEXTO QUE APARECE LETRA POR LETRA</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <textarea id="loopMsgAdmin" class="adm2-textarea" rows="3" placeholder="Escribe el mensaje animado aquí..." style="font-size:17px"></textarea>
+            <button onclick="guardarLoopMsg()" class="adm2-btn adm2-btn-blue">✍️ APLICAR TEXTO ANIMADO</button>
+            <div id="loopMsgFb" class="adm2-feedback"></div>
+          </div>
+        </div>
+        <div class="adm2-card" style="border-color:rgba(204,10,10,0.3)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">🔴</span>
+            <div><div class="adm2-card-title">TEXTO BOTÓN GLOW</div><div class="adm2-card-desc">BOTÓN ROJO CON EFECTO DE LUZ · MÁX 80 CARACTERES</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <textarea id="glowTxtAdmin" class="adm2-textarea" rows="2" maxlength="80" placeholder="¿Por quién votarías hoy?" style="font-size:18px;letter-spacing:1px"></textarea>
+            <button onclick="guardarGlowTxt()" class="adm2-btn adm2-btn-red">🔴 APLICAR TEXTO BOTÓN</button>
+          </div>
         </div>
       </div>
 
-      <!-- TAB BUZÓN -->
-      <div id="panel-buzon" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="adm-label">📬 MENSAJES RECIBIDOS (CORREO)</div>
-          <button onclick="borrarTodosMensajes()" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.28);border-radius:8px;padding:6px 12px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+      <!-- ═══════════ SECCIÓN: ESTADÍSTICAS ═══════════ -->
+      <div id="adm2sec-estadisticas" class="adm2-section">
+        <div style="font-family:'Barlow',sans-serif;font-size:15px;color:rgba(255,255,255,0.6);line-height:1.65;padding:4px 0 14px">
+          Toca cualquier estadística para ver una explicación fácil de entender.
         </div>
-        <div id="buzonWrap" style="display:flex;flex-direction:column;gap:8px"></div>
+        <div class="adm2-stat-grid">
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">%</span>
+            <span class="adm2-stat-name">PORCENTAJE</span>
+            <div class="adm2-stat-tip">De cada 100 votos registrados, cuántos recibió este candidato. Ejemplo: 35% = 35 de cada 100 personas lo eligieron. Es el indicador más directo de preferencia.</div>
+          </div>
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">μ</span>
+            <span class="adm2-stat-name">PROMEDIO</span>
+            <div class="adm2-stat-tip">Si los votos se repartieran igual entre todos, cada candidato tendría este número. Sirve para saber si alguien está arriba o abajo del promedio esperado.</div>
+          </div>
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">σ</span>
+            <span class="adm2-stat-name">DISPERSIÓN</span>
+            <div class="adm2-stat-tip">Número alto = un candidato domina claramente. Número bajo = los votos están muy repartidos entre todos. Mide qué tan concentrado está el voto.</div>
+          </div>
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">±</span>
+            <span class="adm2-stat-name">MARGEN ERROR</span>
+            <div class="adm2-stat-tip">El resultado real podría variar hacia arriba o abajo por este porcentaje. Con más participantes, el margen baja y el resultado es más confiable.</div>
+          </div>
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">n</span>
+            <span class="adm2-stat-name">TOTAL VOTOS</span>
+            <div class="adm2-stat-tip">Cuántas personas han participado en la encuesta. Entre más votos haya, los porcentajes son más representativos de la opinión ciudadana de Silao.</div>
+          </div>
+          <div class="adm2-stat-card" onclick="this.classList.toggle('expanded')">
+            <span class="adm2-stat-sym">▲▼</span>
+            <span class="adm2-stat-name">TENDENCIA</span>
+            <div class="adm2-stat-tip">▲ SUBE = el candidato está ganando preferencia. ▼ BAJA = está perdiendo. — ESTABLE = sin cambios significativos recientes.</div>
+          </div>
+        </div>
+
+        <div class="adm2-section-sep" style="margin-top:8px">FECHAS Y CONTADORES</div>
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">📅</span>
+            <div><div class="adm2-card-title">FECHA DE ELECCIONES</div><div class="adm2-card-desc">CONTADOR GRANDE (IZQUIERDA)</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <span class="adm2-label">FECHA (YYYY-MM-DD)</span>
+            <input id="fechaElec" class="adm2-input" type="date" value="2025-06-01">
+            <span class="adm2-label">ETIQUETA</span>
+            <input id="labelElec" class="adm2-input" value="PRÓXIMAS ELECCIONES MUNICIPALES" placeholder="PRÓXIMAS ELECCIONES MUNICIPALES">
+          </div>
+        </div>
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">📋</span>
+            <div><div class="adm2-card-title">CIERRE ENCUESTA</div><div class="adm2-card-desc">CONTADOR DERECHO</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <span class="adm2-label">FECHA DE CIERRE</span>
+            <input id="fechaEncierre" class="adm2-input" type="date">
+            <span class="adm2-label">ETIQUETA</span>
+            <input id="labelEnc" class="adm2-input" value="CIERRE DE LA ENCUESTA SIN ROSTRO" placeholder="CIERRE DE LA ENCUESTA SIN ROSTRO">
+          </div>
+        </div>
+        <button onclick="guardarFechas()" class="adm2-btn adm2-btn-blue">💾 GUARDAR FECHAS</button>
+        <div id="fechasMsg" class="adm2-feedback"></div>
       </div>
 
-      <!-- TAB DIRECTOS -->
-      <div id="panel-directos" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto">
-        <div style="display:flex;align-items:center;justify-content:space-between">
-          <div class="adm-label">💬 MENSAJES DIRECTOS (INTERNOS)</div>
-          <button onclick="borrarTodosDirectos()" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.28);border-radius:8px;padding:6px 12px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+      <!-- ═══════════ SECCIÓN: VOTOS ═══════════ -->
+      <div id="adm2sec-votos" class="adm2-section">
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">📡</span>
+            <div><div class="adm2-card-title">RESULTADOS EN VIVO</div><div class="adm2-card-desc">DATOS DESDE SUPABASE</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <div id="votosTable" style="display:flex;flex-direction:column;gap:0"></div>
+            <button onclick="adminRefreshVotos()" class="adm2-btn adm2-btn-green" style="margin-top:4px">🔄 ACTUALIZAR DESDE SUPABASE</button>
+            <div id="votosMsg" class="adm2-feedback"></div>
+          </div>
         </div>
-        <div id="directosWrap" style="display:flex;flex-direction:column;gap:8px"></div>
       </div>
+
+      <!-- ═══════════ SECCIÓN: CONFIG ═══════════ -->
+      <div id="adm2sec-config" class="adm2-section">
+        <!-- Supabase -->
+        <div class="adm2-card" style="border-color:rgba(74,222,128,0.2)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">🟢</span>
+            <div><div class="adm2-card-title">CONEXIÓN SUPABASE</div><div class="adm2-card-desc">BASE DE DATOS EN LA NUBE</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <div style="font-family:'Barlow',sans-serif;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:12px">
+              Copia tu URL y KEY desde <strong style="color:rgba(255,255,255,0.7)">Supabase → Settings → API</strong>
+            </div>
+            <span class="adm2-label">PROJECT URL</span>
+            <input id="sbUrl" class="adm2-input" placeholder="https://xxxxxxxxxxxx.supabase.co" style="font-size:13px">
+            <span class="adm2-label">ANON / PUBLIC KEY</span>
+            <input id="sbKey" class="adm2-input" placeholder="eyJhbGciOiJIUzI1NiIs..." style="font-size:11px">
+            <span class="adm2-label">NOMBRE DE TABLA</span>
+            <input id="sbTable" class="adm2-input" placeholder="votos" value="votos">
+            <button onclick="guardarYConectarSupabase()" class="adm2-btn adm2-btn-teal">🔌 CONECTAR Y GUARDAR</button>
+            <div id="sbTestResult" class="adm2-feedback"></div>
+            <div class="adm2-card" style="margin-top:12px;margin-bottom:0;background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.07)">
+              <div class="adm2-card-header" style="border-bottom:none;padding:12px 12px 4px"><div class="adm2-card-title" style="font-size:13px">MODO ACTUAL</div></div>
+              <div class="adm2-card-body" style="padding:4px 12px 12px"><div id="modoActualTxt" style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:rgba(255,255,255,0.6)">Cargando...</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canales de contacto -->
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">📩</span>
+            <div><div class="adm2-card-title">CANALES DE CONTACTO</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <span class="adm2-label">URL FORMSPREE (CORREO)</span>
+            <input id="ajFormspree" class="adm2-input" placeholder="https://formspree.io/f/..." style="font-size:13px">
+            <span class="adm2-label">URL FACEBOOK PAGE</span>
+            <input id="ajFacebook" class="adm2-input" placeholder="https://www.facebook.com/..." style="font-size:13px">
+            <span class="adm2-label">NÚMERO WHATSAPP (con código país)</span>
+            <input id="ajWhatsapp" class="adm2-input" placeholder="5214771234567">
+            <button onclick="guardarCanalesContacto()" class="adm2-btn adm2-btn-teal">💾 GUARDAR CANALES</button>
+            <div id="canalesFb" class="adm2-feedback"></div>
+          </div>
+        </div>
+
+        <!-- Noticias -->
+        <div class="adm2-card">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">📰</span>
+            <div><div class="adm2-card-title">NOTICIAS</div><div class="adm2-card-desc">MÁX. 6 NOTICIAS</div></div>
+          </div>
+          <div class="adm2-card-body">
+            <div id="noticiasEditor" style="display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════ SECCIÓN: BUZÓN ═══════════ -->
+      <div id="adm2sec-buzon" class="adm2-section">
+        <div class="adm2-section-sep">MENSAJES RECIBIDOS (CORREO)</div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+          <button onclick="borrarTodosMensajes()" style="background:rgba(248,113,113,0.12);border:1.5px solid rgba(248,113,113,0.3);border-radius:10px;padding:11px 18px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+        </div>
+        <div id="buzonWrap" style="display:flex;flex-direction:column;gap:10px"></div>
+
+        <div class="adm2-section-sep" style="margin-top:16px">MENSAJES DIRECTOS (INTERNOS)</div>
+        <div style="display:flex;justify-content:flex-end;margin-bottom:10px">
+          <button onclick="borrarTodosDirectos()" style="background:rgba(248,113,113,0.12);border:1.5px solid rgba(248,113,113,0.3);border-radius:10px;padding:11px 18px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+        </div>
+        <div id="directosWrap" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+
+    </div><!-- /adminPanel -->
+  </div><!-- /adm2-shell -->
+</div><!-- /adminModal -->
+
+<!-- MODAL FOTO CANDIDATO (INDEPENDIENTE) -->
+<div id="adm2FotoModal">
+  <div class="adm2-foto-box">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:#fff;text-align:center">📸 FOTO DEL CANDIDATO</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.35);text-align:center">SOLO LA FOTO DE LA PERSONA · NO REEMPLAZA EL LOGO DEL PARTIDO</div>
+    <div id="adm2FotoPreview" style="width:100%;height:160px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:40px;position:relative">👤
+      <img id="adm2FotoImg" src="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">
     </div>
+    <button onclick="document.getElementById('adm2FotoFile').click()" class="adm2-btn adm2-btn-blue">📷 SELECCIONAR FOTO</button>
+    <input type="file" id="adm2FotoFile" accept="image/*" style="display:none" onchange="adm2HandleFoto(event)">
+    <button onclick="adm2GuardarFoto()" class="adm2-btn adm2-btn-green" id="adm2FotoSaveBtn" style="display:none">✅ GUARDAR FOTO</button>
+    <div id="adm2FotoFb" class="adm2-feedback"></div>
+    <button onclick="document.getElementById('adm2FotoModal').classList.remove('open')" class="adm2-btn adm2-btn-ghost">CANCELAR</button>
   </div>
 </div>
+
 
 <script>
 /* ══════════════════════════════════════════
@@ -2351,7 +2742,7 @@ function cargarEditorCands(){
       +'<div id="cfp-'+i+'" style="width:46px;height:46px;border-radius:8px;overflow:hidden;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
       +(c.foto?'<img src="'+c.foto+'" style="width:100%;height:100%;object-fit:cover">':'<span style="font-size:20px">👤</span>')
       +'</div>'
-      +'<button onclick="abrirFotoCand('+i+')" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:8px;color:rgba(255,255,255,0.55);font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 FOTO / LOGO</button></div>'
+      +'<button onclick="abrirFotoCand('+i+')" style="flex:1;background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.3);border-radius:7px;padding:10px;color:#60a5fa;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:800;letter-spacing:1px;cursor:pointer">📸 SOLO FOTO PERSONA</button></div>'
       +'<input id="cn-'+i+'" class="adm-input" value="'+c.nombre+'" placeholder="Nombre del candidato">'
       +'<textarea id="cb-'+i+'" class="adm-textarea" rows="2" placeholder="Bio / propuestas">'+c.bio+'</textarea>'
       +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
@@ -3404,6 +3795,597 @@ document.querySelectorAll('.hbtn4').forEach(function(btn){
   if(ctWa&&wa)ctWa.textContent='+'+wa;
   if(ctFb&&fb)ctFb.textContent=fb.replace('https://','').replace('www.','');
 })();
+
+/* ══════════════════════════════════════════
+   ADMIN V25 — PANEL VISUAL MEJORADO
+══════════════════════════════════════════ */
+
+/* Override cerrarAdmin/abrirAdmin para nuevo panel */
+function abrirAdmin(){
+  var m=document.getElementById('adminModal');
+  m.classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(function(){var p=document.getElementById('adminPass');if(p)p.focus();},100);
+}
+function cerrarAdmin(){
+  document.getElementById('adminModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('adminModal').addEventListener('click',function(e){
+  if(e.target===this)cerrarAdmin();
+});
+
+function verificarAdmin(){
+  var pass=document.getElementById('adminPass').value;
+  var ok=localStorage.getItem('es_admin_pass')||'Silao360#';
+  if(pass===ok){
+    document.getElementById('adminLogin').style.display='none';
+    var panel=document.getElementById('adminPanel');
+    panel.style.display='flex';
+    adm2Sec('multimedia');
+    actualizarModoActual();
+    adm2RestoreImages();
+  }else{
+    var err=document.getElementById('adminErr');err.style.display='block';
+    setTimeout(function(){err.style.display='none';},2500);
+  }
+}
+
+/* Navegación de secciones */
+var ADM2_SECS=['multimedia','logos','candidatos','carrusel','botones','estadisticas','votos','config','buzon'];
+function adm2Sec(sec){
+  ADM2_SECS.forEach(function(s){
+    var el=document.getElementById('adm2sec-'+s);
+    var btn=document.getElementById('adm2btn-'+s);
+    if(el)el.style.display=s===sec?'flex':'none';
+    if(btn)btn.classList.toggle('active',s===sec);
+  });
+  // Cargar datos al cambiar sección
+  if(sec==='candidatos')cargarEditorCands();
+  if(sec==='votos')adminRefreshVotos();
+  if(sec==='carrusel')cargarEditorBanner();
+  if(sec==='buzon'){cargarAdminMensajes();cargarDirectosAdmin();}
+  if(sec==='config'){
+    var afs=document.getElementById('ajFormspree');
+    var afb=document.getElementById('ajFacebook');
+    var awa=document.getElementById('ajWhatsapp');
+    if(afs)afs.value=localStorage.getItem('ct_formspree')||'https://formspree.io/f/maqkgnkq';
+    if(afb)afb.value=localStorage.getItem('ct_facebook')||'https://www.facebook.com/Encuestasilao';
+    if(awa)awa.value=localStorage.getItem('aj_whatsapp')||'';
+    var urlEl=document.getElementById('sbUrl');
+    var keyEl=document.getElementById('sbKey');
+    var tableEl=document.getElementById('sbTable');
+    if(urlEl)urlEl.value=SB.url||'';
+    if(keyEl)keyEl.value=SB.key||'';
+    if(tableEl)tableEl.value=SB.table||'votos';
+    actualizarModoActual();
+    cargarEditorNoticias();
+  }
+  if(sec==='estadisticas')cargarFechasAdmin();
+  if(sec==='logos')adm2BuildLogosGrid();
+  if(sec==='multimedia')adm2BuildMultimedia();
+  // Scroll top
+  var shell=document.querySelector('.adm2-shell');
+  if(shell)shell.scrollTop=0;
+}
+
+/* ── MOSTRAR FEEDBACK ── */
+function adm2Fb(id,type,msg,timeout){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.className='adm2-feedback '+type;
+  el.textContent=msg;
+  el.style.display='block';
+  if(timeout!==false)setTimeout(function(){el.style.display='none';},timeout||2500);
+}
+
+/* ── LOGOS PARTIDOS ── */
+var ADM2_PARTIDOS_ORDER=['PAN','MORENA','MC','PRI','PVEM','PT','SOMOSMX','SOMBRERO','INDEPENDIENTE','NODECIDO'];
+var ADM2_PARTI_LABELS={
+  'PAN':'PAN','MORENA':'MORENA','MC':'MC','PRI':'PRI',
+  'PVEM':'PVEM','PT':'PT','SOMOSMX':'SOMOS MX','SOMBRERO':'SOMBRERO',
+  'INDEPENDIENTE':'INDEP.','NODECIDO':'NO DECID.'
+};
+
+function adm2GetLogoKey(id){return 'es_logo_'+id;}
+
+function adm2BuildLogosGrid(){
+  var grid=document.getElementById('logos-party-grid');
+  if(!grid)return;
+  var cands=getCands();
+  grid.innerHTML='';
+  cands.forEach(function(c){
+    var logo=localStorage.getItem(adm2GetLogoKey(c.id))||c.foto||'';
+    var card=document.createElement('div');
+    card.className='adm2-party-card';
+    card.onclick=function(){adm2SelectLogo(c.id,c.partido,c.color);};
+    card.innerHTML='<div class="adm2-party-thumb">'
+      +(logo?'<img src="'+logo+'" alt="'+c.partido+'">':'<span style="font-size:20px;color:'+c.color+'">'+c.partido.substring(0,2)+'</span>')
+      +'</div>'
+      +'<div class="adm2-party-name">'+c.partido+'</div>'
+      +'<div class="adm2-party-st '+(logo?'has':'no')+'">'+(logo?'✅ Logo cargado':'Sin logo')+'</div>';
+    grid.appendChild(card);
+  });
+}
+
+function adm2SelectLogo(id,nombre,color){
+  document.getElementById('logo-current-id').value=id;
+  document.getElementById('logo-detail-name').textContent=nombre;
+  document.getElementById('logo-detail-color-name').textContent='COLOR: '+color;
+  // Preview existente
+  var existing=localStorage.getItem(adm2GetLogoKey(id))||'';
+  var prev=document.getElementById('logo-detail-prev');
+  if(prev){
+    if(existing){prev.innerHTML='<img src="'+existing+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';}
+    else{prev.innerHTML='<span style="font-size:22px">🏅</span>';}
+  }
+  // Reset upload area
+  document.getElementById('logo-new-data').value='';
+  document.getElementById('logo-upload-status').textContent='Sin imagen nueva';
+  document.getElementById('logo-upload-status').className='adm2-img-status no-img';
+  document.getElementById('logo-upload-thumb').innerHTML='<span style="font-size:26px">🏅</span>';
+  var newPrev=document.getElementById('logo-new-preview');
+  if(newPrev){newPrev.style.display='none';}
+  document.getElementById('logo-detail').style.display='block';
+  document.getElementById('logo-fb').className='adm2-feedback';
+  // Scroll al detalle
+  var det=document.getElementById('logo-detail');
+  if(det)setTimeout(function(){det.scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+
+function logoHandleFile(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    var b=ev.target.result;
+    document.getElementById('logo-new-data').value=b;
+    document.getElementById('logo-upload-status').textContent='✅ Imagen lista para guardar';
+    document.getElementById('logo-upload-status').className='adm2-img-status has-img';
+    document.getElementById('logo-upload-thumb').innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+    var newPrev=document.getElementById('logo-new-preview');
+    if(newPrev){
+      newPrev.style.display='flex';
+      document.getElementById('logo-new-img').src=b;
+    }
+  };
+  r.readAsDataURL(f);
+}
+
+function logoGuardar(){
+  var id=document.getElementById('logo-current-id').value;
+  var data=document.getElementById('logo-new-data').value;
+  if(!id){adm2Fb('logo-fb','err','⚠️ Selecciona un partido primero');return;}
+  if(!data){adm2Fb('logo-fb','err','⚠️ Selecciona una imagen primero');return;}
+  adm2Fb('logo-fb','loading','⏳ Guardando...', false);
+  // Guardar logo del partido (clave independiente de foto candidato)
+  localStorage.setItem(adm2GetLogoKey(id),data);
+  // Actualizar el campo foto del candidato SOLO si no tiene foto de persona
+  var cands=getCands();
+  var idx=cands.findIndex(function(c){return c.id===id;});
+  if(idx>=0){
+    // Guardamos el logo en la clave del partido, no sobreescribimos foto del candidato
+    // El logo se aplica en buildPoll usando la función adm2GetPartyLogo
+  }
+  // Actualizar UI inmediatamente
+  adm2AplicarLogoEnUI(id,data);
+  adm2Fb('logo-fb','ok','✅ LOGO GUARDADO Y APLICADO');
+  adm2BuildLogosGrid();
+  // Actualizar preview en detalle
+  var prev=document.getElementById('logo-detail-prev');
+  if(prev)prev.innerHTML='<img src="'+data+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+}
+
+function adm2GetPartyLogo(candId,fallbackFoto){
+  return localStorage.getItem(adm2GetLogoKey(candId))||fallbackFoto||'';
+}
+
+function adm2AplicarLogoEnUI(id,src){
+  // Actualizar en el carrusel
+  buildCarrusel();
+  // Actualizar en la grid de candidatos
+  buildCandGrid();
+  // Actualizar en la encuesta (poll)
+  buildPoll();
+}
+
+/* ── MULTIMEDIA CENTER ── */
+function adm2BuildMultimedia(){
+  adm2BuildMMLogos();
+  adm2BuildMMFotos();
+  adm2BuildMMBtns();
+  adm2BuildMMBanners();
+}
+
+var _mmCurrentTarget=null;
+
+function adm2BuildMMLogos(){
+  var grid=document.getElementById('mm-logos-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  var cands=getCands();
+  cands.forEach(function(c){
+    var src=localStorage.getItem(adm2GetLogoKey(c.id))||'';
+    var tile=document.createElement('div');
+    tile.className='adm2-media-tile';
+    tile.onclick=function(){_mmCurrentTarget={type:'logo',id:c.id,name:c.partido};document.getElementById('mm-file-input').value='';document.getElementById('mm-file-input').click();};
+    if(src){tile.innerHTML='<img src="'+src+'" alt="'+c.partido+'">';}
+    else{tile.innerHTML='<div class="adm2-media-tile-ico">🏅</div><div class="adm2-media-tile-name">'+c.partido+'</div>';}
+    tile.innerHTML+='<div class="adm2-media-tile-lbl">'+c.partido+'</div>';
+    grid.appendChild(tile);
+  });
+}
+function adm2BuildMMFotos(){
+  var grid=document.getElementById('mm-fotos-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  var cands=getCands();
+  cands.forEach(function(c){
+    var src=c.foto||'';
+    var tile=document.createElement('div');
+    tile.className='adm2-media-tile';
+    tile.onclick=function(){adm2SelectLogo(c.id,c.partido,c.color);adm2Sec('logos');};
+    if(src){tile.innerHTML='<img src="'+src+'" alt="'+c.nombre+'">';}
+    else{tile.innerHTML='<div class="adm2-media-tile-ico">👤</div><div class="adm2-media-tile-name" style="font-size:9px">'+c.partido+'</div>';}
+    tile.innerHTML+='<div class="adm2-media-tile-lbl">'+c.partido+'</div>';
+    grid.appendChild(tile);
+  });
+}
+function adm2BuildMMBtns(){
+  var grid=document.getElementById('mm-btns-grid');
+  if(!grid)return;
+  var BTNS=[
+    {key:'es_nav_logo',ico:'🏙️',lbl:'NAV'},
+    {key:'es_img_btnEnc',ico:'🗳️',lbl:'ENCUESTA'},
+    {key:'es_img_trivia',ico:'🧠',lbl:'TRIVIA'},
+    {key:'es_img_btnPeso',ico:'⚖️',lbl:'PESO'},
+    {key:'es_img_btnInstalar',ico:'📲',lbl:'INSTALAR'},
+    {key:'es_img_btnVisitas',ico:'👁️',lbl:'VISITAS'},
+    {key:'es_img_btnEscribeme',ico:'✉️',lbl:'ESCRIBEME'},
+    {key:'es_img_btnEncuesta',ico:'🗳️',lbl:'ENCUESTA 2'},
+  ];
+  grid.innerHTML='';
+  BTNS.forEach(function(b){
+    var src=localStorage.getItem(b.key)||'';
+    var tile=document.createElement('div');
+    tile.className='adm2-media-tile';
+    tile.onclick=function(){adm2Sec('botones');};
+    if(src){tile.innerHTML='<img src="'+src+'">';}
+    else{tile.innerHTML='<div class="adm2-media-tile-ico">'+b.ico+'</div><div class="adm2-media-tile-name">'+b.lbl+'</div>';}
+    tile.innerHTML+='<div class="adm2-media-tile-lbl">'+b.lbl+'</div>';
+    grid.appendChild(tile);
+  });
+}
+function adm2BuildMMBanners(){
+  var grid=document.getElementById('mm-banners-grid');
+  if(!grid)return;
+  var slides=getSlides();
+  grid.innerHTML='';
+  slides.forEach(function(s,i){
+    var tile=document.createElement('div');
+    tile.className='adm2-media-tile';
+    tile.onclick=function(){adm2Sec('carrusel');};
+    if(s.logo){tile.innerHTML='<img src="'+s.logo+'">';}
+    else{tile.style.background=s.bg;tile.innerHTML='<div class="adm2-media-tile-ico">🎠</div><div class="adm2-media-tile-name">'+(s.tag||'BANNER '+(i+1))+'</div>';}
+    tile.innerHTML+='<div class="adm2-media-tile-lbl">'+(s.tag||'BANNER '+(i+1))+'</div>';
+    grid.appendChild(tile);
+  });
+}
+
+function mmHandleUpload(e){
+  var f=e.target.files[0];if(!f||!_mmCurrentTarget)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    var b=ev.target.result;
+    if(_mmCurrentTarget.type==='logo'){
+      localStorage.setItem(adm2GetLogoKey(_mmCurrentTarget.id),b);
+      adm2AplicarLogoEnUI(_mmCurrentTarget.id,b);
+    }
+    adm2BuildMultimedia();
+    _mmCurrentTarget=null;
+  };
+  r.readAsDataURL(f);
+}
+
+/* ── NUEVA VERSIÓN procesarBtnImg CON FEEDBACK VISUAL ── */
+function adm2ProcBtnImg(e,btnId,fbId,prevId,stId,localFbId){
+  var f=e.target.files[0];if(!f)return;
+  if(localFbId)adm2Fb(localFbId,'loading','⏳ Cargando imagen...', false);
+  var r=new FileReader();
+  r.onload=function(ev){
+    var b=ev.target.result;
+    localStorage.setItem('es_img_'+btnId,b);
+    aplicarBtnImg(btnId,fbId,b);
+    // Actualizar preview en admin
+    var prev=document.getElementById(prevId);
+    if(prev){prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';}
+    var st=document.getElementById(stId);
+    if(st){st.textContent='✅ Imagen guardada';st.className='adm2-img-status has-img';}
+    if(localFbId)adm2Fb(localFbId,'ok','✅ IMAGEN GUARDADA CORRECTAMENTE');
+  };
+  r.onerror=function(){
+    if(localFbId)adm2Fb(localFbId,'err','❌ ERROR AL CARGAR LA IMAGEN');
+  };
+  r.readAsDataURL(f);
+}
+
+function adm2ProcTriviaImg(e,prevId,stId,localFbId){
+  var f=e.target.files[0];if(!f)return;
+  if(localFbId)adm2Fb(localFbId,'loading','⏳ Cargando...', false);
+  var r=new FileReader();
+  r.onload=function(ev){
+    var b=ev.target.result;
+    localStorage.setItem('es_img_trivia',b);
+    aplicarTriviaImg(b);
+    var prev=document.getElementById(prevId);
+    if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+    var st=document.getElementById(stId);
+    if(st){st.textContent='✅ Imagen guardada';st.className='adm2-img-status has-img';}
+    if(localFbId)adm2Fb(localFbId,'ok','✅ IMAGEN GUARDADA CORRECTAMENTE');
+  };
+  r.readAsDataURL(f);
+}
+
+/* Override procesarNavLogo para dar feedback */
+function procesarNavLogo(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;
+    localStorage.setItem('es_nav_logo',b);
+    aplicarNavLogo(b);
+    var prev=document.getElementById('navLogoPrev');
+    if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+    var st=document.getElementById('navLogo-st');
+    if(st){st.textContent='✅ Logo guardado';st.className='adm2-img-status has-img';}
+    adm2Fb('navLogo-fb','ok','✅ LOGO GUARDADO Y APLICADO');
+  };r.readAsDataURL(f);
+}
+
+/* ── FOTO DEL CANDIDATO (INDEPENDIENTE DE LOGOS) ── */
+var _adm2FotoIdx=null;
+var _adm2FotoData=null;
+function abrirFotoCand(idx){
+  _adm2FotoIdx=idx;
+  _adm2FotoData=null;
+  var cands=getCands();
+  var c=cands[idx];
+  var modal=document.getElementById('adm2FotoModal');
+  // Reset
+  document.getElementById('adm2FotoImg').style.display='none';
+  document.getElementById('adm2FotoImg').src='';
+  var box=document.getElementById('adm2FotoPreview');
+  box.innerHTML='👤<img id="adm2FotoImg" src="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none">';
+  // Si tiene foto previa mostrarla
+  if(c&&c.foto){
+    var img=document.getElementById('adm2FotoImg');
+    if(img){img.src=c.foto;img.style.display='block';}
+    box.style.fontSize='0';
+  }
+  document.getElementById('adm2FotoSaveBtn').style.display='none';
+  document.getElementById('adm2FotoFb').className='adm2-feedback';
+  modal.classList.add('open');
+}
+
+function adm2HandleFoto(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(ev){
+    _adm2FotoData=ev.target.result;
+    var box=document.getElementById('adm2FotoPreview');
+    box.innerHTML='<img id="adm2FotoImg" src="'+_adm2FotoData+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">';
+    box.style.fontSize='0';
+    document.getElementById('adm2FotoSaveBtn').style.display='block';
+    adm2Fb('adm2FotoFb','ok','✅ Imagen lista · Toca GUARDAR', false);
+  };
+  r.readAsDataURL(f);
+}
+
+function adm2GuardarFoto(){
+  if(_adm2FotoIdx===null||!_adm2FotoData)return;
+  adm2Fb('adm2FotoFb','loading','⏳ Guardando foto...', false);
+  var cands=getCands();
+  if(cands[_adm2FotoIdx]){
+    cands[_adm2FotoIdx].foto=_adm2FotoData;
+    setCands(cands);
+    buildCandGrid();buildPoll();
+    // Actualizar preview en editor de candidatos
+    var prev=document.getElementById('cfp-'+_adm2FotoIdx);
+    if(prev)prev.innerHTML='<img src="'+_adm2FotoData+'" style="width:100%;height:100%;object-fit:cover">';
+    var fd=document.getElementById('cfd-'+_adm2FotoIdx);
+    if(fd)fd.value=_adm2FotoData;
+    adm2Fb('adm2FotoFb','ok','✅ FOTO GUARDADA CORRECTAMENTE');
+    setTimeout(function(){document.getElementById('adm2FotoModal').classList.remove('open');},1500);
+  }
+}
+
+/* ── BANNER PREVIEW EN TIEMPO REAL ── */
+function nbUpdatePreview(){
+  var cand=document.getElementById('nb-cand');
+  var txt=document.getElementById('nb-txt-main');
+  var sub=document.getElementById('nb-partido');
+  var pc=document.getElementById('nb-prev-cand');
+  var pt=document.getElementById('nb-prev-txt');
+  var ps=document.getElementById('nb-prev-sub');
+  if(pc)pc.textContent=(cand&&cand.value)||'CANDIDATO/A';
+  if(pt)pt.textContent=(txt&&txt.value)||'TEXTO PRINCIPAL';
+  if(ps)ps.textContent=(sub&&sub.value)||'Texto secundario';
+}
+
+function nbPreviewLogo(e){
+  var f=e.target.files[0];if(!f)return;
+  var r=new FileReader();r.onload=function(ev){
+    var b=ev.target.result;
+    document.getElementById('nb-logo-data').value=b;
+    var prev=document.getElementById('nb-logo-prev');
+    if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+    var prevImg=document.getElementById('nb-prev-img');
+    if(prevImg){prevImg.src=b;prevImg.style.display='block';}
+    var st=document.getElementById('nb-img-st');
+    if(st){st.textContent='✅ Imagen lista';st.className='adm2-img-status has-img';}
+  };r.readAsDataURL(f);
+}
+
+function agregarNuevoBanner(){
+  var cand=document.getElementById('nb-cand').value.trim();
+  var txt=document.getElementById('nb-txt-main').value.trim();
+  var sub=document.getElementById('nb-partido').value.trim();
+  var tag=document.getElementById('nb-tag').value.trim()||'NUEVO';
+  var logo=document.getElementById('nb-logo-data').value;
+  if(!txt){adm2Fb('nb-fb','err','⚠️ Falta el texto principal');return;}
+  var slides=getSlides();
+  slides.push({bg:'linear-gradient(135deg,#1e293b,#334155)',tag:tag,txt:txt,candidato:cand,sub:sub,logo:logo,oculto:false});
+  localStorage.setItem('es_slides',JSON.stringify(slides));
+  buildCarrusel();cargarEditorBanner();
+  // Reset form
+  ['nb-cand','nb-txt-main','nb-partido','nb-tag'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('nb-logo-data').value='';
+  document.getElementById('nb-logo-prev').innerHTML='<span style="font-size:26px">🖼️</span>';
+  document.getElementById('nb-prev-img').style.display='none';
+  nbUpdatePreview();
+  adm2Fb('nb-fb','ok','✅ BANNER AGREGADO AL CARRUSEL');
+  snd('vote');
+}
+
+/* Override adminGuardarBanner para feedback visual */
+var _origGuardarBanner=typeof adminGuardarBanner==='function'?adminGuardarBanner:null;
+function adminGuardarBanner(){
+  var slides=getSlides();
+  for(var i=0;i<slides.length;i++){
+    var t=document.getElementById('btag-'+i),x=document.getElementById('btxt-'+i);
+    var c=document.getElementById('bcand-'+i),s=document.getElementById('bsub-'+i);
+    var ld=document.getElementById('bld-'+i),bo=document.getElementById('boculto-'+i);
+    if(t)slides[i].tag=t.value;if(x)slides[i].txt=x.value;
+    if(c)slides[i].candidato=c.value;if(s)slides[i].sub=s.value;
+    if(ld&&ld.value)slides[i].logo=ld.value;
+    if(bo)slides[i].oculto=bo.value==='1';
+  }
+  localStorage.setItem('es_slides',JSON.stringify(slides));
+  buildCarrusel();snd('vote');
+  adm2Fb('banner-fb','ok','✅ BANNERS GUARDADOS CORRECTAMENTE');
+}
+
+/* Override adminGuardarCands */
+var _origGuardarCands=typeof adminGuardarCands==='function'?adminGuardarCands:null;
+function adminGuardarCands(){
+  var cands=getCands();
+  cands.forEach(function(c,i){
+    var cn=document.getElementById('cn-'+i);if(cn)c.nombre=cn.value;
+    var cb=document.getElementById('cb-'+i);if(cb)c.bio=cb.value;
+    var ctw=document.getElementById('ctw-'+i);if(ctw)c.twitter=ctw.value;
+    var cfb=document.getElementById('cfb-'+i);if(cfb)c.facebook=cfb.value;
+    var cig=document.getElementById('cig-'+i);if(cig)c.instagram=cig.value;
+    var cwb=document.getElementById('cwb-'+i);if(cwb)c.web=cwb.value;
+    var ct=document.getElementById('ct-'+i);if(ct)c.tel=ct.value;
+    var ce=document.getElementById('ce-'+i);if(ce)c.estado=ce.value;
+    var fd=document.getElementById('cfd-'+i);if(fd&&fd.value)c.foto=fd.value;
+    var col=document.getElementById('ccolor-'+i);if(col&&col.value)c.color=col.value;
+    var part=document.getElementById('cpartido-'+i);if(part&&part.value)c.partido=part.value;
+    var cid=document.getElementById('cid-'+i);if(cid&&cid.value)c.id=cid.value;
+  });
+  setCands(cands);buildCandGrid();buildPoll();snd('vote');
+  adm2Fb('cands-fb','ok','✅ CANDIDATOS GUARDADOS CORRECTAMENTE');
+}
+
+/* Override guardarLoopMsg y guardarGlowTxt */
+function guardarLoopMsg(){
+  var v=document.getElementById('loopMsgAdmin').value;
+  localStorage.setItem('es_loop_msg',v);
+  if(window._loopMsgUpdate)window._loopMsgUpdate(v);
+  adm2Fb('loopMsgFb','ok','✅ TEXTO ANIMADO ACTUALIZADO');
+  snd('vote');
+}
+function guardarGlowTxt(){
+  var v=document.getElementById('glowTxtAdmin').value;
+  localStorage.setItem('es_poll_glow_txt',v);
+  var ta=document.getElementById('pollGlowText');if(ta)ta.value=v;
+  snd('vote');
+}
+
+/* Override guardarCanalesContacto para nuevo feedback */
+function guardarCanalesContacto(){
+  var fs=document.getElementById('ajFormspree').value;
+  var fb=document.getElementById('ajFacebook').value;
+  var wa=document.getElementById('ajWhatsapp').value;
+  if(fs)localStorage.setItem('ct_formspree',fs);
+  if(fb)localStorage.setItem('ct_facebook',fb);
+  if(wa)localStorage.setItem('aj_whatsapp',wa);
+  adm2Fb('canalesFb','ok','✅ CANALES GUARDADOS');
+  snd('vote');
+}
+
+/* Override guardarFechas feedback */
+function guardarFechas(){
+  var fe=document.getElementById('fechaElec');
+  var le=document.getElementById('labelElec');
+  var fn=document.getElementById('fechaEncierre');
+  var ln=document.getElementById('labelEnc');
+  if(fe&&fe.value){localStorage.setItem('es_fecha_elec',fe.value);window._SB_fecha_elec=fe.value;guardarFechaSupabase('fecha_elec',fe.value);}
+  if(le&&le.value){localStorage.setItem('es_label_elec',le.value);window._SB_label_elec=le.value;guardarFechaSupabase('label_elec',le.value);}
+  if(fn){localStorage.setItem('es_fecha_enc',fn.value);window._SB_fecha_enc=fn.value;guardarFechaSupabase('fecha_enc',fn.value);}
+  if(ln&&ln.value){localStorage.setItem('es_label_enc',ln.value);window._SB_label_enc=ln.value;guardarFechaSupabase('label_enc',ln.value);}
+  tickDualCD();
+  adm2Fb('fechasMsg','ok','✅ FECHAS GUARDADAS');
+  playClick('vote');
+}
+
+/* ── RESTAURAR IMÁGENES EN ADMIN AL ABRIR ── */
+function adm2RestoreImages(){
+  // Botones
+  var BMAP=[
+    ['navLogoPrev','es_nav_logo','navLogo-st'],
+    ['encBtn-prev','es_img_btnEnc','encBtn-st'],
+    ['triviaBtn-prev','es_img_trivia','triviaBtn-st'],
+    ['pesoBtn-prev','es_img_btnPeso','pesoBtn-st'],
+    ['instalarBtn-prev','es_img_btnInstalar','instalarBtn-st'],
+    ['visitasBtn-prev','es_img_btnVisitas','visitasBtn-st'],
+    ['escribemeBtn-prev','es_img_btnEscribeme','escribemeBtn-st'],
+    ['encuestaBtn-prev','es_img_btnEncuesta','encuestaBtn-st'],
+  ];
+  BMAP.forEach(function(m){
+    var src=localStorage.getItem(m[1]);
+    var prev=document.getElementById(m[0]);
+    var st=document.getElementById(m[2]);
+    if(src&&prev){
+      prev.innerHTML='<img src="'+src+'" style="width:100%;height:100%;object-fit:contain;padding:3px">';
+      if(st){st.textContent='✅ Imagen cargada';st.className='adm2-img-status has-img';}
+    }
+  });
+  // Texto animado y glow
+  var lm=document.getElementById('loopMsgAdmin');
+  var gt=document.getElementById('glowTxtAdmin');
+  if(lm)lm.value=localStorage.getItem('es_loop_msg')||'Esta encuesta será solo hasta el 1 de septiembre del 2026';
+  if(gt)gt.value=localStorage.getItem('es_poll_glow_txt')||'¿Por quién votarías hoy?';
+}
+
+/* ── TEXTO BOTONES HERO — AUMENTAR TAMAÑO ── */
+/* Aplicar a los 6 botones del grid */
+(function(){
+  var style=document.createElement('style');
+  style.textContent=[
+    /* Duplicar/triplicar tamaño de texto en botones hero */
+    '.hfb4{font-size:clamp(22px,5.5vw,30px) !important;gap:6px !important}',
+    '.hico4{font-size:clamp(30px,8vw,40px) !important}',
+    '.btn-enc-fallback{font-size:clamp(30px,8vw,42px) !important;gap:14px !important}',
+    '.btn-trivia-fallback{font-size:clamp(22px,5.5vw,30px) !important}',
+    '.btn-peso-fallback{font-size:clamp(22px,5.5vw,30px) !important}',
+    /* Mínimo altura de los botones */
+    '.hbtn4{min-height:88px !important}',
+    /* Botones sub también más grandes */
+    '.btns-sub{gap:12px !important}',
+  ].join('\n');
+  document.head.appendChild(style);
+})();
+
+/* ── OVERRIDE adminTab (compatibilidad legacy calls) ── */
+function adminTab(tab){
+  // Map old tab names to new section names
+  var map={
+    'supabase':'config','fechas':'estadisticas','cands':'candidatos',
+    'votos':'votos','banner':'carrusel','texto':'botones',
+    'noticias':'config','ajustes':'botones','buzon':'buzon','directos':'buzon'
+  };
+  adm2Sec(map[tab]||tab);
+}
+
 
 
 </script>
