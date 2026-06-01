@@ -181,49 +181,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .nav-salir{background:linear-gradient(135deg,#450a0a,#7c0a0a) !important;letter-spacing:2px}
 .nav-salir:hover{background:linear-gradient(135deg,#7c0a0a,#cc0a0a) !important}
 
-/* ORB + LABEL DEBAJO */
-.share-orb-wrap{
-  display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;
-}
-.orb-label{
-  font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;
-  letter-spacing:1px;color:rgba(255,255,255,0.55);text-align:center;
-  line-height:1.2;text-transform:uppercase;pointer-events:none;
-}
-
-/* BOTÓN PÁGINA FACEBOOK */
-.nav-fb-page{
-  display:inline-flex;align-items:center;gap:6px;
-  background:#1877f2;color:#fff;
-  text-decoration:none;border:none;cursor:pointer;
-  font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;
-  padding:9px 14px;border-radius:9px;
-  box-shadow:0 3px 14px rgba(24,119,242,0.5);
-  transition:all .2s;white-space:nowrap;flex-shrink:0;
-}
-.nav-fb-page:hover{background:#1461cc;transform:translateY(-1px);box-shadow:0 5px 18px rgba(24,119,242,0.65)}
-.nav-fb-page-icon{font-size:15px;line-height:1}
-
-/* BOTONES COMPARTIR — rectangulares con texto */
-.share-btn{
-  display:inline-flex;align-items:center;gap:5px;
-  border:none;cursor:pointer;
-  font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1.5px;
-  padding:9px 12px;border-radius:9px;
-  transition:all .2s;white-space:nowrap;flex-shrink:0;color:#fff;
-}
-.share-btn-fb{
-  background:#1877f2;
-  box-shadow:0 3px 12px rgba(24,119,242,0.4);
-}
-.share-btn-fb:hover{background:#1461cc;transform:translateY(-1px)}
-.share-btn-wa{
-  background:#25D366;
-  box-shadow:0 3px 12px rgba(37,211,102,0.4);
-}
-.share-btn-wa:hover{background:#1aad52;transform:translateY(-1px)}
-.share-btn-icon{font-size:14px;line-height:1}
-
 /* STATS BAR — 4 columnas */
 .stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
 .sb{flex:1;padding:11px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.07)}
@@ -454,15 +411,95 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .c-add{background:var(--fondo);border:1.5px dashed var(--borde);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;color:var(--borde);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;text-align:center;gap:4px}
 
 /* ══ 4 BOTONES CUADRADOS IGUALES ══ */
-.hero-4grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;padding:14px 14px 8px}
-/* cada botón: cuadrado perfecto 1:1 */
-.hbtn4{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:14px;border:1.5px solid rgba(255,255,255,0.12);transition:all .22s;overflow:hidden;position:relative;aspect-ratio:1/1;width:100%}
-.hbtn4:hover,.hbtn4:active{transform:scale(.95);filter:brightness(1.1)}
-/* imagen que cubre si se sube */
-.hbtn4 img.btn-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:13px;z-index:0}
-/* texto fallback */
-.hfb4{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;letter-spacing:1.5px;color:#fff;text-align:center;line-height:1.1;font-size:clamp(10px,2.8vw,15px)}
-.hico4{font-size:clamp(20px,5.5vw,32px);display:block;margin-bottom:2px;line-height:1}
+/* ══ 6 BOTONES CUADRADOS EN FILA ══ */
+@property --btn6-a{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes spinBtn6{to{--btn6-a:360deg}}
+@keyframes frameSpinBtn{
+  0%{transform:rotate(0deg) scale(1)}
+  25%{transform:rotate(90deg) scale(1.04)}
+  50%{transform:rotate(180deg) scale(1)}
+  75%{transform:rotate(270deg) scale(1.04)}
+  100%{transform:rotate(360deg) scale(1)}
+}
+.hero-4grid{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;padding:14px 14px 4px}
+.hbtn4{
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;border-radius:12px;
+  transition:transform .18s;
+  overflow:visible;position:relative;
+  aspect-ratio:1/1;width:100%;
+  /* borde conic giratorio */
+  background:
+    var(--btn-bg,linear-gradient(135deg,#1a1a1a,#333)) padding-box,
+    conic-gradient(from var(--btn6-a),
+      rgba(255,255,255,0.8),rgba(255,255,255,0.08),
+      rgba(255,255,255,0.8),rgba(255,255,255,0.04),
+      rgba(255,255,255,0.8)) border-box;
+  border:2px solid transparent;
+  animation:spinBtn6 3s linear infinite;
+}
+.hbtn4:active{transform:scale(.93)}
+.hbtn4 img.btn-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:11px;z-index:0}
+.hfb4{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:6px 3px;width:100%;height:100%;font-family:'Bebas Neue',sans-serif;letter-spacing:1.5px;color:#fff;text-align:center;line-height:1.1;font-size:clamp(8px,2.2vw,12px)}
+.hico4{font-size:clamp(18px,4.5vw,26px);display:block;margin-bottom:1px;line-height:1}
+/* VISITAS badge — fuera del botón, debajo */
+.btn6-vis-badge{
+  position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);
+  background:rgba(0,255,136,0.18);border:1px solid rgba(0,255,136,0.35);
+  border-radius:6px;padding:1px 6px;
+  font-family:'Bebas Neue',sans-serif;font-size:10px;color:#00ff88;
+  white-space:nowrap;pointer-events:none;z-index:5;
+  text-shadow:0 0 8px #00ff88;
+}
+/* COMPARTIR ROW — abajo de los botones */
+.compartir-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:6px 14px 0;position:relative;z-index:2}
+.compartir-btn{
+  position:relative;display:flex;align-items:center;justify-content:center;gap:7px;
+  border-radius:12px;border:none;padding:11px 8px;cursor:pointer;
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(14px,4vw,18px);letter-spacing:2px;color:#fff;
+  background:
+    var(--cbg,#1a1a1a) padding-box,
+    conic-gradient(from var(--btn6-a),rgba(255,255,255,0.7),rgba(255,255,255,0.05),rgba(255,255,255,0.7)) border-box;
+  border:2px solid transparent;
+  animation:spinBtn6 2.5s linear infinite;
+  -webkit-tap-highlight-color:transparent;
+  overflow:hidden;
+}
+.compartir-fb{--cbg:linear-gradient(135deg,#0d3a8e,#1877f2);box-shadow:0 3px 16px rgba(24,119,242,0.4)}
+.compartir-wa{--cbg:linear-gradient(135deg,#075e37,#25D366);box-shadow:0 3px 16px rgba(37,211,102,0.4)}
+.comp-ico{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,4vw,20px);color:#fff;line-height:1;z-index:2;position:relative}
+.comp-txt{position:relative;z-index:2}
+
+/* ══ BARRA FACEBOOK PAGE ══ */
+@property --fp-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes fpSpin{to{--fp-angle:360deg}}
+@keyframes fbPagePulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(24,119,242,0.6),0 4px 24px rgba(24,119,242,0.4)}
+  50%{box-shadow:0 0 0 8px rgba(24,119,242,0),0 4px 36px rgba(24,119,242,0.7)}
+}
+.fb-page-btn{
+  display:flex;align-items:center;position:relative;
+  margin:10px 14px 0;border-radius:16px;overflow:visible;
+  text-decoration:none;cursor:pointer;
+  background:
+    linear-gradient(135deg,#0a1a3a,#1877f2 50%,#0d47a1) padding-box,
+    conic-gradient(from var(--fp-angle),#60a5fa,#fff,#1877f2,#93c5fd,#fff,#1877f2,#60a5fa) border-box;
+  border:2.5px solid transparent;
+  animation:fpSpin 2s linear infinite,fbPagePulse 2s ease-in-out infinite;
+  z-index:2;
+}
+.fb-page-btn:active{transform:scale(0.97)}
+.fb-page-ring{position:absolute;inset:-5px;border-radius:20px;pointer-events:none;border:2px solid transparent}
+.fp1{background:linear-gradient(#0a1a3a,#0a1a3a) padding-box,conic-gradient(from var(--fp-angle),#60a5fa 0%,#fff 15%,transparent 25%,transparent 100%) border-box;animation:fpSpin 1s linear infinite}
+.fp2{background:linear-gradient(#0a1a3a,#0a1a3a) padding-box,conic-gradient(from var(--fp-angle),transparent 40%,#93c5fd 55%,#fff 65%,transparent 80%) border-box;animation:fpSpin 1.6s linear infinite reverse}
+.fp3{background:linear-gradient(#0a1a3a,#0a1a3a) padding-box,conic-gradient(from var(--fp-angle),transparent 70%,#bfdbfe 82%,transparent 92%) border-box;animation:fpSpin 2.2s linear infinite}
+.fb-page-inner{display:flex;align-items:center;gap:12px;padding:14px 16px;position:relative;z-index:2;width:100%}
+.fb-page-ico{width:44px;height:44px;border-radius:11px;background:#1877f2;border:2px solid rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;flex-shrink:0;box-shadow:0 0 16px rgba(24,119,242,0.8)}
+.fb-page-txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.fb-page-lbl{font-family:'Bebas Neue',sans-serif;font-size:clamp(16px,4.5vw,22px);letter-spacing:2px;color:#fff;line-height:1;text-shadow:0 0 12px rgba(255,255,255,0.5)}
+.fb-page-url{font-family:'Barlow Condensed',sans-serif;font-size:clamp(10px,3vw,13px);font-weight:700;letter-spacing:1px;color:rgba(255,255,255,0.6)}
+.fb-page-arrow{font-family:'Bebas Neue',sans-serif;font-size:22px;color:rgba(255,255,255,0.5);flex-shrink:0;animation:arrowBounce 1s ease-in-out infinite alternate}
+@keyframes arrowBounce{from{transform:translateX(0)}to{transform:translateX(5px)}}
 
 /* MODAL INSTALAR */
 #modalInstalar{display:none;position:fixed;inset:0;z-index:9860;background:rgba(0,0,0,0.88);align-items:flex-end;justify-content:center;padding:0}
@@ -566,20 +603,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 .dcd-done{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,6vw,34px);color:#fff;letter-spacing:2px;padding:8px 0;position:relative;z-index:1;text-shadow:0 0 20px rgba(255,100,0,0.8)}
 
 /* Botones nav */
-.nav-right{display:flex;align-items:center;gap:6px;flex-wrap:nowrap}
-/* En pantallas medianas: reducir */
-@media(max-width:600px){
-  .nav-fb-page{padding:8px 10px;font-size:11px;letter-spacing:1px;gap:4px}
-  .share-btn{padding:8px 10px;font-size:11px;letter-spacing:1px}
-  .nav-cta.nav-salir{padding:8px 10px;font-size:11px}
-}
-/* En pantallas muy pequeñas (<400px): solo iconos */
-@media(max-width:399px){
-  .nav-btn-txt{display:none}
-  .nav-fb-page{padding:8px 11px;gap:0}
-  .share-btn{padding:8px 11px;gap:0}
-  .nav-right{gap:5px}
-}
+.nav-right{display:flex;align-items:center;gap:8px}
 .nav-share-btn{width:38px;height:38px;border-radius:9px;background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.13);display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;transition:all .2s;color:#fff;text-decoration:none;flex-shrink:0}
 .nav-share-btn:hover{background:rgba(255,255,255,0.15);transform:translateY(-1px)}
 .nav-fb-btn{width:38px;height:38px;border-radius:9px;background:#1877f2;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;text-decoration:none;transition:all .2s;flex-shrink:0}
@@ -710,6 +734,41 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 .sb-config-box{background:rgba(21,128,61,0.08);border:1.5px solid rgba(74,222,128,0.2);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:9px}
 .sb-config-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#4ade80}
 .sb-connected{display:none;text-align:center;padding:8px;background:rgba(74,222,128,0.1);border-radius:8px;color:#4ade80;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px}
+
+/* ══ BOTÓN PRESIONADO — frameSpinBtn al hacer click ══ */
+.hbtn4.btn-pressed{
+  animation:spinBtn6 3s linear infinite, frameSpinBtn .8s ease !important;
+  transform:scale(1.05);
+}
+
+/* ══ MODAL PULSO EN VIVO ══ */
+#modalPulso{display:none;position:fixed;inset:0;z-index:9870;background:rgba(0,0,0,0.92);align-items:flex-start;justify-content:center;padding:12px;overflow-y:auto}
+#modalPulso.open{display:flex}
+.pulso-box{background:#0a0a0a;border:1px solid rgba(255,255,255,0.09);border-radius:20px;width:100%;max-width:480px;overflow:hidden;margin:auto;animation:popIn .18s ease}
+.pulso-head{background:linear-gradient(135deg,#0f2a0f,#1a4a1a);padding:16px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,255,100,0.15)}
+.pulso-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:#4ade80}
+.pulso-sub{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:3px;color:rgba(74,222,128,0.5)}
+.pulso-body{padding:16px;display:flex;flex-direction:column;gap:10px;max-height:75vh;overflow-y:auto}
+.pulso-metric{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.pulso-metric-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:2px;color:rgba(255,255,255,0.45)}
+.pulso-metric-val{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#fff;letter-spacing:1px}
+.pulso-metric-val.green{color:#4ade80;text-shadow:0 0 12px rgba(74,222,128,0.7)}
+.pulso-metric-val.cyan{color:#22d3ee;text-shadow:0 0 12px rgba(34,211,238,0.7)}
+.pulso-metric-val.yellow{color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,0.7)}
+.pulso-metric-val.red{color:#f87171;text-shadow:0 0 12px rgba(248,113,113,0.7)}
+.pulso-metric-val.purple{color:#a78bfa;text-shadow:0 0 12px rgba(167,139,250,0.7)}
+.pulso-section-lbl{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:4px;color:rgba(255,255,255,0.2);margin-top:4px;padding-left:2px}
+.pulso-graph{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:12px;height:90px;position:relative;overflow:hidden}
+.pulso-graph canvas{width:100%;height:100%}
+.pulso-close-btn{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.4);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer;transition:all .2s;margin-top:4px}
+.pulso-close-btn:hover{background:rgba(255,255,255,0.11);color:#fff}
+@keyframes liveBlip{0%,100%{opacity:1}50%{opacity:.2}}
+.live-blip{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;animation:liveBlip 1s infinite;box-shadow:0 0 8px rgba(74,222,128,0.8);margin-right:6px}
+
+/* ══ MODAL DIRECTO (mensajes internos) ══ */
+#modalDirecto{display:none;position:fixed;inset:0;z-index:9875;background:rgba(0,0,0,0.92);align-items:flex-end;justify-content:center;padding:0}
+#modalDirecto.open{display:flex}
+.directo-box{background:#111;border-top:1px solid rgba(255,255,255,0.1);border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:20px 18px 32px;animation:slideUp .25s ease}
 </style>
 </head>
 <body>
@@ -723,30 +782,16 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
     </div>
   </div>
   <div class="nav-right">
-    <!-- PÁGINA FACEBOOK — botón directo a la fan page -->
-    <a href="https://www.facebook.com/Encuestasilao/" target="_blank" rel="noopener" class="nav-fb-page" title="Ir a nuestra página de Facebook">
-      <span class="nav-fb-page-icon">📘</span><span class="nav-btn-txt"> PÁGINA FB</span>
-    </a>
-
-    <!-- COMPARTIR EN FACEBOOK — orb con label debajo -->
-    <div class="share-orb-wrap">
-      <button class="share-orb share-orb-fb" onclick="compartirFB()" title="Compartir silao360.com en Facebook">
-        <span class="orb-ring ob1"></span><span class="orb-ring ob2"></span>
-        <span class="orb-ico">f</span>
-      </button>
-      <span class="orb-label">Comparte<br>la página</span>
-    </div>
-
-    <!-- COMPARTIR EN WHATSAPP — orb con label debajo -->
-    <div class="share-orb-wrap">
-      <button class="share-orb share-orb-wa" onclick="compartirWA()" title="Compartir silao360.com por WhatsApp">
-        <span class="orb-ring ow1"></span><span class="orb-ring ow2"></span>
-        <span class="orb-ico">💬</span>
-      </button>
-      <span class="orb-label">Comparte<br>la página</span>
-    </div>
-
-    <a href="https://www.google.com.mx" class="nav-cta nav-salir" onclick="chusco(this)">🚪 SALIR</a>
+    <!-- COMPARTIR FB — botón con efecto orbita azul -->
+    <button class="share-orb share-orb-fb" onclick="compartirFB()" title="Compartir en Facebook">
+      <span class="orb-ring ob1"></span><span class="orb-ring ob2"></span>
+      <span class="orb-ico">f</span>
+    </button>
+    <!-- COMPARTIR WA — botón con efecto pulso verde -->
+    <button class="share-orb share-orb-wa" onclick="compartirWA()" title="Compartir en WhatsApp">
+      <span class="orb-ring ow1"></span><span class="orb-ring ow2"></span>
+      <span class="orb-ico">💬</span>
+    </button>
   </div>
 </nav>
 
@@ -765,19 +810,22 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
   </div>
 
   <div class="stats-bar" style="position:relative">
-    <!-- VOTOS -->
-    <div class="sb"><div class="sb-n" id="statVotos">—</div><div class="sb-l">VOTOS</div></div>
-    <!-- VISITAS · Supabase -->
-    <div class="sb"><div class="sb-n" id="statVisitas">—</div><div class="sb-l">VISITAS</div></div>
     <!-- BOTÓN RESULTADOS racing -->
-    <div class="sb sb-racing" style="padding:5px 4px;display:flex;align-items:center;justify-content:center">
+    <div class="sb sb-racing" style="padding:5px 4px;display:flex;align-items:center;justify-content:center;flex:2">
       <button onclick="window.location.href='#encuesta';snd('vote')" id="racingBtn" class="racing-btn" aria-label="Ver resultados">
         <span class="racing-inner"><span class="racing-ico">⚡</span><span class="racing-txt">RESULTADOS</span></span>
         <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
       </button>
     </div>
+    <!-- SALIR -->
+    <div class="sb sb-racing" style="padding:5px 4px;display:flex;align-items:center;justify-content:center;flex:2">
+      <a href="https://www.google.com.mx" class="racing-btn" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;width:100%;height:52px;background:linear-gradient(135deg,#450a0a,#7c0a0a);border-radius:10px;overflow:visible;position:relative" onclick="chusco(this);snd('fun')">
+        <span class="racing-inner" style="text-shadow:0 0 10px rgba(255,80,80,0.9)"><span class="racing-ico">🚪</span><span class="racing-txt">SALIR</span></span>
+        <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
+      </a>
+    </div>
     <!-- LIKE — mismo estilo racing pero verde -->
-    <div class="sb sb-racing" style="padding:5px 4px;display:flex;align-items:center;justify-content:center">
+    <div class="sb sb-racing" style="padding:5px 4px;display:flex;align-items:center;justify-content:center;flex:1">
       <button onclick="darLike(this)" id="likeBtn" class="racing-btn like-btn" aria-label="Like">
         <span class="racing-inner like-inner">
           <span class="racing-ico" id="likeIco">👍</span>
@@ -794,27 +842,75 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
   </div>
 
   <div class="btns-hero">
-    <!-- 4 botones cuadrados iguales — tipo carrusel -->
+    <!-- 6 botones cuadrados con spinCatBorder -->
     <div class="hero-4grid">
-      <a href="https://silao360.com.mx" target="_blank" onclick="chusco(this);snd('vote')" class="hbtn4" id="btnEnc" style="background:linear-gradient(135deg,#7c0a0a,#cc0a0a);box-shadow:0 6px 24px rgba(204,10,10,0.5)">
-        <div class="hfb4" id="btnEncFb"><span class="hico4">🗳️</span>PARTICIPA</div>
+
+      <!-- 1 PULSO EN VIVO -->
+      <button onclick="chusco(this);snd('vote');abrirPulso()" class="hbtn4" id="btnEnc" style="--btn-bg:linear-gradient(135deg,#0a1a0a,#0f4c0f);background:linear-gradient(135deg,#0a1a0a,#0f4c0f);border:none;cursor:pointer">
+        <div class="hfb4" id="btnEncFb"><span class="hico4">📊</span>PULSO EN VIVO</div>
+      </button>
+
+      <!-- 2 ENCUESTA -->
+      <a href="https://silao360.com.mx" target="_blank" onclick="chusco(this);snd('vote');registrarEntrada('encuesta')" class="hbtn4" id="btnEncuesta" style="--btn-bg:linear-gradient(135deg,#7c0a0a,#cc0a0a);background:linear-gradient(135deg,#7c0a0a,#cc0a0a)">
+        <div class="hfb4" id="btnEncuestaFb"><span class="hico4">🗳️</span>ENCUESTA</div>
       </a>
-      <a href="https://trivia.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun')" class="hbtn4" id="btnTrivia" style="background:linear-gradient(135deg,#3b0764,#7c3aed);box-shadow:0 6px 24px rgba(109,40,217,0.45)">
-        <div class="hfb4" id="btnTriviaFb"><span class="hico4">🧠</span>TRIVIA</div>
+
+      <!-- 3 TRIVIA -->
+      <a href="https://trivia.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('trivia')" class="hbtn4" id="btnTrivia" style="--btn-bg:linear-gradient(135deg,#3b0764,#7c3aed);background:linear-gradient(135deg,#3b0764,#7c3aed)">
+        <div class="hfb4" id="btnTriviaFb"><span class="hico4">🎯</span>TRIVIA</div>
       </a>
-      <a href="https://pesoapeso.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun')" class="hbtn4" id="btnPeso" style="background:linear-gradient(135deg,#831843,#db2777);box-shadow:0 6px 24px rgba(219,39,119,0.45)">
-        <div class="hfb4" id="btnPesoFb"><span class="hico4">⚖️</span>PESO A PESO</div>
+
+      <!-- 4 PESO A PESO -->
+      <a href="https://pesoapeso.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('peso')" class="hbtn4" id="btnPeso" style="--btn-bg:linear-gradient(135deg,#831843,#db2777);background:linear-gradient(135deg,#831843,#db2777)">
+        <div class="hfb4" id="btnPesoFb"><span class="hico4">💰</span>PESO A PESO</div>
       </a>
-      <button onclick="chusco(this);snd('install');abrirInstalar()" class="hbtn4" id="btnInstalar" style="background:linear-gradient(135deg,#0f4c2a,#16a34a);box-shadow:0 6px 24px rgba(22,163,74,0.45);border:none;cursor:pointer">
-        <div class="hfb4"><span class="hico4">📲</span>INSTALAR</div>
+
+      <!-- 5 ESCRÍBEME -->
+      <button onclick="chusco(this);snd('fun');registrarEntrada('escribeme');abrirContacto()" class="hbtn4" id="btnEscribeme" style="--btn-bg:linear-gradient(135deg,#065f46,#059669);background:linear-gradient(135deg,#065f46,#059669);border:none;cursor:pointer">
+        <div class="hfb4" id="btnEscribemeFb"><span class="hico4">✉️</span>ESCRÍBEME</div>
+      </button>
+
+      <!-- 6 INSTALAR -->
+      <button onclick="chusco(this);snd('install');abrirInstalar()" class="hbtn4" id="btnInstalar" style="--btn-bg:linear-gradient(135deg,#1e3a5f,#2563eb);background:linear-gradient(135deg,#1e3a5f,#2563eb);border:none;cursor:pointer">
+        <div class="hfb4" id="btnInstalarFb"><span class="hico4">📲</span>INSTALAR</div>
+      </button>
+
+    </div>
+
+    <!-- COMPARTIR: FB + WA abajo de los 6 botones -->
+    <div class="compartir-row">
+      <button class="compartir-btn compartir-fb" onclick="compartirFB()">
+        <span class="comp-ico" style="font-family:'Bebas Neue',sans-serif;font-weight:900;font-size:clamp(16px,4vw,22px)">f</span>
+        <span class="comp-txt">COMPARTIR FB</span>
+      </button>
+      <button class="compartir-btn compartir-wa" onclick="compartirWA()">
+        <span class="comp-ico">💬</span>
+        <span class="comp-txt">COMPARTIR WA</span>
       </button>
     </div>
+
   </div>
 
   <div class="cd-wrap">
     <div class="cd-lbl">⏳ PRÓXIMAS ELECCIONES MUNICIPALES</div>
     <div class="cd-boxes" id="heroCD"></div>
   </div>
+
+  <!-- BARRA FACEBOOK PAGE — abajo de todo, encima de la sección roja -->
+  <a href="https://www.facebook.com/Encuestasilao/" target="_blank" class="fb-page-btn" onclick="chusco(this)">
+    <span class="fb-page-ring fp1"></span>
+    <span class="fb-page-ring fp2"></span>
+    <span class="fb-page-ring fp3"></span>
+    <span class="fb-page-inner">
+      <span class="fb-page-ico">f</span>
+      <span class="fb-page-txt">
+        <span class="fb-page-lbl">SÍGUENOS EN FACEBOOK</span>
+        <span class="fb-page-url">facebook.com/Encuestasilao</span>
+      </span>
+      <span class="fb-page-arrow">▶</span>
+    </span>
+  </a>
+
 </section>
 
 <div class="sep"></div>
@@ -907,7 +1003,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 <!-- ══ EXTRA (admin oculto — 5 toques al logo) ══ -->
 <section class="extra-sec">
   <div class="extra-inner" style="text-align:center">
-    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.07)">ENCUESTA SILAO · V21</p>
+    <p style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.07)">ENCUESTA SILAO · V24</p>
   </div>
 </section>
 
@@ -1030,6 +1126,144 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
   </div>
 </div>
 
+<!-- ══ MODAL CONTACTO ══ -->
+<div id="modalContacto" onclick="if(event.target===this)cerrarContacto()" style="display:none;position:fixed;inset:0;z-index:9860;background:rgba(0,0,0,0.88);align-items:flex-end;justify-content:center;padding:0">
+  <div style="background:#111;border-top:1px solid rgba(255,255,255,0.1);border-radius:20px 20px 0 0;width:100%;max-width:520px;padding:20px 18px 32px;animation:slideUp .25s ease">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;margin-bottom:4px;text-align:center">📩 ESCRÍBEME</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.32);text-align:center;margin-bottom:18px">ELIGE CÓMO CONTACTARME</div>
+
+    <!-- Vista selector de canal -->
+    <div id="ctCanales" style="display:flex;flex-direction:column;gap:10px">
+      <button onclick="ctMostrar('correo')" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,255,255,0.1);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.borderColor='rgba(204,10,10,0.5)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+        <span style="font-size:28px">✉️</span>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">CORREO</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px">silao360oficial@gmail.com</div>
+        </div>
+      </button>
+      <button onclick="ctFacebook()" style="display:flex;align-items:center;gap:14px;background:rgba(24,119,242,0.1);border:1.5px solid rgba(24,119,242,0.3);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.borderColor='rgba(24,119,242,0.7)'" onmouseout="this.style.borderColor='rgba(24,119,242,0.3)'">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#1877f2;font-weight:900">f</span>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">PÁGINA FACEBOOK</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px" id="ct-fb-url">facebook.com/Encuestasilao</div>
+        </div>
+      </button>
+      <button onclick="ctWhatsApp()" style="display:flex;align-items:center;gap:14px;background:rgba(37,211,102,0.1);border:1.5px solid rgba(37,211,102,0.3);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.borderColor='rgba(37,211,102,0.7)'" onmouseout="this.style.borderColor='rgba(37,211,102,0.3)'">
+        <span style="font-size:28px">💬</span>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">WHATSAPP</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px" id="ct-wa-url">Número editable desde Admin</div>
+        </div>
+      </button>
+      <button onclick="cerrarContacto();setTimeout(abrirDirecto,200)" style="display:flex;align-items:center;gap:14px;background:rgba(8,145,178,0.1);border:1.5px solid rgba(8,145,178,0.3);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.borderColor='rgba(8,145,178,0.7)'" onmouseout="this.style.borderColor='rgba(8,145,178,0.3)'">
+        <span style="font-size:28px">💬</span>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">MENSAJE DIRECTO</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px">Mensaje interno · Solo Admin lo ve</div>
+        </div>
+      </button>
+      <button onclick="abrirAdmin();cerrarContacto()" style="display:flex;align-items:center;gap:14px;background:rgba(204,10,10,0.1);border:1.5px solid rgba(204,10,10,0.3);border-radius:14px;padding:16px 18px;cursor:pointer;text-align:left;transition:all .2s" onmouseover="this.style.borderColor='rgba(204,10,10,0.7)'" onmouseout="this.style.borderColor='rgba(204,10,10,0.3)'">
+        <span style="font-size:28px">🔑</span>
+        <div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff">ADMIN</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:1px">Acceso al panel de administración</div>
+        </div>
+      </button>
+      <button onclick="cerrarContacto()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.4);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer">CANCELAR</button>
+    </div>
+
+    <!-- Vista formulario correo -->
+    <div id="ctCorreoForm" style="display:none;flex-direction:column;gap:10px">
+      <button onclick="ctMostrar('canales')" style="display:flex;align-items:center;gap:6px;background:none;border:none;color:rgba(255,255,255,0.45);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;padding:0;margin-bottom:4px">← VOLVER</button>
+      <input id="ctNombre" placeholder="Tu nombre" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;width:100%">
+      <select id="ctTipo" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:14px;width:100%">
+        <option value="SUGERENCIA">💡 SUGERENCIA</option>
+        <option value="ERROR">🐛 ERROR / PROBLEMA</option>
+        <option value="CANDIDATO">🗳️ SOBRE UN CANDIDATO</option>
+        <option value="OTRO">📌 OTRO</option>
+      </select>
+      <textarea id="ctMensaje" placeholder="Tu mensaje..." rows="4" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;width:100%;resize:none"></textarea>
+      <button onclick="enviarContacto()" style="width:100%;background:linear-gradient(135deg,#cc0a0a,#ff3333);border:none;border-radius:12px;padding:15px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;cursor:pointer">ENVIAR MENSAJE</button>
+      <div id="ctFeedback" style="display:none;text-align:center;padding:10px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px"></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.22);text-align:center;letter-spacing:1px">Llegará a silao360oficial@gmail.com</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ MODAL PULSO EN VIVO ══ -->
+<div id="modalPulso" onclick="if(event.target===this)cerrarPulso()">
+  <div class="pulso-box">
+    <div class="pulso-head">
+      <div>
+        <div class="pulso-title"><span class="live-blip"></span>📊 PULSO EN VIVO</div>
+        <div class="pulso-sub">MÉTRICAS EN TIEMPO REAL · ENCUESTA SILAO</div>
+      </div>
+      <button onclick="cerrarPulso()" style="background:rgba(255,255,255,0.1);border:none;border-radius:8px;padding:7px 12px;color:#fff;cursor:pointer;font-size:16px">✕</button>
+    </div>
+    <div class="pulso-body">
+
+      <div class="pulso-section-lbl">👥 ACTIVIDAD</div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">USUARIOS ACTIVOS</span>
+        <span class="pulso-metric-val green" id="pls-activos">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">VISITAS HOY</span>
+        <span class="pulso-metric-val cyan" id="pls-hoy">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">VISITAS TOTALES</span>
+        <span class="pulso-metric-val" id="pls-total">—</span>
+      </div>
+
+      <div class="pulso-section-lbl">📲 ENTRADAS POR SECCIÓN</div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">🗳️ ENTRADAS A ENCUESTA</span>
+        <span class="pulso-metric-val yellow" id="pls-encuesta">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">🎯 ENTRADAS A TRIVIA</span>
+        <span class="pulso-metric-val purple" id="pls-trivia">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">💰 ENTRADAS A PESO A PESO</span>
+        <span class="pulso-metric-val red" id="pls-peso">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">✉️ CLICS EN ESCRÍBEME</span>
+        <span class="pulso-metric-val cyan" id="pls-escribeme">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">💬 MENSAJES DIRECTOS</span>
+        <span class="pulso-metric-val green" id="pls-directos">—</span>
+      </div>
+
+      <div class="pulso-section-lbl">📈 GRÁFICA — VISITAS (últimas 10 lecturas)</div>
+      <div class="pulso-graph">
+        <canvas id="pulsoChart"></canvas>
+      </div>
+
+      <button class="pulso-close-btn" onclick="cerrarPulso()">CERRAR</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL DIRECTO (mensaje interno) ══ -->
+<div id="modalDirecto" onclick="if(event.target===this)cerrarDirecto()">
+  <div class="directo-box">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;margin-bottom:4px;text-align:center">💬 MENSAJE DIRECTO</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.32);text-align:center;margin-bottom:18px">SÓLO VISIBLE EN ADMINISTRACIÓN</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input id="dtNombre" placeholder="Tu nombre (opcional)" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;width:100%">
+      <textarea id="dtMensaje" placeholder="Escribe tu mensaje aquí..." rows="4" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:13px 14px;color:#fff;font-family:'Barlow',sans-serif;font-size:14px;width:100%;resize:none"></textarea>
+      <button onclick="enviarDirecto()" style="width:100%;background:linear-gradient(135deg,#0c2a4a,#0891b2);border:none;border-radius:12px;padding:15px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;cursor:pointer">ENVIAR MENSAJE</button>
+      <div id="dtFeedback" style="display:none;text-align:center;padding:10px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px"></div>
+      <button onclick="cerrarDirecto()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.4);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer">CANCELAR</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══ MODAL COMPARTIR ══ -->
 <div id="modalShare" onclick="if(event.target===this)cerrarShare()">
   <div class="share-box">
@@ -1087,6 +1321,8 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
         <button onclick="adminTab('texto')" id="tab-texto" class="adm-tab">✍️ TEXTO</button>
         <button onclick="adminTab('noticias')" id="tab-noticias" class="adm-tab">📰 NOTICIAS</button>
         <button onclick="adminTab('ajustes')" id="tab-ajustes" class="adm-tab">⚙️ AJUSTES</button>
+        <button onclick="adminTab('buzon')" id="tab-buzon" class="adm-tab">📬 BUZÓN</button>
+        <button onclick="adminTab('directos')" id="tab-directos" class="adm-tab">💬 DIRECTOS</button>
       </div>
 
       <!-- TAB SUPABASE -->
@@ -1272,8 +1508,84 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
           <div class="adm-label">⚖️ IMAGEN PESO A PESO</div>
           <button onclick="document.getElementById('pesoImgFile').click()" style="width:100%;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:7px;padding:9px;color:rgba(255,255,255,0.55);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN PESO A PESO</button>
           <input type="file" id="pesoImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnPeso','btnPesoFb')">
+          <!-- INSTALAR -->
+          <div class="adm-row" style="border-left:3px solid #16a34a">
+            <div class="adm-label">📲 INSTALAR · IMAGEN</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div id="btnInstalarPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('instalarImgFile').click()">📲</div>
+              <button onclick="document.getElementById('instalarImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+            </div>
+            <input type="file" id="instalarImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnInstalar','btnInstalarFb')">
+          </div>
+          <!-- VISITAS -->
+          <div class="adm-row" style="border-left:3px solid #0891b2">
+            <div class="adm-label">👁️ VISITAS · IMAGEN</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div id="btnVisitasPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('visitasImgFile').click()">👁️</div>
+              <button onclick="document.getElementById('visitasImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+            </div>
+            <input type="file" id="visitasImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnVisitas',null)">
+          </div>
+          <!-- ESCRÍBEME -->
+          <div class="adm-row" style="border-left:3px solid #059669">
+            <div class="adm-label">✉️ ESCRÍBEME · IMAGEN</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div id="btnEscribemePrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('escribemeImgFile').click()">✉️</div>
+              <button onclick="document.getElementById('escribemeImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+            </div>
+            <input type="file" id="escribemeImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEscribeme','btnEscribemeFb')">
+          </div>
+          <!-- ENCUESTA BUTTON (was old Encuesta/Participa) -->
+          <div class="adm-row" style="border-left:3px solid #cc0a0a">
+            <div class="adm-label">🗳️ ENCUESTA · IMAGEN</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div id="btnEncuestaPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('encuestaImgFile').click()">🗳️</div>
+              <button onclick="document.getElementById('encuestaImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+            </div>
+            <input type="file" id="encuestaImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEncuesta','btnEncuestaFb')">
+          </div>
+          <!-- PULSO EN VIVO -->
+          <div class="adm-row" style="border-left:3px solid #4ade80">
+            <div class="adm-label">📊 PULSO EN VIVO · IMAGEN</div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div id="btnPulsoPrev" style="width:52px;height:52px;border-radius:9px;overflow:hidden;background:rgba(255,255,255,0.08);border:1.5px dashed rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer" onclick="document.getElementById('pulsoImgFile').click()">📊</div>
+              <button onclick="document.getElementById('pulsoImgFile').click()" style="flex:1;background:rgba(255,255,255,0.06);border:1px dashed rgba(255,255,255,0.18);border-radius:6px;padding:8px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer">📷 SUBIR IMAGEN</button>
+            </div>
+            <input type="file" id="pulsoImgFile" accept="image/*" style="display:none" onchange="procesarBtnImg(event,'btnEnc','btnEncFb')">
+          </div>
         </div>
         <button onclick="adminGuardarAjustes()" class="adm-save-btn" style="background:linear-gradient(135deg,#1a3a8f,#2563eb)">💾 GUARDAR AJUSTES</button>
+
+        <!-- CANALES CONTACTO -->
+        <div class="adm-row" style="margin-top:4px;border-top:1px solid rgba(255,255,255,0.07);padding-top:14px">
+          <div class="adm-label" style="color:#fff">📩 CANALES DE CONTACTO</div>
+          <div class="adm-label">URL FORMSPREE (correo)</div>
+          <input id="ajFormspree" class="adm-input" placeholder="https://formspree.io/f/..." style="font-size:11px">
+          <div class="adm-label">URL FACEBOOK PAGE</div>
+          <input id="ajFacebook" class="adm-input" placeholder="https://www.facebook.com/Encuestasilao" style="font-size:11px">
+          <div class="adm-label">📱 NÚMERO WHATSAPP (con código país, ej: 5214771234567)</div>
+          <input id="ajWhatsapp" class="adm-input" placeholder="5214771234567" style="font-size:13px">
+          <button onclick="guardarCanalesContacto()" class="adm-save-btn" style="background:linear-gradient(135deg,#065f46,#059669);margin-top:4px">💾 GUARDAR CANALES</button>
+          <div id="canalesFb" style="display:none;text-align:center;padding:7px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#4ade80;background:rgba(74,222,128,0.1)">✅ GUARDADO</div>
+        </div>
+      </div>
+
+      <!-- TAB BUZÓN -->
+      <div id="panel-buzon" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="adm-label">📬 MENSAJES RECIBIDOS (CORREO)</div>
+          <button onclick="borrarTodosMensajes()" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.28);border-radius:8px;padding:6px 12px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+        </div>
+        <div id="buzonWrap" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+
+      <!-- TAB DIRECTOS -->
+      <div id="panel-directos" style="padding:16px;display:none;flex-direction:column;gap:10px;max-height:60vh;overflow-y:auto">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div class="adm-label">💬 MENSAJES DIRECTOS (INTERNOS)</div>
+          <button onclick="borrarTodosDirectos()" style="background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.28);border-radius:8px;padding:6px 12px;color:#f87171;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer">🗑️ BORRAR TODO</button>
+        </div>
+        <div id="directosWrap" style="display:flex;flex-direction:column;gap:8px"></div>
       </div>
     </div>
   </div>
@@ -1618,6 +1930,14 @@ async function cargarVotos(){
   setStatusBadge('local');
   refreshStatVotos({});
   buildPoll({});
+  _actualizarVisitasBadge();
+}
+function _actualizarVisitasBadge(){
+  var vis=parseInt(localStorage.getItem('es_visits')||'0');
+  var badge=document.getElementById('visitasBadge');
+  if(badge)badge.textContent=vis.toLocaleString()+' visitas';
+  var txt=document.getElementById('btnVisitasTxt');
+  if(txt)txt.textContent='VISITAS';
 }
 
 /* Stats: solo votos desde Supabase; visitas van en registrarVisita() */
@@ -1874,7 +2194,7 @@ function verificarAdmin(){
   }
 }
 function adminTab(tab){
-  ['supabase','fechas','cands','votos','banner','texto','noticias','ajustes'].forEach(function(t){
+  ['supabase','fechas','cands','votos','banner','texto','noticias','ajustes','buzon','directos'].forEach(function(t){
     var p=document.getElementById('panel-'+t);
     var b=document.getElementById('tab-'+t);
     if(p)p.style.display=t===tab?'flex':'none';
@@ -1883,8 +2203,10 @@ function adminTab(tab){
   if(tab==='cands')cargarEditorCands();
   if(tab==='votos')adminRefreshVotos();
   if(tab==='banner')cargarEditorBanner();
+  if(tab==='directos')cargarDirectosAdmin();
   if(tab==='noticias')cargarEditorNoticias();
   if(tab==='fechas')cargarFechasAdmin();
+  if(tab==='buzon')cargarAdminMensajes();
   if(tab==='texto'){
     var lm=document.getElementById('loopMsgAdmin');
     var gt=document.getElementById('glowTxtAdmin');
@@ -1899,6 +2221,13 @@ function adminTab(tab){
     if(keyEl)keyEl.value=SB.key||'';
     if(tableEl)tableEl.value=SB.table||'votos';
     actualizarModoActual();
+  }
+  if(tab==='ajustes'){
+    var afs=document.getElementById('ajFormspree');
+    var afb=document.getElementById('ajFacebook');
+    if(afs)afs.value=localStorage.getItem('ct_formspree')||'https://formspree.io/f/maqkgnkq';
+    if(afb)afb.value=localStorage.getItem('ct_facebook')||'https://www.facebook.com/Encuestasilao';
+    var awa=document.getElementById('ajWhatsapp');if(awa)awa.value=localStorage.getItem('aj_whatsapp')||'';
   }
 }
 
@@ -2048,25 +2377,6 @@ function cargarEditorCands(){
   });
 }
 var _fotoCandIdx=null;
-function abrirFotoCand(i){
-  _fotoCandIdx=i;
-  var inp=document.getElementById('fotoCandFile');
-  if(!inp){
-    inp=document.createElement('input');inp.type='file';inp.id='fotoCandFile';inp.accept='image/*';inp.style.display='none';
-    inp.onchange=function(e){
-      var f=e.target.files[0];if(!f||_fotoCandIdx===null)return;
-      var r=new FileReader();r.onload=function(ev){
-        var b=ev.target.result;
-        var prev=document.getElementById('cfp-'+_fotoCandIdx);
-        if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:cover">';
-        var h=document.getElementById('cfd-'+_fotoCandIdx);if(h)h.value=b;
-        _fotoCandIdx=null;
-      };r.readAsDataURL(f);
-    };
-    document.body.appendChild(inp);
-  }
-  inp.value='';inp.click();
-}
 function adminGuardarCands(){
   var cands=getCands();
   cands.forEach(function(c,i){
@@ -2536,15 +2846,170 @@ cargarVotos();
 
 /* ── COMPARTIR FB y WA ── */
 function compartirFB(){
-  var url=encodeURIComponent('https://silao360.com');
+  var url=encodeURIComponent('https://silao360.com.mx');
+  var txt=encodeURIComponent('¡Participa en la Encuesta Silao! ¿Por quién votarías? Resultados en tiempo real 📊 silao360.com.mx');
+  chusco(document.querySelector('.compartir-fb'));
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+url+'&quote='+txt,'_blank','noopener,width=600,height=500');
+}
+function _compartirFB_old(){
+  var url=encodeURIComponent(window.location.href);
   var txt=encodeURIComponent('¡Participa en la Encuesta Silao! ¿Por quién votarías? Vota y ve los resultados en tiempo real 📊');
-  chusco(document.querySelector('.share-btn-fb'));
+  chusco(document.querySelector('.share-orb-fb'));
   window.open('https://www.facebook.com/sharer/sharer.php?u='+url+'&quote='+txt,'_blank','noopener,width=600,height=500');
 }
 function compartirWA(){
-  var url='https://silao360.com';
+  var txt=encodeURIComponent('¡Participa en la Encuesta Silao! 🗳️ ¿Por quién votarías hoy?\n\nResultados en tiempo real 📊\n👉 https://silao360.com.mx');
+  chusco(document.querySelector('.compartir-wa'));
+  window.open('https://wa.me/?text='+txt,'_blank','noopener');
+}
+
+/* ── CONTACTO (3 canales) ── */
+function abrirContacto(){document.getElementById('modalContacto').style.display='flex';}
+function cerrarContacto(){document.getElementById('modalContacto').style.display='none';}
+function ctMostrar(vista){
+  document.getElementById('ctCanales').style.display=vista==='canales'?'flex':'none';
+  document.getElementById('ctCorreoForm').style.display=vista==='correo'?'flex':'none';
+}
+function ctFacebook(){
+  var url=localStorage.getItem('ct_facebook')||'https://www.facebook.com/Encuestasilao';
+  window.open(url,'_blank','noopener');
+  cerrarContacto();
+}
+async function enviarContacto(){
+  var nombre=(document.getElementById('ctNombre').value||'').trim();
+  var tipo=document.getElementById('ctTipo').value;
+  var mensaje=(document.getElementById('ctMensaje').value||'').trim();
+  var fb=document.getElementById('ctFeedback');
+  if(!nombre||!mensaje){
+    fb.style.display='block';fb.style.background='rgba(248,113,113,0.1)';fb.style.color='#f87171';
+    fb.textContent='⚠️ Falta nombre o mensaje';return;
+  }
+  fb.style.display='block';fb.style.background='rgba(255,255,255,0.04)';fb.style.color='rgba(255,255,255,0.4)';
+  fb.textContent='⏳ Enviando...';
+
+  /* Guardar en localStorage (buzón local) */
+  var msgs=JSON.parse(localStorage.getItem('ct_msgs')||'[]');
+  msgs.unshift({nombre:nombre,tipo:tipo,mensaje:mensaje,fecha:new Date().toLocaleString('es-MX')});
+  if(msgs.length>50)msgs=msgs.slice(0,50);
+  localStorage.setItem('ct_msgs',JSON.stringify(msgs));
+
+  /* Enviar a Formspree */
+  var formUrl=localStorage.getItem('ct_formspree')||'https://formspree.io/f/maqkgnkq';
+  var ok=false;
+  try{
+    var r=await fetch(formUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({nombre:nombre,tipo:tipo,mensaje:mensaje,_subject:'📩 Mensaje Encuesta Silao · '+tipo})
+    });
+    ok=r.ok;
+  }catch(e){}
+
+  /* Enviar a Supabase tabla 'mensajes' si está activo */
+  if(SB.activo){
+    try{
+      await fetch(SB.url+'/rest/v1/mensajes',{
+        method:'POST',
+        headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key,'Content-Type':'application/json','Prefer':'return=minimal'},
+        body:JSON.stringify({nombre:nombre,tipo:tipo,mensaje:mensaje,fecha:new Date().toISOString()})
+      });
+    }catch(e){}
+  }
+
+  fb.style.background='rgba(74,222,128,0.1)';fb.style.color='#4ade80';
+  fb.textContent=ok?'✅ Enviado · Llegará a silao360oficial@gmail.com':'✅ Guardado · se enviará cuando haya conexión';
+  document.getElementById('ctNombre').value='';
+  document.getElementById('ctMensaje').value='';
+  setTimeout(function(){cerrarContacto();ctMostrar('canales');},2200);
+}
+
+/* ── BUZÓN ADMIN ── */
+function cargarAdminMensajes(){
+  var wrap=document.getElementById('buzonWrap');
+  if(!wrap)return;
+  var msgs=JSON.parse(localStorage.getItem('ct_msgs')||'[]');
+  if(!msgs.length){wrap.innerHTML='<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:2px;text-align:center;padding:20px">Sin mensajes todavía</div>';return;}
+  var colores={SUGERENCIA:'#4ade80',ERROR:'#f87171',CANDIDATO:'#60a5fa',OTRO:'#fbbf24'};
+  wrap.innerHTML='';
+  msgs.forEach(function(m,i){
+    var row=document.createElement('div');
+    row.style.cssText='background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 13px';
+    row.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">'
+      +'<div style="display:flex;align-items:center;gap:7px">'
+      +'<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;color:'+(colores[m.tipo]||'#fff')+'">'+m.tipo+'</span>'
+      +'<span style="font-family:\'Barlow Condensed\',sans-serif;font-size:11px;font-weight:700;color:#fff">'+m.nombre+'</span>'
+      +'</div>'
+      +'<button onclick="borrarMensaje('+i+')" style="background:none;border:none;color:rgba(248,113,113,0.6);font-size:12px;cursor:pointer">🗑️</button>'
+      +'</div>'
+      +'<div style="font-family:\'Barlow\',sans-serif;font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5;word-break:break-word">'+m.mensaje+'</div>'
+      +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:1px;margin-top:5px">'+m.fecha+'</div>';
+    wrap.appendChild(row);
+  });
+}
+function borrarMensaje(i){
+  var msgs=JSON.parse(localStorage.getItem('ct_msgs')||'[]');
+  msgs.splice(i,1);localStorage.setItem('ct_msgs',JSON.stringify(msgs));cargarAdminMensajes();
+}
+function borrarTodosMensajes(){
+  if(!confirm('¿Borrar todos los mensajes?'))return;
+  localStorage.removeItem('ct_msgs');cargarAdminMensajes();
+}
+
+/* ── GUARDAR CANALES CONTACTO ── */
+function guardarCanalesContacto(){
+  var fs=document.getElementById('ajFormspree');var fb2=document.getElementById('ajFacebook');
+  var waEl=document.getElementById('ajWhatsapp');
+  if(fs&&fs.value.trim())localStorage.setItem('ct_formspree',fs.value.trim());
+  if(fb2&&fb2.value.trim())localStorage.setItem('ct_facebook',fb2.value.trim());
+  if(waEl&&waEl.value.trim())localStorage.setItem('aj_whatsapp',waEl.value.trim());
+  var ctFbUrl=document.getElementById('ct-fb-url');var ctWaUrl=document.getElementById('ct-wa-url');
+  if(ctFbUrl&&fb2)ctFbUrl.textContent=(fb2.value||'').replace('https://','').replace('www.','');
+  if(ctWaUrl&&waEl&&waEl.value)ctWaUrl.textContent='+'+waEl.value.trim();
+  var msg=document.getElementById('canalesFb');
+  if(msg){msg.style.display='block';setTimeout(function(){msg.style.display='none';},2000);}
+  snd('vote');
+}
+
+/* ── LOGO UNIVERSAL (candidato propagado a poll + banner) ── */
+function abrirFotoCand(i){
+  _fotoCandIdx=i;
+  var inp=document.getElementById('fotoCandFile');
+  if(!inp){
+    inp=document.createElement('input');inp.type='file';inp.id='fotoCandFile';inp.accept='image/*';inp.style.display='none';
+    inp.onchange=function(e){
+      var f=e.target.files[0];if(!f||_fotoCandIdx===null)return;
+      var r=new FileReader();r.onload=function(ev){
+        var b=ev.target.result;
+        var idx=_fotoCandIdx;
+        /* Actualizar preview en editor */
+        var prev=document.getElementById('cfp-'+idx);
+        if(prev)prev.innerHTML='<img src="'+b+'" style="width:100%;height:100%;object-fit:cover">';
+        var h=document.getElementById('cfd-'+idx);if(h)h.value=b;
+        /* Propagar al candidato guardado */
+        var cands=getCands();
+        if(cands[idx]){
+          cands[idx].foto=b;setCands(cands);
+          buildCandGrid();buildPoll();
+          /* Propagar al banner del mismo partido si existe */
+          var slides=getSlides();
+          var partido=(cands[idx].partido||'').toUpperCase();
+          var changed=false;
+          slides.forEach(function(s){
+            if((s.tag||'').toUpperCase().indexOf(partido)>-1){s.logo=b;changed=true;}
+          });
+          if(changed){localStorage.setItem('es_slides',JSON.stringify(slides));buildCarrusel();}
+        }
+        _fotoCandIdx=null;
+      };r.readAsDataURL(f);
+    };
+    document.body.appendChild(inp);
+  }
+  inp.value='';inp.click();
+}
+function _compartirWA_old(){
+  var url=window.location.href;
   var txt=encodeURIComponent('¡Participa en la Encuesta Silao! 🗳️ ¿Por quién votarías hoy?\n\nVe los resultados en tiempo real 📊\n👉 '+url);
-  chusco(document.querySelector('.share-btn-wa'));
+  chusco(document.querySelector('.share-orb-wa'));
   window.open('https://wa.me/?text='+txt,'_blank','noopener');
 }
 
@@ -2715,6 +3180,232 @@ setInterval(function(){
     });
   }
 },60000);
+
+/* ══════════════════════════════════════════
+   NUEVAS FUNCIONES V24
+══════════════════════════════════════════ */
+
+/* ── REGISTRO DE ENTRADAS (métricas por sección) ── */
+async function registrarEntrada(seccion){
+  // Incrementa contador local
+  var key='es_entrada_'+seccion;
+  var cnt=parseInt(localStorage.getItem(key)||'0')+1;
+  localStorage.setItem(key,cnt);
+  // Guarda en Supabase si activo
+  if(SB.activo){
+    try{
+      await fetch(SB.url+'/rest/v1/metricas',{
+        method:'POST',
+        headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates'},
+        body:JSON.stringify({id:seccion,count:cnt,updated_at:new Date().toISOString()})
+      });
+    }catch(e){}
+  }
+}
+
+/* ── PULSO EN VIVO ── */
+var _pulsoInterval=null;
+var _visitasHoy=parseInt(localStorage.getItem('es_vis_hoy')||'0');
+var _visitasGraph=[];
+
+function abrirPulso(){
+  document.getElementById('modalPulso').classList.add('open');
+  actualizarPulso();
+  _pulsoInterval=setInterval(actualizarPulso,5000);
+}
+function cerrarPulso(){
+  document.getElementById('modalPulso').classList.remove('open');
+  if(_pulsoInterval){clearInterval(_pulsoInterval);_pulsoInterval=null;}
+}
+
+function getEntrada(sec){return parseInt(localStorage.getItem('es_entrada_'+sec)||'0');}
+
+async function actualizarPulso(){
+  // Visitas
+  var total=parseInt(localStorage.getItem('es_visits')||'0');
+  var hoy=parseInt(localStorage.getItem('es_vis_hoy')||'0');
+  
+  // Activos estimados (random ± basado en visitas para simular)
+  var activos=Math.max(1,Math.floor(total/12)+Math.floor(Math.random()*4));
+
+  // Si hay Supabase, leer métricas desde allá
+  var encuentas=getEntrada('encuesta');
+  var trivias=getEntrada('trivia');
+  var pesos=getEntrada('peso');
+  var escribemes=getEntrada('escribeme');
+  var directos=contarMensajesDirectos();
+
+  if(SB.activo){
+    try{
+      var r=await fetch(SB.url+'/rest/v1/metricas?select=id,count',{
+        headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}
+      });
+      var rows=await r.json();
+      if(Array.isArray(rows)){
+        rows.forEach(function(row){
+          if(row.id==='encuesta')encuentas=row.count||encuentas;
+          if(row.id==='trivia')trivias=row.count||trivias;
+          if(row.id==='peso')pesos=row.count||pesos;
+          if(row.id==='escribeme')escribemes=row.count||escribemes;
+          if(row.id==='visitas')total=row.count||total;
+          if(row.id==='activos')activos=row.count||activos;
+        });
+      }
+    }catch(e){}
+  }
+
+  // Actualizar UI
+  var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=typeof v==='number'?v.toLocaleString():v;};
+  el('pls-activos',activos);
+  el('pls-hoy',hoy);
+  el('pls-total',total);
+  el('pls-encuesta',encuentas);
+  el('pls-trivia',trivias);
+  el('pls-peso',pesos);
+  el('pls-escribeme',escribemes);
+  el('pls-directos',directos);
+
+  // Gráfica mini
+  _visitasGraph.push(total);
+  if(_visitasGraph.length>10)_visitasGraph.shift();
+  dibujarGraficaPulso();
+}
+
+function dibujarGraficaPulso(){
+  var canvas=document.getElementById('pulsoChart');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  canvas.width=canvas.offsetWidth||320;
+  canvas.height=canvas.offsetHeight||70;
+  var W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  var data=_visitasGraph;
+  if(data.length<2)return;
+  var mn=Math.min.apply(null,data),mx=Math.max.apply(null,data);
+  var range=mx-mn||1;
+  ctx.strokeStyle='rgba(74,222,128,0.85)';
+  ctx.lineWidth=2;
+  ctx.beginPath();
+  data.forEach(function(v,i){
+    var x=i/(data.length-1)*W;
+    var y=H-((v-mn)/range*(H-10)+5);
+    i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  // Fill
+  ctx.fillStyle='rgba(74,222,128,0.1)';
+  ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.closePath();ctx.fill();
+}
+
+function contarMensajesDirectos(){
+  var msgs=JSON.parse(localStorage.getItem('es_directos')||'[]');
+  return msgs.length;
+}
+
+/* ── MENSAJE DIRECTO ── */
+function abrirDirecto(){document.getElementById('modalDirecto').classList.add('open');}
+function cerrarDirecto(){document.getElementById('modalDirecto').classList.remove('open');}
+
+function enviarDirecto(){
+  var nombre=document.getElementById('dtNombre').value.trim();
+  var msg=document.getElementById('dtMensaje').value.trim();
+  if(!msg){alert('Escribe un mensaje');return;}
+  var msgs=JSON.parse(localStorage.getItem('es_directos')||'[]');
+  msgs.unshift({
+    nombre:nombre||'Anónimo',
+    mensaje:msg,
+    fecha:new Date().toLocaleString('es-MX'),
+    ts:Date.now()
+  });
+  localStorage.setItem('es_directos',JSON.stringify(msgs));
+  // Guardar en Supabase si activo
+  if(SB.activo){
+    fetch(SB.url+'/rest/v1/mensajes_directos',{
+      method:'POST',
+      headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key,'Content-Type':'application/json'},
+      body:JSON.stringify({nombre:nombre||'Anónimo',mensaje:msg,created_at:new Date().toISOString()})
+    }).catch(function(){});
+  }
+  var fb=document.getElementById('dtFeedback');
+  fb.style.display='block';fb.style.background='rgba(74,222,128,0.12)';
+  fb.style.color='#4ade80';fb.textContent='✅ MENSAJE ENVIADO';
+  document.getElementById('dtNombre').value='';
+  document.getElementById('dtMensaje').value='';
+  registrarEntrada('directo');
+  setTimeout(function(){cerrarDirecto();fb.style.display='none';},2000);
+}
+
+/* ── RENDER DIRECTOS EN ADMIN ── */
+function cargarDirectosAdmin(){
+  var msgs=JSON.parse(localStorage.getItem('es_directos')||'[]');
+  var wrap=document.getElementById('directosWrap');
+  if(!wrap)return;
+  if(!msgs.length){
+    wrap.innerHTML='<div style="color:rgba(255,255,255,0.3);font-size:13px;letter-spacing:2px;text-align:center;padding:20px">Sin mensajes directos</div>';
+    return;
+  }
+  wrap.innerHTML=msgs.map(function(m,i){
+    return '<div style="background:rgba(8,145,178,0.07);border:1px solid rgba(8,145,178,0.2);border-radius:10px;padding:12px 14px">'
+      +'<div style="display:flex;justify-content:space-between;margin-bottom:5px">'
+      +'<span style="font-size:14px;color:#22d3ee">'+m.nombre+'</span>'
+      +'<span style="font-size:10px;color:rgba(255,255,255,0.3)">'+m.fecha+'</span>'
+      +'</div>'
+      +'<div style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.6">'+m.mensaje+'</div>'
+      +'</div>';
+  }).join('');
+}
+function borrarTodosDirectos(){
+  if(!confirm('¿Borrar todos los mensajes directos?'))return;
+  localStorage.removeItem('es_directos');
+  cargarDirectosAdmin();
+}
+
+/* ── WHATSAPP CONTACTO ── */
+function ctWhatsApp(){
+  var num=localStorage.getItem('aj_whatsapp')||'5214771234567';
+  var url=window.location.href;
+  var txt=encodeURIComponent('Hola! Te escribo desde Encuesta Silao. '+url);
+  cerrarContacto();
+  window.open('https://wa.me/'+num+'?text='+txt,'_blank','noopener');
+  registrarEntrada('whatsapp');
+}
+
+
+
+
+/* ── REGISTRAR VISITA HOY ── */
+(function(){
+  var today=new Date().toDateString();
+  var lastDay=localStorage.getItem('es_vis_day');
+  if(lastDay!==today){
+    localStorage.setItem('es_vis_day',today);
+    localStorage.setItem('es_vis_hoy','1');
+  }else{
+    var hoy=parseInt(localStorage.getItem('es_vis_hoy')||'0')+1;
+    localStorage.setItem('es_vis_hoy',hoy);
+  }
+})();
+
+/* ── BOTÓN PRESS ANIMATION ── */
+document.querySelectorAll('.hbtn4').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var self=this;
+    self.classList.add('btn-pressed');
+    setTimeout(function(){self.classList.remove('btn-pressed');},850);
+  });
+});
+
+/* ── CARGAR DATOS WHATSAPP EN CONTACTO ── */
+(function(){
+  var wa=localStorage.getItem('aj_whatsapp');
+  var fb=localStorage.getItem('aj_facebook');
+  var ctWa=document.getElementById('ct-wa-url');
+  var ctFb=document.getElementById('ct-fb-url');
+  if(ctWa&&wa)ctWa.textContent='+'+wa;
+  if(ctFb&&fb)ctFb.textContent=fb.replace('https://','').replace('www.','');
+})();
+
+
 </script>
 </body>
 </html>
