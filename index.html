@@ -4,6 +4,22 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Encuesta Silao · La Voz Ciudadana</title>
+<!-- ══ OPEN GRAPH — FACEBOOK SHARING ══ -->
+<meta property="og:title" content="Encuesta Silao · La Voz Ciudadana"/>
+<meta property="og:description" content="¿Por quién votarías hoy? Encuesta ciudadana independiente en tiempo real. Participa y conoce los resultados ahora mismo."/>
+<meta property="og:image" content="https://www.silao360.com.mx/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:url" content="https://www.silao360.com.mx"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="Encuesta Silao"/>
+<meta property="og:locale" content="es_MX"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Encuesta Silao · La Voz Ciudadana"/>
+<meta name="twitter:description" content="¿Por quién votarías hoy? Resultados en tiempo real desde Silao, Guanajuato."/>
+<meta name="twitter:image" content="https://www.silao360.com.mx/og-image.jpg"/>
+<meta name="description" content="Encuesta ciudadana independiente de Silao, Guanajuato. Conoce las preferencias electorales en tiempo real."/>
+<link rel="canonical" href="https://www.silao360.com.mx"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
 <style>
 /* ══ SUPABASE CONFIG ══
@@ -1177,7 +1193,12 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 </section>
 
 <footer>
-  <p>ENCUESTA SILAO · LA VOZ CIUDADANA<br>ENCUESTA INDEPENDIENTE · SIN FINES ELECTORALES · NO OFICIAL<br><span id="ftYear"></span></p>
+  <p style="color:#ffffff;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:3px;text-shadow:0 0 20px rgba(255,255,255,0.4)">ENCUESTA SILAO · LA VOZ CIUDADANA<br><span style="font-size:11px;font-weight:600;letter-spacing:4px;opacity:.75">ENCUESTA INDEPENDIENTE · SIN FINES ELECTORALES · NO OFICIAL</span><br><span id="ftYear" style="font-size:11px;letter-spacing:2px;opacity:.65"></span></p>
+  <p style="margin-top:12px">
+    <button onclick="abrirQuienesSomos()" style="background:none;border:none;color:#ffffff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;text-decoration:underline;margin:0 8px;text-shadow:0 0 12px rgba(255,255,255,0.5)">¿QUIÉNES SOMOS?</button>
+    <span style="color:rgba(255,255,255,0.5)">·</span>
+    <button onclick="abrirPrivacidad()" style="background:none;border:none;color:#ffffff;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:2px;cursor:pointer;text-decoration:underline;margin:0 8px;text-shadow:0 0 12px rgba(255,255,255,0.5)">AVISO DE PRIVACIDAD</button>
+  </p>
 </footer>
 
 <!-- ══ MODAL ESTADÍSTICA ══ -->
@@ -1945,6 +1966,40 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
           </div>
         </div>
 
+        <!-- ══ BOTÓN VOTA AQUÍ — IMAGEN PRINCIPAL ══ -->
+        <div class="adm2-section-sep">🗳️ BOTÓN "VOTA AQUÍ" — IMAGEN PRINCIPAL</div>
+        <div class="adm2-card" style="border-color:rgba(204,10,10,0.4);background:rgba(204,10,10,0.04)">
+          <div class="adm2-card-header">
+            <span class="adm2-card-ico">🗳️</span>
+            <div>
+              <div class="adm2-card-title">IMAGEN BOTÓN VOTA AQUÍ</div>
+              <div class="adm2-card-desc">LA IMAGEN GRANDE QUE APARECE EN EL HERO PRINCIPAL</div>
+            </div>
+          </div>
+          <div class="adm2-card-body">
+            <div style="font-family:'Barlow',sans-serif;font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:12px;line-height:1.6">
+              Esta imagen se sube a Supabase Storage en <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;font-size:11px">fotos/votar_btn.jpg</code> y se carga automáticamente cada vez que alguien abre la página.
+            </div>
+            <!-- Preview actual -->
+            <div id="votaBtnPrevWrap" style="width:100%;border-radius:14px;overflow:hidden;background:rgba(255,255,255,0.04);border:2px dashed rgba(204,10,10,0.3);margin-bottom:12px;min-height:100px;display:flex;align-items:center;justify-content:center">
+              <img id="votaBtnPreview" src="" style="width:100%;max-height:220px;object-fit:cover;display:none;border-radius:12px" onerror="this.style.display='none'">
+              <div id="votaBtnPlaceholder" style="padding:20px;text-align:center;color:rgba(255,255,255,0.3);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px">🗳️ SIN IMAGEN ACTUAL</div>
+            </div>
+            <div class="adm2-img-zone" onclick="document.getElementById('votaBtnFile').click()" style="border-color:rgba(204,10,10,0.4)">
+              <div id="votaBtnThumb" class="adm2-img-thumb" style="background:rgba(204,10,10,0.15)"><span style="font-size:26px">🗳️</span></div>
+              <div class="adm2-img-info">
+                <div class="adm2-img-name">Toca para seleccionar imagen</div>
+                <div class="adm2-img-hint">JPG o PNG · Recomendado: 800×400px o similar</div>
+                <div class="adm2-img-status no-img" id="votaBtnSt">Sin imagen seleccionada</div>
+              </div>
+            </div>
+            <input type="file" id="votaBtnFile" accept="image/*" style="display:none" onchange="votaBtnHandleFile(event)">
+            <input type="hidden" id="votaBtnData" value="">
+            <button id="votaBtnSaveBtn" onclick="votaBtnGuardar()" class="adm2-btn adm2-btn-red" style="display:none">☁️ SUBIR A SUPABASE Y APLICAR</button>
+            <div id="votaBtnFb" class="adm2-feedback"></div>
+          </div>
+        </div>
+
                 <!-- TEXTO DE BOTONES -->
         <div class="adm2-section-sep">TEXTO DEL BOTÓN PRINCIPAL</div>
         <div class="adm2-card">
@@ -2152,11 +2207,14 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
    el Panel Admin → pestaña SUPABASE
 ══════════════════════════════════════════ */
 var SB = {
-  url:   localStorage.getItem('sb_url')   || '',
-  key:   localStorage.getItem('sb_key')   || '',
+  url:   localStorage.getItem('sb_url')   || 'https://irekcyeoumxnwbtonfup.supabase.co',
+  key:   localStorage.getItem('sb_key')   || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlyZWtjeWVvdW14bndidG9uZnVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTczMzAsImV4cCI6MjA5NDc5MzMzMH0.gzmCwhJBeaabl83Q4W6cMhpk0Ofwg0OrHaYou9_ksL0',
   table: localStorage.getItem('sb_table') || 'votos',
   get activo(){ return !!(this.url && this.key); }
 };
+// Persistir en localStorage para que el admin las reconozca
+if(!localStorage.getItem('sb_url')) localStorage.setItem('sb_url', SB.url);
+if(!localStorage.getItem('sb_key')) localStorage.setItem('sb_key', SB.key);
 
 /* ── SONIDOS ── */
 function snd(t){
@@ -2218,8 +2276,11 @@ var SLIDES_DEF=[
 ];
 
 var DEFAULT_NEWS=[
-  {id:1,titulo:'Socavón genera caos vial en carretera federal',texto:'Continúan trabajos de reparación mientras ciudadanos reportan tráfico intenso y demoras en accesos al municipio.',img:'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800',tag:'LOCAL · INFRAESTRUCTURA',fuente:'El Correo Guanajuato',link:''},
-  {id:2,titulo:'Participación ciudadana en Encuesta Silao supera expectativas',texto:'Miles de silaoenses han participado en la plataforma digital, expresando su preferencia electoral de forma anónima.',img:'https://images.unsplash.com/photo-1508615070457-7baeba4003ab?q=80&w=800',tag:'POLÍTICA · ENCUESTA',fuente:'Encuesta Silao',link:''},
+  {id:1,titulo:'Silao lidera competitividad en Guanajuato según IMCO 2026',texto:'Silao es una de las únicas dos ciudades de Guanajuato con nivel de competitividad "media alta" en el Índice de Competitividad Urbana 2026. El municipio entró por primera vez en la medición nacional, ubicándose en el lugar 9 de 23 ciudades de su rango.',img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=800',tag:'🏆 DESARROLLO · ECONOMÍA',fuente:'AM Guanajuato · 3 Jun 2026',link:'https://www.am.com.mx/guanajuato/2026/06/03/imco-2026-irapuato-y-silao-lideran-competitividad-persiste-rezago-en-leon-y-celaya-1801653.html'},
+  {id:2,titulo:'Ciclistas exigen red de ciclovías en Silao',texto:'Colectivos ciclistas y habitantes denuncian que la infraestructura actual es insuficiente. Las dos ciclovías existentes están aisladas y no forman una red. Exigen a la administración municipal una solución integral urgente.',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800',tag:'🚴 MOVILIDAD · CIUDADANOS',fuente:'Periódico Correo · 3 Jun 2026',link:'https://periodicocorreo.com.mx/municipios/2026/jun/03/ciclistas-exigen-red-de-ciclovias-en-silao-ante-infraestructura-insuficiente-158480.html'},
+  {id:3,titulo:'Lanzan "Reinas Silao 2026" para visibilizar liderazgo femenino',texto:'La alcaldesa Melanie Murillo Chávez presentó la convocatoria en el Teatro de Silao. Cada colonia y comunidad rural tendrá una representante. Las inscripciones cierran el 12 de junio en el Instituto de la Juventud.',img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=800',tag:'👑 COMUNIDAD · MUJERES',fuente:'Periódico Correo · 2 Jun 2026',link:'https://periodicocorreo.com.mx/municipios/2026/jun/02/lanzan-convocatoria-reinas-silao-2026-para-visibilizar-el-liderazgo-de-mujeres-jovenes-158397.html'},
+  {id:4,titulo:'Carretera Silao–San Felipe: la más insegura de Guanajuato',texto:'El gobierno estatal invertirá en 62 puntos carreteros tras estudio con organización internacional. La carretera Silao-San Felipe resultó ser la de mayor índice de accidentalidad en todo Guanajuato. Se intervendrán las zonas más oscuras identificadas.',img:'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=800',tag:'🛣️ INFRAESTRUCTURA · SEGURIDAD',fuente:'Zona Franca · 1 Jun 2026',link:'https://zonafranca.mx/politica-sociedad/movilidad/silao-san-felipe-la-carretera-mas-insegura-de-guanajuato-estado-invertira-en-su-infraestructura/'},
+  {id:5,titulo:'Silao sin Presupuesto 2026 por diferencias en el cabildo',texto:'El ayuntamiento de Silao lleva dos meses sin aprobar el Presupuesto de Egresos 2026 por diferencias entre ediles. El Congreso local advirtió que el municipio podría perder acceso a fondos federales y estatales si no se resuelve el impasse a la brevedad.',img:'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=800',tag:'🏛️ POLÍTICA · GOBIERNO',fuente:'Zona Franca · Mar 2026',link:'https://zonafranca.mx/politica-sociedad/silao-no-podria-acceder-a-fondos-si-no-logra-consenso-en-presupuesto-2026/'},
 ];
 
 /* ── ESTADÍSTICAS — textos explicativos ── */
@@ -2387,22 +2448,157 @@ function eliminarCandidato(idx){
   cargarEditorCands();buildCandGrid();buildPoll();
 }
 
-/* ── COMPARTIR ── */
-var SHARE_URL='https://www.facebook.com/share/1CCfvKYYK1/?mibextid=wwXIfr';
+/* ══════════════════════════════════════════
+   COMPARTIR — FACEBOOK Y WHATSAPP
+   El botón de arriba y los botones de preguntas
+   comparten la URL correcta con OG tags
+══════════════════════════════════════════ */
+var SHARE_URL='https://www.silao360.com.mx';
+var SHARE_FB_PAGE='https://www.facebook.com/Encuestasilao';
+
 function abrirShare(){document.getElementById('modalShare').classList.add('open');}
 function cerrarShare(){document.getElementById('modalShare').classList.remove('open');}
-function shareToFacebook(){window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL),'_blank');cerrarShare();}
-function shareToWhatsapp(){var t='🗳️ Encuesta Silao · La Voz Ciudadana\n¡Participa y ve los resultados!\n'+SHARE_URL;window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');cerrarShare();}
+
+/* Compartir la página principal en Facebook */
+function shareToFacebook(){
+  var url = SHARE_URL;
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url),'_blank','noopener,noreferrer');
+  cerrarShare();
+}
+
+/* Compartir pregunta específica — arma texto + URL */
+function compartirPreguntaFB(preguntaTxt){
+  var txt = preguntaTxt || '¿Por quién votarías hoy para presidente municipal de Silao?';
+  var url = SHARE_URL;
+  var shareText = '🗳️ Encuesta Silao · ' + txt + '\n¡Participa y ve los resultados en tiempo real!\n' + url;
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+'&quote='+encodeURIComponent(shareText),'_blank','noopener,noreferrer');
+}
+
+/* Botones de compartir en el hero */
+function compartirFB(){
+  chusco(document.querySelector('.compartir-btn.compartir-fb'));
+  window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(SHARE_URL),'_blank','noopener,noreferrer');
+}
+function compartirWA(){
+  var t='🗳️ *Encuesta Silao · La Voz Ciudadana*\n¿Por quién votarías hoy para presidente municipal?\n¡Participa y ve los resultados en tiempo real!\n👉 '+SHARE_URL;
+  chusco(document.querySelector('.compartir-btn.compartir-wa'));
+  window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank','noopener,noreferrer');
+}
+
+/* Función original para botones de órbita (WA) */
+function shareToWhatsapp(){
+  var t='🗳️ Encuesta Silao · La Voz Ciudadana\n¡Participa y ve los resultados!\n'+SHARE_URL;
+  window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank','noopener,noreferrer');
+  cerrarShare();
+}
+
 function copiarEnlace(){
   var el=document.getElementById('sbCopiarTxt');
-  try{navigator.clipboard.writeText(SHARE_URL);}catch(e){}
-  el.textContent='✅ ENLACE COPIADO';
-  setTimeout(function(){el.textContent='COPIAR ENLACE';},2200);
+  try{navigator.clipboard.writeText(SHARE_URL);}catch(e){
+    var ta=document.createElement('textarea');ta.value=SHARE_URL;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+  }
+  if(el){el.textContent='✅ ENLACE COPIADO';setTimeout(function(){el.textContent='COPIAR ENLACE';},2200);}
 }
 
 /* ══════════════════════════════════════════
-   SUPABASE — VOTOS
+   SUPABASE STORAGE UPLOAD — FUNCIÓN REAL
+   Convierte base64 → binario → sube a Storage
 ══════════════════════════════════════════ */
+async function sbStorageUpload(path, base64Data){
+  if(!SB || !SB.activo) return null;
+  try{
+    // 1. Separar el header "data:image/jpeg;base64," del contenido
+    var parts = base64Data.split(',');
+    var header = parts[0]; // "data:image/jpeg;base64"
+    var b64 = parts[1];    // datos puros
+    // Detectar mime type
+    var mimeMatch = header.match(/:(.*?);/);
+    var mimeType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+    // 2. Convertir base64 a Uint8Array
+    var byteChars = atob(b64);
+    var byteArr = new Uint8Array(byteChars.length);
+    for(var i=0; i<byteChars.length; i++){
+      byteArr[i] = byteChars.charCodeAt(i);
+    }
+    var blob = new Blob([byteArr], {type: mimeType});
+    // 3. Subir a Supabase Storage (bucket 'fotos', path dinámico)
+    // Primero intentar UPSERT (update-or-insert)
+    var uploadUrl = SB.url + '/storage/v1/object/fotos/' + path;
+    var res = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {
+        'apikey': SB.key,
+        'Authorization': 'Bearer ' + SB.key,
+        'Content-Type': mimeType,
+        'x-upsert': 'true'  // sobrescribir si ya existe
+      },
+      body: blob
+    });
+    if(res.ok || res.status === 200 || res.status === 201){
+      // URL pública
+      return SB.url + '/storage/v1/object/public/fotos/' + path;
+    }
+    // Si falla POST, intentar PUT (update)
+    var res2 = await fetch(uploadUrl.replace('/object/','/object/'), {
+      method: 'PUT',
+      headers: {
+        'apikey': SB.key,
+        'Authorization': 'Bearer ' + SB.key,
+        'Content-Type': mimeType,
+        'x-upsert': 'true'
+      },
+      body: blob
+    });
+    if(res2.ok || res2.status === 200){
+      return SB.url + '/storage/v1/object/public/fotos/' + path;
+    }
+    console.warn('[SB Storage] Error al subir:', res.status, await res.text().catch(()=>''));
+    return null;
+  }catch(err){
+    console.error('[SB Storage] sbStorageUpload error:', err);
+    return null;
+  }
+}
+
+/* Guardar URL de logo en tabla media_urls */
+async function sbGuardarUrlLogo(id, url){
+  if(!SB || !SB.activo) return;
+  try{
+    await fetch(SB.url+'/rest/v1/media_urls', {
+      method: 'POST',
+      headers: {
+        'apikey': SB.key,
+        'Authorization': 'Bearer '+SB.key,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({id: id, url: url, updated_at: new Date().toISOString()})
+    });
+  }catch(e){}
+}
+
+/* Cargar logos de Supabase tabla media_urls al inicio */
+async function sbCargarLogos(){
+  if(!SB || !SB.activo) return;
+  try{
+    var res = await fetch(SB.url+'/rest/v1/media_urls?select=id,url', {
+      headers: {'apikey': SB.key, 'Authorization': 'Bearer '+SB.key}
+    });
+    var rows = await res.json();
+    if(!Array.isArray(rows)) return;
+    rows.forEach(function(row){
+      if(row.id && row.url){
+        localStorage.setItem('es_logo_'+row.id, row.url+'?t='+(Date.now()-Math.random()*1000|0));
+      }
+    });
+    // Refrescar UI con los logos cargados
+    buildPoll(_votosCache);
+    buildCandGrid();
+    buildCarrusel();
+  }catch(e){}
+}
+
+
 
 /* Actualiza el badge de estado */
 function setStatusBadge(estado){
@@ -4533,7 +4729,69 @@ function guardarFechas(){
   playClick('vote');
 }
 
-/* ── RESTAURAR IMÁGENES EN ADMIN AL ABRIR ── */
+/* ── BOTÓN VOTA AQUÍ — FUNCIONES ADMIN ── */
+function votaBtnHandleFile(e){
+  var f = e.target.files[0]; if(!f) return;
+  var r = new FileReader();
+  r.onload = function(ev){
+    var b = ev.target.result;
+    document.getElementById('votaBtnData').value = b;
+    // Preview
+    var prev = document.getElementById('votaBtnPreview');
+    var ph = document.getElementById('votaBtnPlaceholder');
+    var thumb = document.getElementById('votaBtnThumb');
+    if(prev){ prev.src = b; prev.style.display = 'block'; }
+    if(ph)   ph.style.display = 'none';
+    if(thumb) thumb.innerHTML = '<img src="'+b+'" style="width:100%;height:100%;object-fit:cover">';
+    var st = document.getElementById('votaBtnSt');
+    if(st){ st.textContent = '✅ Imagen lista · Toca SUBIR'; st.className = 'adm2-img-status has-img'; }
+    var btn = document.getElementById('votaBtnSaveBtn');
+    if(btn) btn.style.display = 'block';
+  };
+  r.readAsDataURL(f);
+}
+
+async function votaBtnGuardar(){
+  var data = document.getElementById('votaBtnData').value;
+  if(!data){ adm2Fb('votaBtnFb','err','⚠️ Selecciona una imagen primero'); return; }
+  adm2Fb('votaBtnFb','loading','⏳ Subiendo a Supabase...', false);
+  var finalSrc = data;
+  if(SB && SB.activo){
+    var url = await sbStorageUpload('votar_btn.jpg', data);
+    if(url){
+      finalSrc = url + '?t=' + Date.now();
+      adm2Fb('votaBtnFb','ok','✅ SUBIDO A SUPABASE ☁️ · Se cargará automáticamente');
+    } else {
+      adm2Fb('votaBtnFb','err','❌ Error al subir. Revisa que el bucket "fotos" exista en Supabase Storage.');
+      return;
+    }
+  } else {
+    adm2Fb('votaBtnFb','ok','✅ GUARDADO LOCAL · Configura Supabase para sincronizar');
+  }
+  // Aplicar en pantalla inmediatamente
+  localStorage.setItem('es_vota_btn', finalSrc);
+  var el = document.querySelector('.vota-img-inner');
+  if(el){ el.src = finalSrc; el.style.display = 'block'; }
+  document.getElementById('votaBtnSaveBtn').style.display = 'none';
+  document.getElementById('votaBtnData').value = '';
+  snd && snd('vote');
+}
+
+/* Restaurar preview del botón vota aquí en admin */
+function adm2RestoreVotaBtn(){
+  var src = localStorage.getItem('es_vota_btn') || '';
+  if(!src) return;
+  var prev = document.getElementById('votaBtnPreview');
+  var ph = document.getElementById('votaBtnPlaceholder');
+  var thumb = document.getElementById('votaBtnThumb');
+  if(prev){ prev.src = src; prev.style.display = 'block'; }
+  if(ph)   ph.style.display = 'none';
+  if(thumb) thumb.innerHTML = '<img src="'+src+'" style="width:100%;height:100%;object-fit:cover">';
+  var st = document.getElementById('votaBtnSt');
+  if(st){ st.textContent = '✅ Imagen actual desde Supabase'; st.className = 'adm2-img-status has-img'; }
+}
+
+
 function adm2RestoreImages(){
   var BMAP=[
     ['navLogoPrev',  'es_nav_logo',          'navLogo-st'],
@@ -4859,6 +5117,15 @@ async function mmHandleUpload(e){
   r.readAsDataURL(f);
 }
 
+// Aplicar imagen guardada del botón VOTA AQUÍ
+(function(){
+  var src = localStorage.getItem('es_vota_btn');
+  if(src){
+    var el = document.querySelector('.vota-img-inner');
+    if(el){ el.src = src; el.style.display = 'block'; }
+  }
+})();
+
 /* ── CARGAR LOGOS DE SUPABASE AL INICIO ── */
 // Ejecutar después de que SB esté inicializado
 (function(){
@@ -4910,6 +5177,19 @@ async function sbCargarBotones(){
       var finalNav = navUrl + '?t=' + Date.now();
       localStorage.setItem('es_nav_logo', finalNav);
       aplicarNavLogo(finalNav);
+    }
+  }catch(e){}
+  // Cargar imagen del botón VOTA AQUÍ
+  try{
+    var votaUrl2 = BASE + 'fotos/votar_btn.jpg';
+    var vr2 = await fetch(votaUrl2, {method:'HEAD',
+      headers:{ 'apikey': SB.key, 'Authorization': 'Bearer ' + SB.key }
+    });
+    if(vr2.ok){
+      var finalVota2 = votaUrl2 + '?t=' + Date.now();
+      localStorage.setItem('es_vota_btn', finalVota2);
+      var elV = document.querySelector('.vota-img-inner');
+      if(elV){ elV.src = finalVota2; elV.style.display = 'block'; }
     }
   }catch(e){}
 }
@@ -5173,6 +5453,87 @@ async function adm2ProcTriviaImg(e, prevId, stId, localFbId, dataId){
     aplicarBtnImg("btnInstalar","btnInstalarFb",_cur);
   }
 })();
+</script>
+
+<!-- ══ MODAL QUIÉNES SOMOS ══ -->
+<div id="modalQuienesSomos" onclick="if(event.target===this)cerrarQuienesSomos()" style="display:none;position:fixed;inset:0;z-index:9900;background:rgba(0,0,0,0.88);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto">
+  <div style="background:#0f172a;border:1px solid rgba(255,255,255,0.1);border-radius:18px;max-width:640px;width:100%;padding:28px 24px 24px;margin:auto;color:#fff;font-family:'Barlow',sans-serif;line-height:1.7">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:#fff;margin:0">¿QUIÉNES SOMOS?</h2>
+      <button onclick="cerrarQuienesSomos()" style="background:rgba(255,255,255,0.08);border:none;border-radius:8px;padding:6px 12px;color:#fff;cursor:pointer;font-size:16px">✕</button>
+    </div>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:4px;color:#cc0a0a;margin:0 0 8px">BIENVENIDO A ENCUESTA SILAO</h3>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:16px">Encuesta Silao es una plataforma digital independiente creada para fomentar la participación ciudadana, conocer la opinión pública y generar espacios de interacción entre la ciudadanía y los temas de interés local.</p>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:20px">Nuestro objetivo es ofrecer a los habitantes de Silao una herramienta moderna donde puedan expresar sus opiniones mediante encuestas, sondeos y espacios de participación comunitaria.</p>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:4px;color:#cc0a0a;margin:0 0 8px">NUESTRA MISIÓN</h3>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:20px">Promover la participación ciudadana mediante herramientas digitales accesibles, transparentes y fáciles de usar, fortaleciendo el interés de la comunidad en los asuntos públicos y sociales del municipio.</p>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:4px;color:#cc0a0a;margin:0 0 8px">NUESTRA VISIÓN</h3>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:20px">Convertirnos en la plataforma ciudadana de referencia en Silao para la consulta de opiniones, tendencias y participación comunitaria.</p>
+    <div style="background:rgba(204,10,10,0.1);border:1px solid rgba(204,10,10,0.3);border-radius:12px;padding:14px 16px;margin-bottom:20px">
+      <p style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 6px">⚠ IMPORTANTE</p>
+      <p style="font-size:13px;color:rgba(255,255,255,0.7);margin:0">Las encuestas publicadas en esta plataforma tienen fines informativos, estadísticos y de participación ciudadana. Los resultados no sustituyen estudios demoscópicos profesionales ni representan necesariamente la opinión de toda la población.</p>
+    </div>
+    <button onclick="cerrarQuienesSomos()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer">CERRAR</button>
+  </div>
+</div>
+
+<!-- ══ MODAL AVISO DE PRIVACIDAD ══ -->
+<div id="modalPrivacidad" onclick="if(event.target===this)cerrarPrivacidad()" style="display:none;position:fixed;inset:0;z-index:9900;background:rgba(0,0,0,0.88);align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto">
+  <div style="background:#0f172a;border:1px solid rgba(255,255,255,0.1);border-radius:18px;max-width:640px;width:100%;padding:28px 24px 24px;margin:auto;color:#fff;font-family:'Barlow',sans-serif;line-height:1.7">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:#fff;margin:0">AVISO DE PRIVACIDAD</h2>
+      <button onclick="cerrarPrivacidad()" style="background:rgba(255,255,255,0.08);border:none;border-radius:8px;padding:6px 12px;color:#fff;cursor:pointer;font-size:16px">✕</button>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,0.35);letter-spacing:1px;margin-bottom:20px">Última actualización: Junio de 2026</p>
+    <p style="font-size:15px;color:rgba(255,255,255,0.8);margin-bottom:20px">En Encuesta Silao, respetamos y protegemos la privacidad de nuestros usuarios. El presente Aviso de Privacidad tiene como finalidad informar cómo recopilamos, utilizamos y protegemos la información proporcionada a través de nuestra plataforma.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">1. INFORMACIÓN QUE PODEMOS RECOPILAR</h3>
+    <ul style="font-size:14px;color:rgba(255,255,255,0.75);margin:0 0 16px;padding-left:18px">
+      <li>Nombre o alias de usuario.</li>
+      <li>Correo electrónico cuando sea proporcionado voluntariamente o mediante inicio de sesión autorizado.</li>
+      <li>Datos de participación en encuestas.</li>
+      <li>Información técnica de navegación (tipo de dispositivo, navegador y estadísticas generales de uso).</li>
+      <li>Comentarios, sugerencias o mensajes enviados por los usuarios.</li>
+    </ul>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">2. USO DE LA INFORMACIÓN</h3>
+    <ul style="font-size:14px;color:rgba(255,255,255,0.75);margin:0 0 16px;padding-left:18px">
+      <li>Permitir la participación en encuestas.</li>
+      <li>Mejorar la experiencia de uso de la plataforma.</li>
+      <li>Generar estadísticas de participación.</li>
+      <li>Prevenir actividades fraudulentas o usos indebidos.</li>
+      <li>Responder consultas o solicitudes realizadas por los usuarios.</li>
+      <li>Mantener la seguridad y funcionamiento del sitio.</li>
+    </ul>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">3. PROTECCIÓN DE LA INFORMACIÓN</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:16px">Implementamos medidas razonables de seguridad para proteger la información almacenada y evitar accesos no autorizados, alteraciones o divulgaciones indebidas.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">4. COMPARTICIÓN DE INFORMACIÓN</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:4px">Encuesta Silao <strong>no vende ni comercializa</strong> información personal de los usuarios.</p>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:16px">La información únicamente podrá ser compartida cuando exista una obligación legal o requerimiento de autoridad competente conforme a la legislación aplicable.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">5. COOKIES Y TECNOLOGÍAS SIMILARES</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:16px">La plataforma puede utilizar cookies o tecnologías similares para mejorar la experiencia de navegación, obtener estadísticas de uso y optimizar el funcionamiento del sitio. El usuario puede configurar su navegador para rechazar o eliminar dichas cookies si así lo desea.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">6. DERECHOS DE LOS USUARIOS</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:16px">Los usuarios podrán solicitar información relacionada con los datos proporcionados, así como solicitar la corrección o eliminación de información personal cuando resulte procedente.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">7. MODIFICACIONES</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:16px">Encuesta Silao podrá actualizar este Aviso de Privacidad en cualquier momento para adaptarlo a cambios legales, técnicos o de funcionamiento de la plataforma. Las modificaciones serán publicadas en esta misma sección.</p>
+
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:3px;color:#cc0a0a;margin:0 0 8px">8. CONTACTO</h3>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-bottom:20px">Para dudas, comentarios o solicitudes relacionadas con este Aviso de Privacidad, los usuarios podrán comunicarse a través de los medios de contacto publicados en la plataforma.</p>
+
+    <button onclick="cerrarPrivacidad()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px;color:rgba(255,255,255,0.5);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:800;letter-spacing:2px;cursor:pointer">CERRAR</button>
+  </div>
+</div>
+
+<script>
+function abrirQuienesSomos(){document.getElementById('modalQuienesSomos').style.display='flex';document.body.style.overflow='hidden';}
+function cerrarQuienesSomos(){document.getElementById('modalQuienesSomos').style.display='none';document.body.style.overflow='';}
+function abrirPrivacidad(){document.getElementById('modalPrivacidad').style.display='flex';document.body.style.overflow='hidden';}
+function cerrarPrivacidad(){document.getElementById('modalPrivacidad').style.display='none';document.body.style.overflow='';}
 </script>
 </body>
 </html>
