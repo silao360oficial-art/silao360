@@ -2719,19 +2719,21 @@ function buildHeroPoll(votosObj){
   if(!rows)return;
   if(tot)tot.textContent=total.toLocaleString();
 
-  // Ordenar por votos desc, tomar top 5
+  // Ordenar por votos desc, mostrar TODOS los partidos
   var sorted=allVals.slice().sort(function(a,b){return b.votos-a.votos;});
-  var top=sorted.slice(0,5);
 
-  var rankClasses=['gold','silver','bronze','',''];
-  var rankNums=['1','2','3','4','5'];
-
-  rows.innerHTML=top.map(function(c,i){
+  rows.innerHTML=sorted.map(function(c,i){
     var pct=total>0?Math.round(c.votos/total*100):0;
     var barW=total>0?Math.max(2,Math.round(c.votos/total*100))+'%':'2%';
+    var rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    var logoKey='es_logo_'+c.id;
+    var logoSrc=localStorage.getItem(logoKey)||'';
+    var logoHtml=logoSrc
+      ?'<img src="'+logoSrc+'" style="width:22px;height:22px;object-fit:contain;border-radius:4px;flex-shrink:0" onerror="this.style.display=\'none\'">'
+      :'<div style="width:22px;height:22px;border-radius:4px;background:'+c.color+';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:900;color:#fff">'+c.partido.substring(0,3)+'</div>';
     return '<div class="hero-poll-row">'
-      +'<div class="hero-poll-rank '+(rankClasses[i]||'')+'">'+rankNums[i]+'</div>'
-      +'<div class="hero-poll-color" style="background:'+c.color+'"></div>'
+      +'<div class="hero-poll-rank '+rankClass+'">'+(i+1)+'</div>'
+      +logoHtml
       +'<div class="hero-poll-name">'+c.nombre+' <span style="font-size:10px;opacity:.55;font-weight:600;letter-spacing:1px">'+c.partido+'</span></div>'
       +'<div class="hero-poll-bar-wrap"><div class="hero-poll-bar" style="width:'+barW+';background:'+c.color+'"></div></div>'
       +'<div class="hero-poll-pct'+(i===0?' leader':'')+'">'+pct+'%</div>'
@@ -4678,24 +4680,34 @@ async function sbGuardarUrlLogo(partido_id, url){
 /* Carga URLs de logos desde Supabase al iniciar */
 async function sbCargarLogos(){
   if(!SB.activo) return;
+  var BASE = SB.url + '/storage/v1/object/public/fotos/';
+  var LOGO_MAP = {
+    'PAN':'pan_logo.jpg','MORENA':'morena_logo.jpg','MC':'mc_logo.jpg',
+    'PRI':'pri_logo.jpg','PVEM':'pvem_logo.jpg','PT':'pt_logo.jpg',
+    'SOMOSMX':'somosmx_logo.jpg','SOMBRERO':'sombrero_logo.jpg',
+    'INDEPENDIENTE':'independiente_logo.jpg','NODECIDO':'nulo_logo.jpg'
+  };
+  await Promise.all(Object.keys(LOGO_MAP).map(async function(id){
+    try{
+      var url = BASE + LOGO_MAP[id];
+      var r = await fetch(url, {method:'HEAD'});
+      if(r.ok) localStorage.setItem('es_logo_'+id, url+'?t='+Date.now());
+    }catch(e){}
+  }));
   try{
     var res = await fetch(SB.url+'/rest/v1/partido_logos?select=id,url', {
       headers:{ 'apikey': SB.key, 'Authorization': 'Bearer ' + SB.key }
     });
-    if(!res.ok) return;
-    var rows = await res.json();
-    if(!Array.isArray(rows)) return;
-    rows.forEach(function(r){
-      if(r.id && r.url){
-        // Guardar en localStorage como caché local
-        localStorage.setItem('es_logo_'+r.id, r.url);
-      }
-    });
-    // Refrescar UI con los logos cargados
-    buildCandGrid();
-    buildPoll();
-    buildCarrusel();
+    if(res.ok){
+      var rows = await res.json();
+      if(Array.isArray(rows)) rows.forEach(function(r){
+        if(r.id && r.url) localStorage.setItem('es_logo_'+r.id, r.url);
+      });
+    }
   }catch(e){}
+  buildCandGrid();
+  buildPoll();
+  buildCarrusel();
 }
 
 /* ── LOGO DEL PARTIDO — guardar con Supabase Storage ── */
@@ -4854,6 +4866,7 @@ async function mmHandleUpload(e){
   setTimeout(function(){
     sbCargarLogos();
     sbCargarBotones();
+    sbCargarVotaBtn();
   }, 2000);
 })();
 
@@ -4897,6 +4910,30 @@ async function sbCargarBotones(){
       var finalNav = navUrl + '?t=' + Date.now();
       localStorage.setItem('es_nav_logo', finalNav);
       aplicarNavLogo(finalNav);
+    }
+  }catch(e){}
+}
+
+/* ── CARGAR BOTÓN VOTA AQUÍ DESDE SUPABASE STORAGE ── */
+async function sbCargarVotaBtn(){
+  if(!SB || !SB.activo) return;
+  var BASE = SB.url + '/storage/v1/object/public/fotos/';
+  // Botón VOTA AQUÍ principal
+  try{
+    var url = BASE + 'votar_btn.jpg';
+    var r = await fetch(url, {method:'HEAD'});
+    if(r.ok){
+      var el = document.querySelector('.vota-img-inner');
+      if(el){ el.src = url+'?t='+Date.now(); el.style.display='block'; }
+    }
+  }catch(e){}
+  // Botón ENCUESTA (si existe)
+  try{
+    var url2 = BASE + 'encuesta_btn.jpg';
+    var r2 = await fetch(url2, {method:'HEAD'});
+    if(r2.ok){
+      var el2 = document.querySelector('.encuesta-img-inner');
+      if(el2){ el2.src = url2+'?t='+Date.now(); }
     }
   }catch(e){}
 }
