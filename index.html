@@ -2647,7 +2647,7 @@ function setStatusBadge(estado){
 async function fetchSupabaseVotos(){
   if(!SB.activo)return null;
   try{
-    var res=await fetch(SB.url+'/rest/v1/votos?select=id,partido,total',{
+    var res=await fetch(SB.url+'/rest/v1/votos?select=partido,votos',{
       headers:{
         'apikey':SB.key,
         'Authorization':'Bearer '+SB.key,
@@ -2657,9 +2657,10 @@ async function fetchSupabaseVotos(){
     if(!res.ok)return null;
     var rows=await res.json();
     var obj={};
-    rows.forEach(function(r){if(r.partido)obj[r.partido.toUpperCase()]=Number(r.total)||0;
+    rows.forEach(function(r){
+      if(r.partido)obj[r.partido.toUpperCase()]=Number(r.votos)||0;
       // nulo -> NODECIDO (mapeo especial)
-      if(r.partido==='nulo')obj['NODECIDO']=Number(r.total)||0;
+      if(r.partido==='nulo')obj['NODECIDO']=Number(r.votos)||0;
     });
     return obj;
   }catch(e){return null;}
@@ -2670,11 +2671,11 @@ async function upsertSupabaseVoto(partido,delta){
   if(!SB.activo)return false;
   try{
     // 1. Leer total actual
-    var res=await fetch(SB.url+'/rest/v1/votos?partido=eq.'+encodeURIComponent(partido)+'&select=id,partido,total',{
+    var res=await fetch(SB.url+'/rest/v1/votos?partido=eq.'+encodeURIComponent(partido)+'&select=partido,votos',{
       headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}
     });
     var rows=await res.json();
-    var current=(rows&&rows[0])?Number(rows[0].total)||0:0;
+    var current=(rows&&rows[0])?Number(rows[0].votos)||0:0;
     var nuevo=current+delta;
     // 2. UPDATE (nunca INSERT)
     await fetch(SB.url+'/rest/v1/votos?partido=eq.'+encodeURIComponent(partido),{
@@ -2684,7 +2685,7 @@ async function upsertSupabaseVoto(partido,delta){
         'Authorization':'Bearer '+SB.key,
         'Content-Type':'application/json'
       },
-      body:JSON.stringify({total:nuevo})
+      body:JSON.stringify({votos:nuevo})
     });
     return true;
   }catch(e){return false;}
