@@ -349,6 +349,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
   cursor:pointer;
   text-decoration:none;
   -webkit-tap-highlight-color:transparent;
+  background:linear-gradient(135deg,#0a0020,#1a0040);
 }
 .vota-img-btn:active{transform:scale(.97);}
 .vota-img-inner{
@@ -1188,7 +1189,7 @@ var IMGDATA_HERO_5 = "";
         <div class="hfb4" id="btnPesoFb"><span class="hico4">💰</span>PESO A PESO</div>
       </a>
 
-      <button onclick="chusco(this);snd('install');abrirInstalar()" class="hbtn4" id="btnInstalar" style="--btn-bg:linear-gradient(135deg,#1e3a5f,#2563eb);background:linear-gradient(135deg,#1e3a5f,#2563eb);border:none;cursor:pointer">
+      <button onclick="chusco(this);snd('install');abrirInstalar()" class="hbtn4" id="btnInstalar" style="--btn-bg:linear-gradient(135deg,#1a1000,#4d3000);background:linear-gradient(135deg,#1a1000,#4d3000);border:none;cursor:pointer">
         <div class="hfb4" id="btnInstalarFb"><span class="hico4">📲</span>INSTALAR</div>
       </button>
 
@@ -1198,31 +1199,26 @@ var IMGDATA_HERO_5 = "";
         <div class="hfb4" id="btnEncFb"><span class="hico4">📊</span>PULSO EN VIVO</div>
       </button>
 
-      <a href="https://silao360.com.mx" target="_blank" onclick="chusco(this);snd('vote');registrarEntrada('encuesta')" class="hbtn4" id="btnEncuesta" style="--btn-bg:linear-gradient(135deg,#7c0a0a,#cc0a0a);background:linear-gradient(135deg,#7c0a0a,#cc0a0a)">
+      <a href="https://silao360.com.mx" target="_blank" onclick="chusco(this);snd('vote');registrarEntrada('encuesta')" class="hbtn4" id="btnEncuesta" style="--btn-bg:linear-gradient(135deg,#0a0050,#1a0080);background:linear-gradient(135deg,#0a0050,#1a0080)">
         <div class="hfb4" id="btnEncuestaFb"><span class="hico4">🗳️</span>ENCUESTA</div>
       </a>
 
-      <button onclick="chusco(this);snd('fun');registrarEntrada('escribeme');abrirContacto()" class="hbtn4" id="btnEscribeme" style="--btn-bg:linear-gradient(135deg,#065f46,#059669);background:linear-gradient(135deg,#065f46,#059669);border:none;cursor:pointer">
+      <button onclick="chusco(this);snd('fun');registrarEntrada('escribeme');abrirContacto()" class="hbtn4" id="btnEscribeme" style="--btn-bg:linear-gradient(135deg,#0d0020,#2a0055);background:linear-gradient(135deg,#0d0020,#2a0055);border:none;cursor:pointer">
         <div class="hfb4" id="btnEscribemeFb" style="position:relative"><span class="hico4">✉️</span>ESCRÍBEME<span id="msgBadge" style="display:none;position:absolute;top:-8px;right:-8px;background:#cc0a0a;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:900;min-width:18px;height:18px;border-radius:9px;display:none;align-items:center;justify-content:center;padding:0 4px;line-height:18px;box-shadow:0 0 6px rgba(204,10,10,0.8)">0</span></div>
       </button>
 
       <!-- FILA 3 — BREAKOUT · TETRIS · PACMAN -->
 
-      <a href="https://breakout.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('breakout')" class="hbtn4" id="btnBreakout" style="position:relative">
-        <img src="assets/hero_6.jpg" class="btn-img" style="object-position:center center">
-        <div class="hfb4" style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(80,0,255,0.08) 0%,transparent 50%,rgba(0,200,255,0.06) 100%);pointer-events:none"></div>
+      <a href="https://breakout.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('breakout')" class="hbtn4" id="btnBreakout" style="position:relative;background:linear-gradient(135deg,#000820,#001244)">
+        <div id="btnBreakoutFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🧱</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">BREAKOUT</span></div>
       </a>
 
-      <a href="https://tetris.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('tetris')" class="hbtn4" id="btnTetris"
-        style="position:relative">
-        <img src="assets/hero_7.jpg"
-             class="btn-img" style="object-position:center 18%">
-        <div class="hfb4" id="btnTetrisFb" style="background:linear-gradient(135deg,rgba(0,200,255,0.12) 0%,transparent 45%,rgba(80,0,255,0.09) 100%);mix-blend-mode:screen"></div>
+      <a href="https://tetris.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('tetris')" class="hbtn4" id="btnTetris" style="position:relative;background:linear-gradient(135deg,#000d20,#001a44)">
+        <div id="btnTetrisFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🟦</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">TETRIS</span></div>
       </a>
 
-      <a href="https://pacman.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('pacman')" class="hbtn4" id="btnPacman" style="position:relative">
-        <img src="assets/hero_8.jpg" class="btn-img" style="object-position:center center">
-        <div class="hfb4" style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,100,255,0.08) 0%,transparent 50%,rgba(180,0,255,0.06) 100%);pointer-events:none"></div>
+      <a href="https://pacman.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('pacman')" class="hbtn4" id="btnPacman" style="position:relative;background:linear-gradient(135deg,#1a1400,#3d3000)">
+        <div id="btnPacmanFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🟡</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">PAC-MAN</span></div>
       </a>
 
     </div>
@@ -5256,10 +5252,39 @@ async function mmHandleUpload(e){
     sbCargarLogos();
     sbCargarBotones();
     sbCargarVotaBtn();
+    sbCargarCarrusel();
   }, 2000);
 })();
 
 /* ── CARGAR IMÁGENES DE BOTONES HERO DESDE SUPABASE STORAGE ── */
+
+/* ── CARGAR CARRUSEL DESDE SUPABASE (tabla carrusel) ── */
+async function sbCargarCarrusel(){
+  if(!SB || !SB.activo) return;
+  try{
+    var r = await fetch(SB.url+'/rest/v1/carrusel?select=*&order=orden.asc', {
+      headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}
+    });
+    if(!r.ok) return;
+    var rows = await r.json();
+    if(!Array.isArray(rows) || !rows.length) return;
+    var slides = rows.map(function(row){
+      return {
+        bg:        row.bg        || 'linear-gradient(135deg,#0f172a,#334155)',
+        tag:       row.tag       || '',
+        txt:       row.txt       || row.texto || '',
+        candidato: row.candidato || '',
+        sub:       row.sub       || '',
+        logo:      row.logo      || '',
+        candId:    row.cand_id   || row.candId || '',
+        oculto:    row.oculto    || false
+      };
+    });
+    localStorage.setItem('es_slides', JSON.stringify(slides));
+    buildCarrusel();
+  }catch(e){}
+}
+
 async function sbCargarBotones(){
   if(!SB || !SB.activo) return;
   var BASE = SB.url + '/storage/v1/object/public/';
@@ -5270,6 +5295,9 @@ async function sbCargarBotones(){
     { path:'fotos/hero_3.jpg', btnId:'btnPeso',      fbId:'btnPesoFb',      lsKey:'es_img_btnPeso'      },
     { path:'fotos/hero_4.jpg', btnId:'btnEscribeme', fbId:'btnEscribemeFb', lsKey:'es_img_btnEscribeme' },
     { path:'fotos/hero_5.jpg', btnId:'btnInstalar',  fbId:'btnInstalarFb',  lsKey:'es_img_btnInstalar'  },
+    { path:'fotos/hero_6.jpg', btnId:'btnBreakout',  fbId:'btnBreakoutFb',  lsKey:'es_img_btnBreakout', gameImg:true },
+    { path:'fotos/hero_7.jpg', btnId:'btnTetris',    fbId:'btnTetrisFb',    lsKey:'es_img_btnTetris',   gameImg:true },
+    { path:'fotos/hero_8.jpg', btnId:'btnPacman',    fbId:'btnPacmanFb',    lsKey:'es_img_btnPacman',   gameImg:true },
   ];
   for(var i=0; i<BTNS.length; i++){
     var b = BTNS[i];
@@ -5283,6 +5311,8 @@ async function sbCargarBotones(){
         localStorage.setItem(b.lsKey, finalUrl);
         if(b.trivia){
           aplicarTriviaImg(finalUrl);
+        } else if(b.gameImg){
+          aplicarBtnImg(b.btnId, b.fbId, finalUrl);
         } else {
           aplicarBtnImg(b.btnId, b.fbId, finalUrl);
         }
