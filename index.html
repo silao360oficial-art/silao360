@@ -5072,7 +5072,7 @@ async function sbCargarLogos(){
   await Promise.all(Object.keys(LOGO_MAP).map(async function(id){
     try{
       var url = BASE + LOGO_MAP[id];
-      var r = await fetch(url, {method:'HEAD'});
+      var r = await fetch(url, {method:'HEAD', headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}});
       if(r.ok) localStorage.setItem('es_logo_'+id, url+'?t='+Date.now());
     }catch(e){}
   }));
@@ -5257,11 +5257,12 @@ async function mmHandleUpload(e){
 // Ejecutar después de que SB esté inicializado
 (function(){
   // Esperar a que buildPoll haya corrido, luego cargar logos remotos
-  setTimeout(function(){
-    sbCargarLogos();
-    sbCargarBotones();
+  setTimeout(async function(){
+    await sbCargarLogos();   // primero logos (llama buildCarrusel al final)
+    sbCargarBotones();       // botones hero en paralelo
     sbCargarVotaBtn();
-    sbCargarCarrusel();
+    await sbCargarCarrusel(); // carrusel desde Supabase (sobreescribe slides con los de BD)
+    buildCarrusel();          // rebuild final con logos ya listos
   }, 2000);
 })();
 
@@ -5357,17 +5358,8 @@ async function sbCargarBotones(){
 
 /* ── CARGAR BOTÓN VOTA AQUÍ DESDE SUPABASE STORAGE ── */
 async function sbCargarVotaBtn(){
-  if(!SB || !SB.activo) return;
-  var BASE = SB.url + '/storage/v1/object/public/fotos/';
-  // Botón VOTA AQUÍ principal
-  try{
-    var url = BASE + 'votar_btn.jpg';
-    var r = await fetch(url, {method:'HEAD'});
-    if(r.ok){
-      var el = document.querySelector('.vota-img-inner');
-      if(el){ el.src = url+'?t='+Date.now(); el.style.display='block'; }
-    }
-  }catch(e){}
+  // Ya se carga en sbCargarBotones con headers correctos — función vacía para compatibilidad
+  return;
   // Botón ENCUESTA (si existe)
   try{
     var url2 = BASE + 'encuesta_btn.jpg';
