@@ -1153,7 +1153,7 @@ var IMGDATA_HERO_5 = "";
 
   <!-- ══ BOTÓN GRANDE: VOTA AQUÍ — imagen banner ══ -->
   <a href="https://silao360.com.mx" target="_blank" class="vota-img-btn" onclick="snd('vote');registrarEntrada('vota')">
-    <img src="" alt="VOTA AQUÍ · Encuesta Silao" class="vota-img-inner">
+    <img src="" alt="VOTA AQUÍ · Encuesta Silao" class="vota-img-inner" style="background:linear-gradient(135deg,#0a0020,#1a0040);min-height:80px">
     <div class="vota-img-overlay">
       <span class="vota-img-sub">VER RESULTADOS EN TIEMPO REAL · SILAO360.COM.MX</span>
     </div>
@@ -2888,7 +2888,7 @@ function buildCarrusel(){
   var wrap=document.getElementById('heroBanner');
   if(!wrap)return;
   wrap.innerHTML='';
-  if(_carTimer)clearInterval(_carTimer);
+  if(_carTimer){cancelAnimationFrame(_carTimer);_carTimer=null;}
   if(!slides.length)return;
   slides.forEach(function(s){
     var el=document.createElement('div');
@@ -2917,15 +2917,24 @@ function buildCarrusel(){
     wrap.appendChild(el);
   });
   Array.from(wrap.children).forEach(function(c){wrap.appendChild(c.cloneNode(true));});
-  // velocidad: pixeles/frame basada en segundos por vuelta completa
-  var pxPerFrame=wrap.scrollWidth/2/(_carSpeed*60);
+  // Esperar que el navegador pinte antes de medir scrollWidth
   var x=0;
-  _carTimer=setInterval(function(){
-    x+=Math.max(0.05,pxPerFrame);
-    var half=wrap.scrollWidth/2;
-    if(x>=half)x=0;
-    wrap.style.transform='translateX(-'+x+'px)';
-  },16);
+  setTimeout(function(){
+    var half=Math.round(wrap.scrollWidth/2);
+    if(!half) return;
+    var pxPerFrame=half/(_carSpeed*60);
+    var last=performance.now();
+    function tick(now){
+      var dt=now-last; last=now;
+      // limitar dt para evitar saltos si la pestaña estuvo inactiva
+      if(dt>100) dt=16;
+      x+=pxPerFrame*(dt/16);
+      if(x>=half) x-=half;
+      wrap.style.transform='translateX(-'+x.toFixed(2)+'px)';
+      _carTimer=requestAnimationFrame(tick);
+    }
+    _carTimer=requestAnimationFrame(tick);
+  }, 100);
 }
 function guardarVelocidadCarrusel(){
   var v=document.getElementById('carVelocidad');
