@@ -66,7 +66,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .clock-date{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,5vw,36px);font-weight:800;letter-spacing:4px;color:#fff;margin-top:6px;text-transform:uppercase}
 
 /* STATS */
-.stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
+.stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:visible;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
 .sb{flex:1;padding:10px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.07)}
 .sb:last-child{border-right:none}
 /* VOTOS — fuego rojo/naranja */
@@ -467,7 +467,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 .hero-poll-total span{color:#ff6644;font-size:13px}
 
 /* STATS BAR — 4 columnas */
-.stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
+.stats-bar{display:flex;margin:12px 14px 0;border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;overflow:visible;background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);position:relative;z-index:2}
 .sb{flex:1;padding:11px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.07)}
 .sb:last-child{border-right:none}
 .sb-racing{flex:1.2;padding:5px 4px !important}
@@ -535,6 +535,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 @property --a1{syntax:'<angle>';initial-value:0deg;inherits:false}
 @property --a2{syntax:'<angle>';initial-value:120deg;inherits:false}
 @property --a3{syntax:'<angle>';initial-value:240deg;inherits:false}
+
 @keyframes raceRing1{to{--a1:360deg}}
 @keyframes raceRing2{to{--a2:480deg}}
 @keyframes raceRing3{to{--a3:600deg}}
@@ -897,7 +898,7 @@ footer p{font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:2.5px;font-f
 
 /* HERO 4-GRID BTNS */
 .hero-4grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.hbtn4{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:16px;border:2px solid rgba(255,255,255,0.18);transition:transform .15s,box-shadow .15s;overflow:hidden;position:relative;min-height:74px}
+.hbtn4{display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:16px;border:2px solid rgba(255,255,255,0.18);transition:transform .15s,box-shadow .15s;overflow:visible;position:relative;min-height:74px}
 .hfb4{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:14px 8px;font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,5.5vw,30px);letter-spacing:2px;color:#fff;pointer-events:none;width:100%}
 .hico4{font-size:clamp(30px,8vw,40px);line-height:1;display:block}
 
@@ -1144,7 +1145,7 @@ var IMGDATA_HERO_5 = "";
           <span class="racing-ico" id="likeIco" style="animation:heartbeat .8s ease-in-out infinite">❤️</span>
           <span class="racing-txt"><span id="likeCnt">0</span></span>
         </span>
-        <span class="racing-ring rl1"></span><span class="racing-ring rl2"></span><span class="racing-ring rl3"></span>
+        <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
       </button>
     </div>
     <div id="sbStatusBadge" class="sb-status loading">CONECTANDO...</div>
@@ -1214,16 +1215,19 @@ var IMGDATA_HERO_5 = "";
 
       <!-- FILA 3 — BREAKOUT · TETRIS · PACMAN -->
 
-      <a href="https://breakout.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('breakout')" class="hbtn4" id="btnBreakout" style="position:relative;background:linear-gradient(135deg,#000820,#001244)">
-        <div id="btnBreakoutFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🧱</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">BREAKOUT</span></div>
+      <a href="https://breakout.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('breakout')" class="hbtn4" id="btnBreakout" style="position:relative;background:linear-gradient(135deg,#000820,#001244);overflow:visible">
+        <div id="btnBreakoutFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;z-index:2"><span style="font-size:36px">🧱</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">BREAKOUT</span></div>
+        <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
       </a>
 
-      <a href="https://tetris.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('tetris')" class="hbtn4" id="btnTetris" style="position:relative;background:linear-gradient(135deg,#000d20,#001a44)">
-        <div id="btnTetrisFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🟦</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">TETRIS</span></div>
+      <a href="https://tetris.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('tetris')" class="hbtn4" id="btnTetris" style="position:relative;background:linear-gradient(135deg,#000d20,#001a44);overflow:visible">
+        <div id="btnTetrisFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;z-index:2"><span style="font-size:36px">🟦</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">TETRIS</span></div>
+        <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
       </a>
 
-      <a href="https://pacman.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('pacman')" class="hbtn4" id="btnPacman" style="position:relative;background:linear-gradient(135deg,#1a1400,#3d3000)">
-        <div id="btnPacmanFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px"><span style="font-size:36px">🟡</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">PAC-MAN</span></div>
+      <a href="https://pacman.silao360.com.mx" target="_blank" onclick="chusco(this);snd('fun');registrarEntrada('pacman')" class="hbtn4" id="btnPacman" style="position:relative;background:linear-gradient(135deg,#1a1400,#3d3000);overflow:visible">
+        <div id="btnPacmanFb" class="hfb4" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;z-index:2"><span style="font-size:36px">🟡</span><span style="font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:#fff">PAC-MAN</span></div>
+        <span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>
       </a>
 
     </div>
@@ -1627,6 +1631,20 @@ var IMGDATA_HERO_5 = "";
       <div class="pulso-metric">
         <span class="pulso-metric-lbl">💬 MENSAJES DIRECTOS</span>
         <span class="pulso-metric-val green" id="pls-directos">—</span>
+      </div>
+
+      <div class="pulso-section-lbl">🎮 JUEGOS</div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">🧱 ENTRADAS A BREAKOUT</span>
+        <span class="pulso-metric-val red" id="pls-breakout">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">🟡 ENTRADAS A PAC-MAN</span>
+        <span class="pulso-metric-val yellow" id="pls-pacman">—</span>
+      </div>
+      <div class="pulso-metric">
+        <span class="pulso-metric-lbl">🟦 ENTRADAS A TETRIS</span>
+        <span class="pulso-metric-val cyan" id="pls-tetris">—</span>
       </div>
 
       <div class="pulso-section-lbl">📈 GRÁFICA — VISITAS (últimas 10 lecturas)</div>
@@ -2893,7 +2911,7 @@ function getSlides(){var s=localStorage.getItem('es_slides');return s?JSON.parse
 var _carTimer=null;
 var _carX=0;
 var _carHalf=0;
-var _carSpeed=parseFloat(localStorage.getItem('es_car_speed')||45);
+var _carSpeed=parseFloat(localStorage.getItem('es_car_speed')||90);
 
 function _getLogo(id){
   var ls=localStorage.getItem('es_logo_'+id)||'';
@@ -4105,6 +4123,11 @@ async function cargarFechasSupabase(){
         window._SB_label_enc=row.valor;
         localStorage.setItem('es_label_enc',row.valor);
       }
+      if(row.clave==='velocidad_carrusel'&&row.valor){
+        _carSpeed=parseFloat(row.valor)||_carSpeed;
+        localStorage.setItem('es_car_speed',_carSpeed);
+        buildCarrusel();
+      }
     });
     tickDualCD();
   }catch(e){}
@@ -4181,6 +4204,9 @@ async function actualizarPulso(){
   var pesos=getEntrada('peso');
   var escribemes=getEntrada('escribeme');
   var directos=await contarMensajesDirectosReal();
+  var breakouts=getEntrada('breakout');
+  var pacmans=getEntrada('pacman');
+  var tetrises=getEntrada('tetris');
 
   if(SB.activo){
     try{
@@ -4219,6 +4245,9 @@ async function actualizarPulso(){
           if(row.id==='peso')pesos=row.count||0;
           if(row.id==='escribeme')escribemes=row.count||0;
           if(row.id==='directo')directos=row.count||0;
+          if(row.id==='breakout')breakouts=row.count||0;
+          if(row.id==='pacman')pacmans=row.count||0;
+          if(row.id==='tetris')tetrises=row.count||0;
         });
       }
     }catch(e){}
@@ -4234,6 +4263,9 @@ async function actualizarPulso(){
   el('pls-peso',pesos);
   el('pls-escribeme',escribemes);
   el('pls-directos',directos);
+  el('pls-breakout',breakouts);
+  el('pls-pacman',pacmans);
+  el('pls-tetris',tetrises);
 
   // Gráfica mini
   _visitasGraph.push(total);
