@@ -2882,59 +2882,71 @@ function _actualizarVisitasBadge(){
 /* ── CARRUSEL ── */
 function getSlides(){var s=localStorage.getItem('es_slides');return s?JSON.parse(s):SLIDES_DEF;}
 var _carTimer=null;
-var _carSpeed=parseFloat(localStorage.getItem('es_car_speed')||120); // segundos por vuelta completa
+var _carX=0;
+var _carHalf=0;
+var _carSpeed=parseFloat(localStorage.getItem('es_car_speed')||120);
+
+function _getLogo(id){
+  var ls=localStorage.getItem('es_logo_'+id)||'';
+  return ls;
+}
+
+function _resolverLogo(s){
+  if(s.logo) return s.logo;
+  // buscar por candId
+  if(s.candId){var l=_getLogo(s.candId);if(l)return l;}
+  // buscar por tag — extraer palabra clave
+  if(s.tag){
+    var tag=(s.tag||'').replace(/^[^a-zA-Z]*/,'').trim().toUpperCase().split(' ')[0];
+    var l2=_getLogo(tag);if(l2)return l2;
+  }
+  return '';
+}
+
 function buildCarrusel(){
   var slides=getSlides().filter(function(s){return !s.oculto;});
   var wrap=document.getElementById('heroBanner');
   if(!wrap)return;
-  wrap.innerHTML='';
+  // Detener animación anterior
   if(_carTimer){cancelAnimationFrame(_carTimer);_carTimer=null;}
+  _carX=0; _carHalf=0;
+  wrap.innerHTML='';
   if(!slides.length)return;
+  // Construir slides
   slides.forEach(function(s){
+    var logo=_resolverLogo(s);
+    var logoHtml=logo
+      ?'<div class="banner-logo-wrap"><img src="'+logo+'" alt="logo" onerror="this.parentNode.innerHTML=String.fromCodePoint(127979)"></div>'
+      :'<div class="banner-logo-wrap">🏙️</div>';
     var el=document.createElement('div');
     el.className='banner-slide';
-    el.style.background=s.bg;
-    // Resolver logo: LOGO_DATA hardcoded primero, luego localStorage, luego s.logo
-    var _slideLogoSrc = s.logo || '';
-    function _getLogo(id){ return (typeof LOGO_DATA!=='undefined'&&LOGO_DATA[id])?LOGO_DATA[id]:(localStorage.getItem('es_logo_'+id)||''); }
-    if(s.candId){ var _ll=_getLogo(s.candId); if(_ll) _slideLogoSrc=_ll; }
-    if(!_slideLogoSrc && s.tag){
-      var _cands=getCands();
-      var _sc=_cands.find(function(cc){ return (cc.partido||'').toUpperCase()===(s.tag||'').toUpperCase(); });
-      if(_sc){ var _ll2=_getLogo(_sc.id); if(_ll2) _slideLogoSrc=_ll2; }
-      if(!_slideLogoSrc && typeof LOGO_DATA!=='undefined'){
-        var _tag=(s.tag||'').replace(/^[^a-zA-Z]*/,'').trim().toUpperCase().split(' ')[0];
-        if(LOGO_DATA[_tag]) _slideLogoSrc=LOGO_DATA[_tag];
-      }
-    }
-    el.innerHTML=(_slideLogoSrc?'<div class="banner-logo-wrap"><img src="'+_slideLogoSrc+'" alt="logo"></div>':'<div class="banner-logo-wrap">🏙️</div>')
-      +'<div class="banner-tag-badge">'+s.tag+'</div>'
+    el.style.background=s.bg||'linear-gradient(135deg,#0f172a,#334155)';
+    el.innerHTML=logoHtml
+      +'<div class="banner-tag-badge">'+(s.tag||'')+'</div>'
       +'<div class="banner-content">'
       +(s.candidato?'<div class="banner-cand-name">'+s.candidato+'</div>':'')
-      +'<div class="banner-main-txt">'+s.txt+'</div>'
+      +'<div class="banner-main-txt">'+(s.txt||'')+'</div>'
       +(s.sub?'<div class="banner-sub-txt">'+s.sub+'</div>':'')
       +'</div>';
     wrap.appendChild(el);
   });
+  // Duplicar para loop infinito
   Array.from(wrap.children).forEach(function(c){wrap.appendChild(c.cloneNode(true));});
-  // Esperar que el navegador pinte antes de medir scrollWidth
-  var x=0;
+  // Arrancar animación después de que el navegador pinte
   setTimeout(function(){
-    var half=Math.round(wrap.scrollWidth/2);
-    if(!half) return;
-    var pxPerFrame=half/(_carSpeed*60);
+    _carHalf=Math.round(wrap.scrollWidth/2);
+    if(!_carHalf)return;
+    var pxPerFrame=_carHalf/(_carSpeed*60);
     var last=performance.now();
     function tick(now){
-      var dt=now-last; last=now;
-      // limitar dt para evitar saltos si la pestaña estuvo inactiva
-      if(dt>100) dt=16;
-      x+=pxPerFrame*(dt/16);
-      if(x>=half) x-=half;
-      wrap.style.transform='translateX(-'+x.toFixed(2)+'px)';
+      var dt=Math.min(now-last,80);last=now;
+      _carX+=pxPerFrame*(dt/16);
+      if(_carX>=_carHalf)_carX-=_carHalf;
+      wrap.style.transform='translateX(-'+_carX.toFixed(2)+'px)';
       _carTimer=requestAnimationFrame(tick);
     }
     _carTimer=requestAnimationFrame(tick);
-  }, 100);
+  },200);
 }
 function guardarVelocidadCarrusel(){
   var v=document.getElementById('carVelocidad');
@@ -4029,27 +4041,27 @@ initLikes();
 async function cargarFechasSupabase(){
   if(!SB.activo)return;
   try{
-    var r=await fetch(SB.url+'/rest/v1/config?select=key,value',{
+    var r=await fetch(SB.url+'/rest/v1/config?select=clave,valor',{
       headers:{'apikey':SB.key,'Authorization':'Bearer '+SB.key}
     });
     var rows=await r.json();
     if(!Array.isArray(rows))return;
     rows.forEach(function(row){
-      if(row.key==='fecha_elec'){
-        window._SB_fecha_elec=row.value;
-        localStorage.setItem('es_fecha_elec',row.value);
+      if(row.clave==='fecha_elec'){
+        window._SB_fecha_elec=row.valor;
+        localStorage.setItem('es_fecha_elec',row.valor);
       }
-      if(row.key==='label_elec'){
-        window._SB_label_elec=row.value;
-        localStorage.setItem('es_label_elec',row.value);
+      if(row.clave==='label_elec'){
+        window._SB_label_elec=row.valor;
+        localStorage.setItem('es_label_elec',row.valor);
       }
-      if(row.key==='fecha_enc'){
-        window._SB_fecha_enc=row.value;
-        localStorage.setItem('es_fecha_enc',row.value);
+      if(row.clave==='fecha_enc'){
+        window._SB_fecha_enc=row.valor;
+        localStorage.setItem('es_fecha_enc',row.valor);
       }
-      if(row.key==='label_enc'){
-        window._SB_label_enc=row.value;
-        localStorage.setItem('es_label_enc',row.value);
+      if(row.clave==='label_enc'){
+        window._SB_label_enc=row.valor;
+        localStorage.setItem('es_label_enc',row.valor);
       }
     });
     tickDualCD();
@@ -5089,7 +5101,7 @@ async function sbCargarLogos(){
   }catch(e){}
   buildCandGrid();
   buildPoll();
-  buildCarrusel();
+  // buildCarrusel se llama desde el timeout principal después de sbCargarCarrusel
 }
 
 /* ── LOGO DEL PARTIDO — guardar con Supabase Storage ── */
@@ -5256,14 +5268,16 @@ async function mmHandleUpload(e){
 /* ── CARGAR LOGOS DE SUPABASE AL INICIO ── */
 // Ejecutar después de que SB esté inicializado
 (function(){
-  // Esperar a que buildPoll haya corrido, luego cargar logos remotos
   setTimeout(async function(){
-    await sbCargarLogos();   // primero logos (llama buildCarrusel al final)
-    sbCargarBotones();       // botones hero en paralelo
-    sbCargarVotaBtn();
-    await sbCargarCarrusel(); // carrusel desde Supabase (sobreescribe slides con los de BD)
-    buildCarrusel();          // rebuild final con logos ya listos
-  }, 2000);
+    // 1. Logos de partidos primero (los necesita el carrusel)
+    await sbCargarLogos();
+    // 2. Slides desde Supabase (tabla carrusel)
+    await sbCargarCarrusel();
+    // 3. Rebuild final con logos ya en localStorage
+    buildCarrusel();
+    // 4. Botones hero y vota aquí (independientes)
+    sbCargarBotones();
+  }, 1500);
 })();
 
 /* ── CARGAR IMÁGENES DE BOTONES HERO DESDE SUPABASE STORAGE ── */
@@ -5291,7 +5305,7 @@ async function sbCargarCarrusel(){
       };
     });
     localStorage.setItem('es_slides', JSON.stringify(slides));
-    buildCarrusel();
+    // NO llamar buildCarrusel aquí — se llama desde el timeout principal
   }catch(e){}
 }
 
