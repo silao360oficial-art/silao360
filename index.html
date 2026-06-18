@@ -622,7 +622,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0a0a;padding:0
 
 /* Grid 3 cols */
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.stat-card{background:transparent;border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:background .6s ease,border-color .6s ease,box-shadow .6s ease;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden}
+.stat-card{background:transparent;border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:background .6s ease,border-color .6s ease,box-shadow .6s ease;-webkit-tap-highlight-color:transparent;position:relative;overflow:visible}
 .stat-card:active{transform:scale(.96)}
 .stat-sym{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;display:block;transition:color .6s ease}
 .stat-val{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#fff;line-height:1.1;display:block;margin-top:2px}
@@ -3016,6 +3016,13 @@ function iniciarStatColors(){
         card.style.boxShadow='0 0 14px rgba('+_hexRgb(col)+',0.18)';
         var sym=card.querySelector('.stat-sym');
         if(sym)sym.style.color=col;
+        // Pintar racing-rings con color del partido
+        card.querySelectorAll('.racing-ring').forEach(function(ring,ri){
+          var alpha=ri===0?'ff':ri===1?'aa':'77';
+          ring.style.background=
+            'transparent padding-box, conic-gradient(from var(--a'+(ri+1)+','+[0,120,240][ri]+'deg),'+
+            pcolor+' 0%,'+pcolor+alpha+' 15%,transparent 20%,transparent '+(ri===0?'75%,'+pcolor+' 88%,'+pcolor+' 100%':'80%,transparent 100%')+') border-box';
+        });
       });
     });
     idx++;
@@ -3107,31 +3114,37 @@ function buildPoll(votosObj){
     var statsHTML='<div class="p-stats" data-pcolor="'+_sc+'">'
       +'<div class="stats-grid">'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\'%\',\''+pct+'%\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym">%</span>'
         +'<span class="stat-val">'+pct+'</span>'
         +'<span class="stat-lbl">Porcentaje</span>'
       +'</div>'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\'μ\',\''+Math.round(st.mu)+'\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym">μ</span>'
         +'<span class="stat-val">'+Math.round(st.mu)+'</span>'
         +'<span class="stat-lbl">Promedio</span>'
       +'</div>'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\'σ\',\''+Math.round(st.sigma)+'\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym">σ</span>'
         +'<span class="stat-val">'+Math.round(st.sigma)+'</span>'
         +'<span class="stat-lbl">Dispersión</span>'
       +'</div>'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\'±\',\''+me+'\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym">±</span>'
         +'<span class="stat-val" style="font-size:15px">'+me+'</span>'
         +'<span class="stat-lbl">Margen Error</span>'
       +'</div>'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\'n\',\''+totalVotos+'\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym">n</span>'
         +'<span class="stat-val">'+totalVotos+'</span>'
         +'<span class="stat-lbl">Total Votos</span>'
       +'</div>'
       +'<div class="stat-card" style="border-color:'+_sc+'88;box-shadow:0 0 8px '+_sc+'44" onclick="abrirStatInfo(\''+trendSym+'\',\''+trendLabel+'\',event)">'
+        +'<span class="racing-ring r1"></span><span class="racing-ring r2"></span><span class="racing-ring r3"></span>'
         +'<span class="stat-sym" style="font-size:14px;color:'+trendColor+'">'+trendSym+'</span>'
         +'<span class="stat-val" style="font-size:13px;color:'+trendColor+'">'+trendLabel+'</span>'
         +'<span class="stat-lbl">Tendencia</span>'
